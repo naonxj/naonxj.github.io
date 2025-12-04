@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: Advanced Network Security Lab </title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 테마 설정 */
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;
+            --text-main: #FAFAFA;
+            --text-sub: #AAAAAA;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 공통 레이아웃 */
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        
+        a.back-link {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: 5%;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* 프로젝트 헤더 */
+        .project-header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
+        
+        .tags { margin-top: 20px; }
+        .tag {
+            background: #222; color: var(--accent);
+            padding: 5px 12px; border-radius: 4px;
+            font-size: 0.85rem; margin-right: 8px; font-weight: 600;
+        }
+
+        /* 섹션 스타일 */
+        section { margin-bottom: 80px; }
+        h2 {
+            font-size: 1.8rem; color: var(--text-main);
+            margin-bottom: 25px; border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+        h3 { font-size: 1.3rem; color: var(--text-main); margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: inline-block;}
+        
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        /* --- [수정됨] 이미지 그리드 스타일 (정사각형 & 예쁜 배치) --- */
+        .gallery-grid, .comparison-grid {
+            display: grid;
+            /* 화면 크기에 따라 자동으로 열 개수 조절 (최소 280px) */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px;
+        }
+
+        .img-container {
+            background: var(--bg-card);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 마우스 올렸을 때 카드 살짝 위로 */
+        .img-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 이미지 스타일 (정사각형 강제 & 줌인 커서) */
+        .img-container img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1;  /* 1:1 정사각형 비율 고정 */
+            object-fit: cover;    /* 이미지가 찌그러지지 않고 꽉 차게 (크롭) */
+            border-radius: 8px; 
+            display: block; 
+            cursor: zoom-in;      /* 돋보기 커서 */
+            transition: transform 0.3s ease;
+        }
+        
+        /* 이미지 호버 시 살짝 확대 효과 */
+        .img-container:hover img {
+            transform: scale(1.02);
+        }
+
+        .img-caption {
+            margin-top: 15px; 
+            color: var(--text-sub); 
+            font-size: 0.9rem; 
+            text-align: center;
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Main Portfolio</a>
+    </header>
+
+    <main>
+        <!-- 1. 프로젝트 개요 -->
+        <section class="project-header">
+            <h1>Advanced Network Security Lab</h1>
+            <p>GNS3 가상 환경에서 방화벽(ASAv), IDS/IPS(Snort, Suricata), SIEM(Wazuh/OSSEC)을 통합 구축하고<br>실제 공격 시나리오에 따른 탐지 및 방어 체계를 검증한 프로젝트입니다.</p>
+            <div class="tags">
+                <span class="tag">GNS3</span>
+                <span class="tag">Cisco ASAv</span>
+                <span class="tag">Snort/Suricata</span>
+                <span class="tag">OSSEC & Zabbix</span>
+                <span class="tag">VPN</span>
+            </div>
+        </section>
+
+        <!-- 2. 네트워크 아키텍처 -->
+        <section>
+            <h2>01. Network Architecture Design</h2>
+            <p class="description">
+                GNS3와 VMware Workstation을 연동하여 Inside, Outside, DMZ 구간을 분리하고, 
+                다양한 OS(Rocky, Ubuntu, Windows, Kali)를 배치하여 실제 기업망과 유사한 환경을 구성했습니다.
+            </p>
+            
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/popo.png" alt="전체 네트워크 구성도 (기본 Lab)">
+                    <div class="img-caption">Figure 1. 전체 네트워크 토폴로지 설계</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/popo2.png" alt="IP 할당 내역 포함 네트워크 구성도">
+                    <div class="img-caption">Figure 2. 상세 IP 주소 할당 및 라우팅 설계</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 네트워크 보안 (Firewall & VPN & HA) -->
+        <section>
+            <h2>02. Firewall & Network Security</h2>
+            <p class="description">
+                Cisco ASAv를 활용하여 Zone-based Policy를 수립하고, PfSense를 통한 VPN 터널링 및 HSRP 고가용성 네트워크를 구현했습니다.
+            </p>
+
+            <h3>Firewall Rules (Cisco ASAv)</h3>
+            <p class="description">트래픽 흐름 제어를 위한 5가지 핵심 ACL/Firewall Rule 적용 검증</p>
+
+            <div class="gallery-grid">
+                <!-- Rule 1 -->
+                <div class="img-container">
+                    <img src="images/p1/fire3-inside-http.png" alt="Firefox3 -> Inside HTTP">
+                    <div class="img-caption">Rule 1: Inside망 HTTP 접근 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/fire3-inside-telnet.png" alt="Firefox3 -> Inside Telnet">
+                    <div class="img-caption">Rule 1: Inside망 Telnet 접근 허용</div>
+                </div>
+                
+                <!-- Rule 2 -->
+                <div class="img-container">
+                    <img src="images/p1/fire5-dmz-telnet.png" alt="Webterm2 -> DMZ Telnet">
+                    <div class="img-caption">Rule 2: DMZ 구간 Telnet 접근 제어</div>
+                </div>
+
+                <!-- Rule 3 -->
+                <div class="img-container">
+                    <img src="images/p1/pc1-fire4-ping.png" alt="PC1 -> Webterm1 Ping">
+                    <div class="img-caption">Rule 3: PC1 -> Webterm1 ICMP 허용</div>
+                </div>
+
+                <!-- Rule 4 -->
+                <div class="img-container">
+                    <img src="images/p1/firewallrule4http.png" alt="Webterm1 -> R1 HTTP">
+                    <div class="img-caption">Rule 4: 라우터 관리페이지 HTTP 접근</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/firewallrule4telnet.png" alt="Webterm1 -> R1 Telnet">
+                    <div class="img-caption">Rule 4: 라우터 Telnet 접근</div>
+                </div>
+
+                <!-- Rule 5 -->
+                <div class="img-container">
+                    <img src="images/p1/firewall5ping.png" alt="Webterm2 -> PC1 Ping">
+                    <div class="img-caption">Rule 5: Webterm2 -> PC1 ICMP 통신</div>
+                </div>
+            </div>
+
+            <h3>Remote Access VPN (PfSense)</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/openvpn.png" alt="PfSense OpenVPN Server">
+                    <div class="img-caption">OpenVPN 서버 설정 (PfSense)</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/openvpnclient" alt="OpenVPN Client">
+                    <div class="img-caption">Client 접속 및 터널링 성공</div>
+                </div>
+            </div>
+
+            <h3>High Availability (FHRP - HSRP)</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/HSRP-active.png" alt="HSRP Active Router">
+                    <div class="img-caption">HSRP Active 상태 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/HSRP-standby.png" alt="HSRP Standby Router">
+                    <div class="img-caption">HSRP Standby 상태 확인 (이중화)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 시스템 보안 및 통합 관제 -->
+        <section>
+            <h2>03. System Security & Monitoring (HIDS/NMS)</h2>
+            <p class="description">
+                호스트 기반 침입 탐지(OSSEC)와 네트워크 관리 시스템(Zabbix)을 연동하여 
+                서버 상태 모니터링 및 파일 무결성 검사를 수행했습니다.
+            </p>
+
+            <div class="gallery-grid">
+                <!-- OSSEC Server -->
+                <div class="img-container">
+                    <img src="images/p1/ossecserver.png" alt="OSSEC Server Setup">
+                    <div class="img-caption">OSSEC Server 구축 (Ubuntu/Rocky)</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/ossecserver2.png" alt="OSSEC Server Config">
+                    <div class="img-caption">OSSEC 설정 및 에이전트 키 관리</div>
+                </div>
+
+                <!-- OSSEC Agents -->
+                <div class="img-container">
+                    <img src="images/p1/ossecagent.png" alt="OSSEC Agent Linux">
+                    <div class="img-caption">Linux Agent 연결 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/windowossec4tail.png" alt="OSSEC Log Tail">
+                    <div class="img-caption">실시간 로그 모니터링 (Log Tail)</div>
+                </div>
+
+                <!-- Windows Integration -->
+                <div class="img-container">
+                    <img src="images/p1/ossecwindowfinal.png" alt="Windows Agent Final">
+                    <div class="img-caption">Windows 10 Agent 연동 완료</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/windowossec1.png" alt="Windows Agent Config">
+                    <div class="img-caption">Windows 에이전트 설정</div>
+                </div>
+
+                <!-- Zabbix -->
+                <div class="img-container">
+                    <img src="images/p1/zabbixhome.png" alt="Zabbix Dashboard">
+                    <div class="img-caption">Zabbix Server 메인 대시보드</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/zabbixwindowconnect" alt="Zabbix Window Connect">
+                    <div class="img-caption">Windows 클라이언트 연결 모니터링</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/zabbixclintcomplete.png" alt="Zabbix Client Status">
+                    <div class="img-caption">Agent 연결 상태 확인 (Green Status)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 위협 탐지 시나리오 A (Snort) -->
+        <section>
+            <h2>04. Threat Detection Scenarios (Snort Rules)</h2>
+            <p class="description">
+                커스텀 Snort Rule을 작성하여 5가지 유형의 공격을 시뮬레이션하고, 
+                패킷 기반 탐지 로그를 확인했습니다.
+            </p>
+
+            <!-- Scenario 1 -->
+            <h3>Scenario 1: ICMP & HTTP Traffic Detection</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/snort(win10-ossec)ping-cmd.png" alt="Ping Attack Command">
+                    <div class="img-caption">Win10 -> OSSEC (Ping 시도)</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/snort(win10-ossec)ping.png" alt="Ping Detection Log">
+                    <div class="img-caption">Snort 탐지 로그 (ICMP)</div>
+                </div>
+            </div>
+            <div class="gallery-grid" style="margin-top: 20px;">
+                <div class="img-container">
+                    <img src="images/p1/snort(win10-ossec)http.png" alt="HTTP Detection Log">
+                    <div class="img-caption">HTTP 트래픽 탐지 로그 확인</div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <h3>Scenario 2: Inter-Network Ping (Rocky -> Win10)</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/rocky-win-ping.png" alt="Rocky Ping Attack">
+                    <div class="img-caption">공격: Rocky9에서 Ping 전송</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/rock-win-ping-result" alt="Ping Result">
+                    <div class="img-caption">탐지: Snort Alert 발생</div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <h3>Scenario 3: Command Injection Attack (/etc/passwd)</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/rockinjectcurl.png" alt="Injection Attack Curl">
+                    <div class="img-caption">공격: 웹 파라미터를 통한 시스템 파일 접근 시도</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/injection-dect.png" alt="Injection Detection">
+                    <div class="img-caption">탐지: "etc/passwd" 패턴 매칭 탐지</div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <h3>Scenario 4: DDoS - Random Source Attack</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/random-attack.png" alt="Random Attack Tool">
+                    <div class="img-caption">공격: Kali에서 Random Source DDoS 수행</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/randomattack-detection.png" alt="DDoS Detection">
+                    <div class="img-caption">탐지: 비정상 트래픽 플러딩 탐지</div>
+                </div>
+            </div>
+
+            <!-- Scenario 5 -->
+            <h3>Scenario 5: SYN Flag Scanning</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/snort-synflagattack.png" alt="SYN Scan Attack">
+                    <div class="img-caption">공격: 포트 스캐닝 (SYN Flag)</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/snort-synflagdetection.png" alt="SYN Scan Detection">
+                    <div class="img-caption">탐지: 스캔 행위 식별</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 위협 탐지 시나리오 B (Suricata) -->
+        <section>
+            <h2>05. Threat Detection Scenarios (Suricata Rules)</h2>
+            <p class="description">
+                멀티스레드 기반의 IDS인 Suricata를 활용하여 동일한 공격 시나리오에 대한 탐지 성능을 교차 검증했습니다.
+            </p>
+
+            <!-- Scenario 1 -->
+            <h3>Scenario 1: ICMP & HTTP Traffic</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/suriwin-ossec-ping.png" alt="Suricata Ping Attack">
+                    <div class="img-caption">공격: Ping 트래픽 발생</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/surwin-ossec-pingdetect.png" alt="Suricata Ping Detection">
+                    <div class="img-caption">탐지: fast.log 확인 (ICMP)</div>
+                </div>
+            </div>
+            <div class="gallery-grid" style="margin-top: 20px;">
+                <div class="img-container">
+                    <img src="images/p1/win-ossechttpdet.png" alt="Suricata HTTP Detection">
+                    <div class="img-caption">HTTP 트래픽 탐지 로그</div>
+                </div>
+            </div>
+
+            <!-- Scenario 2 -->
+            <h3>Scenario 2: Inter-Network Ping (Rocky -> Win10)</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/surirocky-win-ping.png" alt="Rocky Ping Attack">
+                    <div class="img-caption">공격: Ping 전송</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/surirocky-winping-det.png" alt="Rocky Ping Detection">
+                    <div class="img-caption">탐지: Suricata Alert 확인</div>
+                </div>
+            </div>
+
+            <!-- Scenario 3 -->
+            <h3>Scenario 3: Command Injection Defense</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/suri-injection-attack.png" alt="Injection Attack">
+                    <div class="img-caption">공격: 악성 페이로드 전송</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/suri-injection-detec.png" alt="Injection Detection">
+                    <div class="img-caption">탐지: 시그니처 기반 공격 탐지</div>
+                </div>
+            </div>
+
+            <!-- Scenario 4 -->
+            <h3>Scenario 4: DDoS Detection</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/surikali-winrandattack.png" alt="DDoS Attack">
+                    <div class="img-caption">공격: Random Source Flooding</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/surikali-win-randattack2.png" alt="DDoS Detection">
+                    <div class="img-caption">탐지: 임계치 기반 탐지 로그</div>
+                </div>
+            </div>
+
+            <!-- Scenario 5 -->
+            <h3>Scenario 5: SYN Scan Detection</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p1/surikali-rocky-synattack" alt="SYN Scan Attack">
+                    <div class="img-caption">공격: Nmap SYN Scan</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p1/suri-kali-rocky-syn-attack-det" alt="SYN Scan Detection">
+                    <div class="img-caption">탐지: 스캐닝 패턴 탐지</div>
+                </div>
+            </div>
+
+            
+        </section>
+    </main>
+    
+    <footer style="text-align: center; padding: 40px; color: #555; border-top: 1px solid #333;">
+        &copy; 2024 KIMSEOJIN. All Rights Reserved.
+    </footer>
+
+    <!-- 라이트박스 오버레이 (숨겨져 있음) -->
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="Full Screen Image">
+    </div>
+
+    <!-- 라이트박스 스크립트 -->
+    <script>
+        // 1. 모든 이미지 컨테이너 내의 이미지 선택
+        const images = document.querySelectorAll('.img-container img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        // 2. 각 이미지에 클릭 이벤트 추가
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.style.display = 'flex'; // 라이트박스 보이기
+                lightboxImg.src = img.src;       // 클릭한 이미지 주소 복사
+            });
+        });
+
+        // 3. 라이트박스 클릭 시 닫기
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

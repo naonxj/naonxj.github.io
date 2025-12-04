@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: Full Stack Security Lab | [당신의 이름]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 테마 설정 (Deep Aqua) */
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;
+            --text-main: #FAFAFA;
+            --text-sub: #AAAAAA;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 공통 레이아웃 */
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        
+        a.back-link {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: 5%;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* 프로젝트 헤더 */
+        .project-header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
+        
+        .tags { margin-top: 20px; }
+        .tag {
+            background: #222; color: var(--accent);
+            padding: 5px 12px; border-radius: 4px;
+            font-size: 0.85rem; margin-right: 8px; font-weight: 600;
+        }
+
+        /* 섹션 스타일 */
+        section { margin-bottom: 80px; }
+        h2 {
+            font-size: 1.8rem; color: var(--text-main);
+            margin-bottom: 25px; border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+        h3 { font-size: 1.3rem; color: var(--text-main); margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: inline-block;}
+        
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        /* 이미지 그리드 스타일 (정사각형 & 예쁜 배치) */
+        .gallery-grid, .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 20px;
+        }
+
+        .img-container {
+            background: var(--bg-card);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-container img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 8px; 
+            display: block; 
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        
+        .img-container:hover img { transform: scale(1.02); }
+
+        .img-caption {
+            margin-top: 15px; 
+            color: var(--text-sub); 
+            font-size: 0.85rem; 
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* 라이트박스 스타일 */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            padding: 20px;
+        }
+
+        #lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.2);
+            object-fit: contain;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* 결과 테이블 스타일 */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 40px 0;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .result-table th, .result-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            font-size: 0.9rem;
+        }
+        .result-table th {
+            background-color: #222;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+        .result-table tr:last-child td { border-bottom: none; }
+        .result-table tr:hover { background-color: #252525; }
+        
+        .status-pass { color: #4CAF50; font-weight: 700; }
+        .status-block { color: #FF5252; font-weight: 700; }
+
+        @media (max-width: 768px) {
+            .gallery-grid, .comparison-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .project-header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Main Portfolio</a>
+    </header>
+
+    <main>
+        <!-- 1. 프로젝트 개요 -->
+        <section class="project-header">
+            <h1>Integrated Network & System Security Project</h1>
+            <p>네트워크 설계부터 서버 구축(Web, DB, DNS, FTP), 보안 장비(FW, IDS) 설정, 그리고 시스템 하드닝 및 모의해킹(CTF)까지<br>
+            전체 인프라 보안 라이프사이클을 수행한 Full-Stack 보안 프로젝트입니다.</p>
+            <div class="tags">
+                <span class="tag">Network Design</span>
+                <span class="tag">Firewall/ACL</span>
+                <span class="tag">Server Hardening</span>
+                <span class="tag">DB/Web Security</span>
+                <span class="tag">CTF/Exploit</span>
+            </div>
+        </section>
+
+        <!-- 2. 인프라 아키텍처 -->
+        <section>
+            <h2>01. Infrastructure Design</h2>
+            <p class="description">
+                VLAN(10, 20, 30)을 통해 Server, Network, Security Zone을 논리적으로 분리하고, 
+                다양한 OS와 보안 솔루션을 배치하여 복합적인 기업망 환경을 구성했습니다.
+            </p>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p2/network-system.png" alt="전체 네트워크 구성도">
+                    <div class="img-caption">Figure 1. 전체 네트워크 토폴로지</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/network-popo2.png" alt="IP 및 라우팅 설계">
+                    <div class="img-caption">Figure 2. 상세 IP 할당 및 라우팅 계획</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 네트워크 접근 제어 (Firewall & ACL & VPN) -->
+        <section>
+            <h2>02. Network Access Control</h2>
+            <p class="description">
+                PfSense, Cisco ASAv, Router ACL을 활용하여 각 구간(Inside, DMZ, Outside) 간의 정교한 트래픽 제어 정책을 적용했습니다.
+            </p>
+
+            <h3>Firewall & ACL Policies</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/pfsense-firewallrule.png" alt="PfSense Rule">
+                    <div class="img-caption">PfSense: FTP 차단 / HTTP 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/r3acl.png" alt="Router ACL">
+                    <div class="img-caption">R3 ACL: SSH 허용 / ICMP 차단</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/assv-https.png" alt="ASAv HTTPS">
+                    <div class="img-caption">ASAv: DVWA -> Inside HTTPS 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/assv-telnet.png" alt="ASAv Telnet">
+                    <div class="img-caption">ASAv: Telnet 접근 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/asav-dns-r3-ping.png" alt="ASAv Ping">
+                    <div class="img-caption">ASAv: DNS -> Router Ping 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/asav-r2-r4-ssh.png" alt="ASAv SSH">
+                    <div class="img-caption">ASAv: R2 -> R4 SSH 접근 허용</div>
+                </div>
+            </div>
+
+            <h3>Remote Access VPN</h3>
+            <div class="gallery-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                <div class="img-container">
+                    <img src="images/p2/remoteaccess.png" alt="Remote Access VPN">
+                    <div class="img-caption">Remote Access VPN 연결 및 터널링 구성</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 서버 인프라 구축 (FTP, DNS, Samba) -->
+        <section>
+            <h2>03. Server Infrastructure & Services</h2>
+            <p class="description">
+                보안 파일 전송(SFTP, FTPS), DNS 서버 구축, 그리고 이기종 간 파일 공유(Samba, NFS) 환경을 구축하고 검증했습니다.
+            </p>
+
+            <h3>Secure File Transfer (FTP/SFTP)</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/ftp.png" alt="FTP Server">
+                    <div class="img-caption">FTP 서버 구축</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/ftps.png" alt="FTPS Server">
+                    <div class="img-caption">FTPS (SSL/TLS) 보안 설정</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/ftps-certi.png" alt="FTPS Certificate">
+                    <div class="img-caption">FTPS 인증서 발급 및 적용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/sfpt.png" alt="SFTP Connection">
+                    <div class="img-caption">SFTP (SSH) 연결 테스트</div>
+                </div>
+            </div>
+
+            <h3>DNS & NFS / Samba</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/dns-2.png" alt="DNS Zone Config">
+                    <div class="img-caption">DNS Zone 설정</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/dns-5botf.png" alt="DNS Resolution">
+                    <div class="img-caption">DNS 질의 및 응답 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/nameserver-nfsclient.png" alt="NFS Client">
+                    <div class="img-caption">NFS 클라이언트 마운트</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/samba-window.png" alt="Samba Windows">
+                    <div class="img-caption">Samba 윈도우 공유 폴더 접근</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 데이터베이스 및 통합 모니터링 -->
+        <section>
+            <h2>04. Database & Integrated Monitoring</h2>
+            <p class="description">
+                MariaDB 구축 및 사용자별 DB 분리, PMM(Percona Monitoring Management)을 통한 DB 성능 모니터링, 
+                그리고 LogAnalyzer와 OSSEC을 통한 통합 관제 환경을 구현했습니다.
+            </p>
+
+            <h3>Database & PMM Monitoring</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/db.png" alt="MariaDB Setup">
+                    <div class="img-caption">MariaDB 설치 및 구성</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/pmm2.png" alt="PMM Dashboard">
+                    <div class="img-caption">PMM 서버 대시보드 (Query Analytics)</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/pmmserverclientconncection.png" alt="PMM Client Connect">
+                    <div class="img-caption">PMM Client-Server 연동</div>
+                </div>
+            </div>
+            
+            <h3>Log Analysis & OSSEC</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/loganlyser.png" alt="LogAnalyzer">
+                    <div class="img-caption">LogAnalyzer: Rsyslog 시각화</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/ossec-client.png" alt="OSSEC Client">
+                    <div class="img-caption">OSSEC Agent 연결</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/ossecresult.png" alt="OSSEC Alert">
+                    <div class="img-caption">OSSEC 침입 탐지 알림</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. 공격 시뮬레이션 및 시스템 강화 -->
+        <section>
+            <h2>05. Offensive Security & Hardening</h2>
+            <p class="description">
+                실제 CTF 시나리오(Venus)를 통한 모의해킹 수행, Snort를 이용한 공격 탐지, 
+                그리고 시스템 무결성을 위한 Hardening(권한 관리, BoF 분석)을 수행했습니다.
+            </p>
+
+            <h3>CTF & Snort Detection</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/ctf-userflag.png" alt="CTF User Flag">
+                    <div class="img-caption">CTF: User Flag 획득</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/ctf-rootflag.png" alt="CTF Root Flag">
+                    <div class="img-caption">CTF: Root 권한 탈취 성공</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/snort-kali-web-ddos.png" alt="Snort DDoS Detection">
+                    <div class="img-caption">Snort: DDoS 공격 탐지 로그</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/snort-kali-ctf.png" alt="Snort LFI Detection">
+                    <div class="img-caption">Snort: /etc/passwd 접근 탐지</div>
+                </div>
+            </div>
+
+            <h3>System Hardening & Exploit Analysis</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p2/stickybit.png" alt="Sticky Bit">
+                    <div class="img-caption">Sticky Bit 설정 및 파일 보호</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/stickbitmore.png" alt="SetUID & Password Policy">
+                    <div class="img-caption">SetUID 설정 및 패스워드 정책 적용</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p2/bof.png" alt="Buffer Overflow">
+                    <div class="img-caption">Buffer Overflow(BoF) 취약점 분석 및 실행</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. 최종 결과 요약 -->
+        <section>
+            <h2>06. Project Outcomes</h2>
+            <p class="description">
+                네트워크 접근 제어부터 시스템 하드닝까지, 각 보안 계층에서 수행한 정책 설정 및 테스트 결과 요약입니다.
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Test Scenario</th>
+                            <th>Policy / Tool</th>
+                            <th>Result Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Firewall</td>
+                            <td>Block FTP (192.168.5.50)</td>
+                            <td>PfSense Rule</td>
+                            <td><span class="status-pass">Blocked Successfully</span></td>
+                        </tr>
+                        <tr>
+                            <td>ACL</td>
+                            <td>Allow SSH (Firefox2 -> Kali)</td>
+                            <td>Router R3 ACL</td>
+                            <td><span class="status-pass">Allowed</span></td>
+                        </tr>
+                        <tr>
+                            <td>IDS Detection</td>
+                            <td>DDoS Attack (Kali -> Web)</td>
+                            <td>Snort IDS</td>
+                            <td><span class="status-block">Detected & Alerted</span></td>
+                        </tr>
+                        <tr>
+                            <td>System</td>
+                            <td>Root Privilege Escalation</td>
+                            <td>SetUID / BoF Analysis</td>
+                            <td><span class="status-pass">Verified Vulnerability</span></td>
+                        </tr>
+                        <tr>
+                            <td>Encryption</td>
+                            <td>Secure File Transfer</td>
+                            <td>FTPS (SSL/TLS)</td>
+                            <td><span class="status-pass">Encrypted Connection</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer style="text-align: center; padding: 40px; color: #555; border-top: 1px solid #333;">
+        &copy; 2024 [당신의 이름]. All Rights Reserved.
+    </footer>
+
+    <!-- 라이트박스 -->
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="Full Screen Image">
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.img-container img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = img.src;
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

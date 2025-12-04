@@ -1,0 +1,56 @@
+록키 suricata 16.67 -> 97
+ubuntu snort 16.69 -> 81
+ubuntu ossec server 16.74 -> 75
+ubuntu ossec agent 16.77 -> 90
+kali ip 16.142
+
+
+server key
+MDAxIHVidW50dS1vc3NlYyAxOTIuMTY4LjE2Ljc3IDU5ZmYxZTBkMzFlM2EwMzIyMTNmY2E0MzM2OGMxMDkxNGQ5M2Q2ODcyMjg4NThiOGY5ZDNlZTM2MGYyMmZhYmE=
+
+
+server key
+MDAyIG9zc2VjIDE5Mi4xNjguMTYuOTAgMzQzOGQxM2M5NzQyN2ZmYzc1MzgxZTk3NDNiYTg2NTMzNzRlOTZmYzAzN2ZhNTYzNjFlZGVjNjI1MDNkNGM0Yw==
+
+window key
+MDAzIHdpbmRvd3MgMTkyLjE2OC4xNi4xMzEgM2NkODk2ZWY2YzZhYzExOGQ2ODc0NDY0OWJkZWVkZDAyYTI3NzgzNDIyZWUwMTU3ZDkxOWM2NTk0OWE0ZjljYQ==
+
+sudo apt update
+sudo apt install -y vim
+
+ossec server에서 탐지할때 명령어
+sudo tail -f /var/ossec/logs/alerts/alerts.log 
+
+sudo snort -c /usr/local/etc/snort/snort.lua -i enp0s3 -A alert_fast -s 65535 -k none -R /usr/local/etc/snort/rules/local.rules
+
+zavvix안에 ossec agent 설치
+
+zabbix server - rocky 구축 
+https://sysissue.tistory.com/9 
+i eh0
+hping3 -S --flood --rand-source -p 80 -c 5 192.168.16.131
+
+ossec에서는 snort처럼 트래픽에서 바로 매칭하는 방식이아니라 웹서버 로그시스템 로그에 /etc/passwd 문자열이 나오면 탐지하도록 룰을 작성해야한다. 
+
+
+snort에 룰작성
+alert tcp any any -> $HOME_NET 80 (
+    msg:"[ATTACK] Command Injection attempt - /etc/passwd";
+    content:"/etc/passwd"; nocase;
+    http_uri;
+    sid:1003001; rev:1;
+)
+
+ossec server에서 cul로 테스트
+curl "http://192.168.16.97/etc/passwd"75
+여기서 16.142는 rocky ip이다. 
+
+
+alert icmp any any -> $HOME_NET any (msg:"ICMp "; sid:1000001; rev:1;)
+alert icmp 192.168.16.131 any -> 192.168.16.77 any (msg: "window -> ossec ping detection"; sid:1000001; rev:1; detection_filter:track by_src, count 1, seconds 10; classtype:icmp-event; itype:8;)
+alert tcp 192.168.16.131 any -> 192.168.16.77 80 (msg: "window -> ossec http detection"; sid:1000002; rev:1; flags:S; flow:to_server; classtype:attempted-recon;)
+alert icmp 192.168.16.67 any -> 192.168.16.131 any (msg: "rocky -> window ping detection"; sid:1000003; rev:1; detection_filter:track by_src, count 1, seconds 10; classtype:icmp-event; itype:8;)
+alert tcp any any -> 192.168.16.131 80 (msg: "kali -> window Rand Source Attack DDoS detection"; detection_filter: track by_dst, count 10, seconds 1; sid:1000005; rev:1;)
+alert tcp 192.168.16.142 any -> 192.168.16.97 any (msg: " kali -> rocky SYN Flag Scanning detection" ; sid:1000006; rev:1; flags:S; flow:stateless; detection_filter: track by_src, count 15, seconds 3; classtype:attempted-recon;)
+alert tcp 192.168.16.75 any -> 192.168.16.97 80 (msg:" /etc/passwd command injection attack detection"; content:"/etc/passwd", nocase; sid:1000008; rev:1;)
+

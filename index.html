@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Engineer Portfolio | 김서진</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;       /* Cyan */
+            --accent-dim: #008ba3;
+            --text-main: #FAFAFA;
+            --text-sub: #A0A0A0;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.5;
+            font-size: 15px; /* 기본 폰트 살짝 축소 */
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.2s; }
+        ul { list-style: none; }
+
+        /* HEADER: 더 얇게 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(17, 17, 17, 0.95);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+
+        nav a { margin-left: 30px; font-size: 0.9rem; font-weight: 500; color: var(--text-sub); }
+        nav a:hover { color: var(--accent); }
+
+        /* LAYOUT: 섹션 간격 축소 */
+        main { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+        section { padding: 60px 0; border-bottom: 1px solid #222; }
+        section:last-child { border-bottom: none; }
+
+        h2 {
+            font-size: 2rem; /* 크기 축소 */
+            font-weight: 800;
+            margin-bottom: 30px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+        h2::before {
+            content: ''; width: 6px; height: 24px; background: var(--accent);
+            margin-right: 12px; border-radius: 2px;
+        }
+
+        /* HERO: 높이 줄임 */
+        #hero {
+            padding: 80px 0 60px 0; /* 상하 여백 축소 */
+            text-align: left;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(0, 188, 212, 0.1);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 3.5rem; /* 5.5rem -> 3.5rem 로 축소 */
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+        h1 span { color: var(--accent); }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-sub);
+            max-width: 700px;
+            margin-bottom: 0; /* 버튼 제거로 여백 최소화 */
+        }
+
+        /* SKILLS: 카드 밀집도 향상 */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* 너비 자동 조절 */
+            gap: 20px; /* 간격 축소 */
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            padding: 25px; /* 패딩 축소 */
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-bottom: 1px solid #333;
+            padding-bottom: 8px;
+        }
+
+        .skill-card li {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: #ccc;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .skill-card li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .skill-card strong { color: white; font-weight: 600; }
+
+        /* PROJECTS: 컴팩트 그리드 */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-color 0.2s;
+            display: block; /* a태그 블록화 */
+        }
+
+        .project-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+
+        .project-card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 700; }
+        
+        .tags { margin-bottom: 12px; }
+        .tag {
+            font-size: 0.75rem;
+            background: #252525;
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .project-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.4; }
+
+        /* CONTACT & FOOTER */
+        #contact { text-align: center; padding: 60px 0; }
+        .contact-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 30px;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 50px;
+            font-weight: 600;
+        }
+        .contact-btn:hover { background: var(--accent); color: var(--bg-dark); }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">SeoJin<span>.SEC</span></div>
+        <nav>
+            <a href="#hero">Home</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HERO SECTION -->
+        <section id="hero">
+            <span class="hero-badge">Available for Hire</span>
+            <h1>Deep Insight.<br><span>Active Defense.</span></h1>
+            <p class="hero-desc">
+            "작은 로그 하나도 놓치지 않는 집요함으로 위협의 신호를 포착합니다."<br>
+            Wazuh와 IDS를 활용해 수많은 이벤트 속에서 유의미한 공격 징후를 식별하고, 정확한 분석을 통해 <strong>가장 빠른 대응책을 제시</strong>하는 보안 분석가입니다.
+            </p>
+        </section>
+        
+        <!-- SKILLS SECTION -->
+        <section id="skills">
+            <h2>Technical Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Network Security</h3>
+                    <ul>
+                        <li>Cisco (Router/Switch, ASAv)</li>
+                        <li>VPN (IPSec, Remote Access), PfSense</li>
+                        <li>L3/L4 Security (ACL, ZFW, NAT)</li>
+                        <li>HA Network (HSRP/VRRP/GLBP)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>System Security</h3>
+                    <ul>
+                        <li>Linux (Rocky, Ubuntu), Windows 2022</li>
+                        <li>System Hardening (계정/권한 관리)</li>
+                        <li><strong>Shell Scripting (취약점 자동점검)</strong></li>
+                        <li>Access Control (Iptables, Firewalld)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Security Ops (SIEM)</h3>
+                    <ul>
+                        <li><strong>Wazuh</strong>, Security Onion 구축</li>
+                        <li>Snort/Suricata (Rule Customizing)</li>
+                        <li>Log Analysis (Graylog, Zabbix)</li>
+                        <li>Packet Analysis (Wireshark)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Web & DB Security</h3>
+                    <ul>
+                        <li>Web Server (HTTPS/SSL), Docker</li>
+                        <li>MariaDB (Replication, DB보안)</li>
+                        <li>OWASP Top 10 대응</li>
+                        <li>Web Log Analysis (GoAccess)</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Vulnerability Check</h3>
+                    <ul>
+                        <li>Kali Linux, <strong>GDB (Debugging)</strong></li>
+                        <li>Memory Analysis (BoF, ASLR)</li>
+                        <li>CTF / Wargame (Bandit, WebGoat)</li>
+                        <li>System/Web 모의해킹 수행</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION: 링크 수정 완료 -->
+        <section id="projects">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                
+                <!-- Project 1 Link -->
+                <a href="project_1.html" class="project-card">
+                    <h3>🛡️ 통합 보안 관제 구축</h3>
+                    <div class="tags">
+                        <span class="tag">Wazuh</span><span class="tag">ELK</span><span class="tag">Snort</span>
+                    </div>
+                    <p class="project-desc">Wazuh와 Security Onion을 연동한 SIEM 구축. 커스텀 Snort 룰을 적용하여 오탐율 감소 및 위협 탐지 효율 최적화.</p>
+                </a>
+                
+                <!-- Project 2 Link -->
+                <a href="project_2.html" class="project-card">
+                    <h3>⚙️ 리눅스 취약점 자동 점검</h3>
+                    <div class="tags">
+                        <span class="tag">Shell Script</span><span class="tag">Automation</span>
+                    </div>
+                    <p class="project-desc">주요 정보통신기반시설 기술적 취약점 분석 기준에 맞춰 서버의 보안 설정을 자동 진단하는 쉘 스크립트 도구 개발.</p>
+                </a>
+
+                <!-- Project 3 Link -->
+                <a href="project_3.html" class="project-card">
+                    <h3>🔗 고가용성 보안 네트워크</h3>
+                    <div class="tags">
+                        <span class="tag">GNS3</span><span class="tag">Cisco ASAv</span><span class="tag">VPN</span>
+                    </div>
+                    <p class="project-desc">GNS3 환경에서 이중화된 방화벽과 VPN 터널링을 구현. FHRP(HSRP)를 통해 장애 발생 시에도 끊김 없는 가용성 확보.</p>
+                </a>
+
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Ready to Work?</h2>
+            <p style="color: #888; margin-bottom: 20px;">안전하고 효율적인 시스템 구축을 위한 준비가 되어 있습니다.</p>
+            <a href="mailto:cc4391@naver.com" class="contact-btn">Send Email</a>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2024 [당신의 이름]. Designed for Security Professionals.
+    </footer>
+
+</body>
+</html>

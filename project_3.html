@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: Enterprise Network & Wargame Lab | [당신의 이름]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* 기본 테마 설정 (Deep Aqua) */
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;
+            --text-main: #FAFAFA;
+            --text-sub: #AAAAAA;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* 공통 레이아웃 */
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+        
+        a.back-link {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: 5%;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* 프로젝트 헤더 */
+        .project-header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
+        
+        .tags { margin-top: 20px; }
+        .tag {
+            background: #222; color: var(--accent);
+            padding: 5px 12px; border-radius: 4px;
+            font-size: 0.85rem; margin-right: 8px; font-weight: 600;
+        }
+
+        /* 섹션 스타일 */
+        section { margin-bottom: 80px; }
+        h2 {
+            font-size: 1.8rem; color: var(--text-main);
+            margin-bottom: 25px; border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+        h3 { font-size: 1.3rem; color: var(--text-main); margin: 40px 0 20px 0; border-bottom: 1px solid #333; padding-bottom: 10px; display: inline-block;}
+        
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        /* 이미지 그리드 스타일 (정사각형) */
+        .gallery-grid, .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+            gap: 20px;
+        }
+
+        .img-container {
+            background: var(--bg-card);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .img-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-container img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 8px; 
+            display: block; 
+            cursor: zoom-in;
+            transition: transform 0.3s ease;
+        }
+        
+        .img-container:hover img { transform: scale(1.02); }
+
+        .img-caption {
+            margin-top: 15px; 
+            color: var(--text-sub); 
+            font-size: 0.85rem; 
+            text-align: center;
+            font-weight: 500;
+        }
+
+        /* 서브넷팅 테이블 스타일 */
+        .subnet-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .subnet-table th, .subnet-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+        .subnet-table th {
+            background-color: #222;
+            color: var(--accent);
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .subnet-table tr:hover { background-color: #252525; }
+
+        /* 링크 버튼 스타일 (Wargame/CTF 이동) */
+        .action-btn {
+            display: inline-block;
+            background-color: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .action-btn:hover {
+            background-color: var(--accent);
+            color: var(--bg-dark);
+            transform: translateY(-2px);
+        }
+
+        /* 라이트박스 */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+            padding: 20px;
+        }
+        #lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 188, 212, 0.2);
+            object-fit: contain;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+
+        @media (max-width: 768px) {
+            .gallery-grid, .comparison-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .project-header h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← Main Portfolio</a>
+    </header>
+
+    <main>
+        <!-- 1. 프로젝트 개요 -->
+        <section class="project-header">
+            <h1>Enterprise Network Segmentation & Wargame Lab</h1>
+            <p>대규모 내부망/외부망 서브넷팅 설계와 VLAN 분리, 그리고 WAF, SIEM, PMM 등 다양한 보안 솔루션을 통합 구축했습니다.<br>
+            또한 자체 제작한 Wargame 사이트를 운영하며 모의해킹 실습 환경을 구현했습니다.</p>
+            <div class="tags">
+                <span class="tag">Subnetting</span>
+                <span class="tag">VLAN</span>
+                <span class="tag">WAF (GoAccess)</span>
+                <span class="tag">Wazuh/PMM</span>
+                <span class="tag">Wargame Development</span>
+            </div>
+        </section>
+
+        <!-- 2. 네트워크 설계 및 서브넷팅 -->
+        <section>
+            <h2>01. Network Design & Subnetting</h2>
+            <p class="description">
+                내부망(192.168.0.0/16)과 외부망(10.10.10.0/24)을 효율적으로 관리하기 위해 
+                VLSM(Variable Length Subnet Mask) 기반의 정교한 서브넷팅을 수행했습니다.
+            </p>
+
+            <div class="comparison-grid" style="margin-bottom: 40px;">
+                <div class="img-container">
+                    <img src="images/p3/lab.png" alt="기본 Lab 구성도">
+                    <div class="img-caption">Figure 1. 기본 네트워크 토폴로지</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/lab-more.png" alt="IP 할당 포함 구성도">
+                    <div class="img-caption">Figure 2. 상세 IP 및 포트 구성도</div>
+                </div>
+            </div>
+
+            <h3>Internal Network Subnetting (192.168.0.0/16)</h3>
+            <p style="color: #888; margin-bottom: 10px;">Subnet Mask: <strong>255.255.224.0 (/19)</strong> | Wildcard: 0.0.31.255 | Total 8 Subnets (Used 6)</p>
+            <div style="overflow-x: auto;">
+                <table class="subnet-table">
+                    <thead>
+                        <tr>
+                            <th>Subnet Index</th>
+                            <th>Network Address</th>
+                            <th>Usable IP Range</th>
+                            <th>Broadcast Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>#1</td><td>192.168.0.0</td><td>192.168.0.1 ~ 31.254</td><td>192.168.31.255</td></tr>
+                        <tr><td>#2</td><td>192.168.32.0</td><td>192.168.32.1 ~ 63.254</td><td>192.168.63.255</td></tr>
+                        <tr><td>#3</td><td>192.168.64.0</td><td>192.168.64.1 ~ 95.254</td><td>192.168.95.255</td></tr>
+                        <tr><td>#4</td><td>192.168.96.0</td><td>192.168.96.1 ~ 127.254</td><td>192.168.127.255</td></tr>
+                        <tr><td>#5</td><td>192.168.128.0</td><td>192.168.128.1 ~ 159.254</td><td>192.168.159.255</td></tr>
+                        <tr><td>#6</td><td>192.168.160.0</td><td>192.168.160.1 ~ 191.254</td><td>192.168.191.255</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>External Network & VLAN (10.10.10.0/24)</h3>
+            <p style="color: #888; margin-bottom: 10px;">Subnet Mask: <strong>255.255.255.192 (/26)</strong> | VLAN 10, 20, 30 Allocation</p>
+            <div style="overflow-x: auto;">
+                <table class="subnet-table">
+                    <thead>
+                        <tr>
+                            <th>VLAN ID</th>
+                            <th>Network Address</th>
+                            <th>Usable IP Range</th>
+                            <th>Broadcast</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>VLAN 10</td><td>10.10.10.0</td><td>10.10.10.1 ~ 10.62</td><td>10.10.10.63</td></tr>
+                        <tr><td>VLAN 20</td><td>10.10.10.64</td><td>10.10.10.65 ~ 10.126</td><td>10.10.10.127</td></tr>
+                        <tr><td>VLAN 30</td><td>10.10.10.128</td><td>10.10.10.129 ~ 10.190</td><td>10.10.10.191</td></tr>
+                        <tr><td>Reserved</td><td>10.10.10.192</td><td>10.10.10.193 ~ 10.254</td><td>10.10.10.255</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p3/vlan-router.png" alt="VLAN Router Config">
+                    <div class="img-caption">Router VLAN 설정 및 Inter-VLAN 라우팅</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/vlan-kali-ping.png" alt="VLAN Ping Test 1">
+                    <div class="img-caption">VLAN 간 통신 테스트 (Ping) - 1</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/vlan-kali-ping2.png" alt="VLAN Ping Test 2">
+                    <div class="img-caption">VLAN 간 통신 테스트 (Ping) - 2</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 보안 인프라 (WAF, ASAv, DNS) -->
+        <section>
+            <h2>02. Security Infrastructure (WAF & FW)</h2>
+            <p class="description">
+                Cisco ASAv를 이용한 접근 제어와 Web Application Firewall(WAF) 구축을 통해 
+                네트워크 및 애플리케이션 계층의 보안을 강화했습니다.
+            </p>
+
+            <h3>ASAv Firewall & DNS</h3>
+            <div class="comparison-grid">
+                <div class="img-container">
+                    <img src="images/p3/rule-1.png" alt="ASAv Rule">
+                    <div class="img-caption">ASAv 방화벽 정책 설정</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/dns.png" alt="DNS Configuration">
+                    <div class="img-caption">내부 DNS 서버 구축 및 질의 테스트</div>
+                </div>
+            </div>
+
+            <h3>Web Security & WAF (GoAccess Analysis)</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="images/p3/waf-before.png" alt="WAF Before">
+                    <div class="img-caption">WAF 적용 전: 공격 쿼리 유입</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/waf-after.png" alt="WAF After">
+                    <div class="img-caption">WAF 적용 후: 악성 요청 차단 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/goaccess.png" alt="GoAccess Terminal">
+                    <div class="img-caption">GoAccess: 웹 로그 터미널 분석</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/goaccess_web.png" alt="GoAccess Dashboard">
+                    <div class="img-caption">GoAccess: HTML 대시보드 시각화</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. 통합 관제 및 모니터링 -->
+        <section>
+            <h2>03. Monitoring & SIEM (Wazuh, PMM, Zabbix)</h2>
+            <p class="description">
+                이기종 보안 장비와 서버의 로그를 통합 수집(SIEM)하고, DB 성능(PMM) 및 시스템 상태(NMS)를 실시간으로 모니터링했습니다.
+            </p>
+
+            <div class="gallery-grid">
+                <!-- Wazuh -->
+                <div class="img-container">
+                    <img src="images/p3/wazuh1.png" alt="Wazuh Dashboard 1">
+                    <div class="img-caption">Wazuh SIEM: 보안 이벤트 대시보드</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/wazuh2.png" alt="Wazuh Dashboard 2">
+                    <div class="img-caption">Wazuh: 에이전트 상태 및 위협 탐지</div>
+                </div>
+
+                <!-- PMM -->
+                <div class="img-container">
+                    <img src="images/p3/pmm-server.png" alt="PMM Server">
+                    <div class="img-caption">PMM Server: DB 쿼리 성능 분석</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/pmm-client.png" alt="PMM Client">
+                    <div class="img-caption">PMM Client 연동 설정</div>
+                </div>
+
+                <!-- OSSEC & Zabbix -->
+                <div class="img-container">
+                    <img src="images/p3/ossec-window10.png" alt="OSSEC HIDS">
+                    <div class="img-caption">OSSEC: Windows 10 침입 탐지 로그</div>
+                </div>
+                <div class="img-container">
+                    <img src="images/p3/zabbix.png" alt="Zabbix NMS">
+                    <div class="img-caption">Zabbix: 네트워크 자산 모니터링</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Wargame 및 CTF 풀이 (외부 링크 섹션) -->
+        <section style="background: rgba(255, 255, 255, 0.03); padding: 50px 40px; border-radius: 12px; border: 1px solid #333;">
+            <h2>04. Custom Wargame - Team project & Solve Wargame Juice-shop</h2>
+            <p class="description">
+                자체 구축한 Wargame 사이트와 외부 wargame(Juice Shop - OWASP Top 10기준) 문제를 해결한 상세 분석 보고서는 별도 페이지에서 확인하실 수 있습니다.
+            </p>
+
+            <!-- [수정됨] gap: 50px로 간격을 넓혀서 사진과 CTF 섹션 사이 여백 확보 -->
+            <div class="comparison-grid" style="gap: 50px;">
+                
+                <!-- Wargame Write-up Link -->
+                <div style="text-align: center;">
+                    <h3 style="border: none; margin-top: 0;">🏴‍☠️ Custom Wargame Site</h3>
+                    <p style="color: #888; margin-bottom: 20px;">SQL Injection, XSS 등 직접 제작한 5단계 웹 해킹 시나리오</p>
+                    
+                    <!-- 사진 (크기 고정 및 중앙 정렬) -->
+                    <div class="img-container" style="max-width: 300px; margin: 0 auto 25px auto;">
+                        <img src="images/p3/firstpage.png" alt="Wargame Main Page">
+                    </div>
+
+                    <a href="wargame_writeup.html" class="action-btn">View Wargame Solutions</a>
+                </div>
+
+                <!-- CTF Write-up Link -->
+                <div style="text-align: center;">
+                    <h3 style="border: none; margin-top: 0;">🚩 CTF - Juice Shop</h3>
+                    <p style="color: #888; margin-bottom: 20px;">Juice Shop wargame 문제 풀이 상세 보고서</p>
+                    
+                    <!-- 이미지 placeholder (추후 사진 추가 시 이 div를 img-container로 교체) -->
+                    <div style="background: #111; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px dashed #444; margin: 0 auto 25px auto; max-width: 300px; color: #555;">
+                        <span>CTF Scoreboard (Coming Soon)</span>
+                    </div>
+                    
+                    <a href="ctf_writeup.html" class="action-btn">View CTF Write-ups</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer style="text-align: center; padding: 40px; color: #555; border-top: 1px solid #333;">
+        &copy; 2024 KIMSEOJIN. All Rights Reserved.
+    </footer>
+
+    <!-- 라이트박스 -->
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="Full Screen Image">
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.img-container img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = img.src;
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
+
+</body>
+</html>

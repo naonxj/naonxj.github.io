@@ -1,0 +1,29 @@
+1. pc, firefox ip 설정, 라우터에서 네트워크되게 interface 설정 및 라우팅 설정해주기 (ospf 100, area 0)으로 주기 
+- 방화벽은 ospf routing network 설정할때 255.255.255.0 으로해줘야하는거 주의 +  nameif로 이름도 정해주기 dmz는 security-level로 level도 주기
+2. HSRP 하기전, R3, R4 도 원래대로 각각의 인터페이스에 IP주소 설정하고 ospf 라우팅 프로토콜도 정상적으로 동작하게 만들어줘야함. 
+-HSRP 하기
+active 
+int f0/0
+standby 1 ip 192.168.50.254
+standby 1 priority 105
+standby 1 preempt
+sh standby (확인) / brief
+
+standby
+int f0/1
+standby 1 ip 192.168.50.254
+standby 1 preempt
+
+3. 방화벽 rule
+firefox3 -> inside
+-telnet
+방화벽
+passwd 1234
+telnet 192.168.30.100 255.255.255.255 inside
+
+-http
+방화벽 http server enable
+http 192.168.30.0 255.255.255.0 inside
+
+
+
