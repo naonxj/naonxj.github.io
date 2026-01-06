@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 상세: Full Stack Security Lab | [당신의 이름]</title>
+    <title>프로젝트 상세: Full Stack Security Lab | KIMSEOJIN</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* 기본 테마 설정 (Deep Aqua) */
@@ -64,7 +64,7 @@
         
         .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
 
-        /* 이미지 그리드 스타일 (정사각형 & 예쁜 배치) */
+        /* 이미지 그리드 스타일 */
         .gallery-grid, .comparison-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
@@ -175,7 +175,7 @@
 <body>
 
     <header>
-        <a href="index.html" class="back-link">← Main Portfolio</a>
+        <a href="../index.html" class="back-link">← Main Portfolio</a>
     </header>
 
     <main>
@@ -202,11 +202,11 @@
             </p>
             <div class="comparison-grid">
                 <div class="img-container">
-                    <img src="images/p2/network-system.png" alt="전체 네트워크 구성도">
+                    <img src="../p2/network-system.png" alt="전체 네트워크 구성도">
                     <div class="img-caption">Figure 1. 전체 네트워크 토폴로지</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/network-popo2.png" alt="IP 및 라우팅 설계">
+                    <img src="../p2/network-popo2.png" alt="IP 및 라우팅 설계">
                     <div class="img-caption">Figure 2. 상세 IP 할당 및 라우팅 계획</div>
                 </div>
             </div>
@@ -222,27 +222,27 @@
             <h3>Firewall & ACL Policies</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/pfsense-firewallrule.png" alt="PfSense Rule">
+                    <img src="../p2/pfsense-firewallrule.png" alt="PfSense Rule">
                     <div class="img-caption">PfSense: FTP 차단 / HTTP 허용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/r3acl.png" alt="Router ACL">
+                    <img src="../p2/r3acl.png" alt="Router ACL">
                     <div class="img-caption">R3 ACL: SSH 허용 / ICMP 차단</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/assv-https.png" alt="ASAv HTTPS">
+                    <img src="../p2/assv-https.png" alt="ASAv HTTPS">
                     <div class="img-caption">ASAv: DVWA -> Inside HTTPS 허용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/assv-telnet.png" alt="ASAv Telnet">
+                    <img src="../p2/assv-telnet.png" alt="ASAv Telnet">
                     <div class="img-caption">ASAv: Telnet 접근 허용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/asav-dns-r3-ping.png" alt="ASAv Ping">
+                    <img src="../p2/asav-dns-r3-ping.png" alt="ASAv Ping">
                     <div class="img-caption">ASAv: DNS -> Router Ping 허용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/asav-r2-r4-ssh.png" alt="ASAv SSH">
+                    <img src="../p2/asav-r2-r4-ssh.png" alt="ASAv SSH">
                     <div class="img-caption">ASAv: R2 -> R4 SSH 접근 허용</div>
                 </div>
             </div>
@@ -250,7 +250,7 @@
             <h3>Remote Access VPN</h3>
             <div class="gallery-grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
                 <div class="img-container">
-                    <img src="images/p2/remoteaccess.png" alt="Remote Access VPN">
+                    <img src="../p2/remoteaccess.png" alt="Remote Access VPN">
                     <div class="img-caption">Remote Access VPN 연결 및 터널링 구성</div>
                 </div>
             </div>
@@ -266,19 +266,19 @@
             <h3>Secure File Transfer (FTP/SFTP)</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/ftp.png" alt="FTP Server">
+                    <img src="../p2/ftp.png" alt="FTP Server">
                     <div class="img-caption">FTP 서버 구축</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/ftps.png" alt="FTPS Server">
+                    <img src="../p2/ftps.png" alt="FTPS Server">
                     <div class="img-caption">FTPS (SSL/TLS) 보안 설정</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/ftps-certi.png" alt="FTPS Certificate">
+                    <img src="../p2/ftps-certi.png" alt="FTPS Certificate">
                     <div class="img-caption">FTPS 인증서 발급 및 적용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/sfpt.png" alt="SFTP Connection">
+                    <img src="../p2/sfpt.png" alt="SFTP Connection">
                     <div class="img-caption">SFTP (SSH) 연결 테스트</div>
                 </div>
             </div>
@@ -286,19 +286,19 @@
             <h3>DNS & NFS / Samba</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/dns-2.png" alt="DNS Zone Config">
+                    <img src="../p2/dns-2.png" alt="DNS Zone Config">
                     <div class="img-caption">DNS Zone 설정</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/dns-5botf.png" alt="DNS Resolution">
+                    <img src="../p2/dns-5botf.png" alt="DNS Resolution">
                     <div class="img-caption">DNS 질의 및 응답 확인</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/nameserver-nfsclient.png" alt="NFS Client">
+                    <img src="../p2/nameserver-nfsclient.png" alt="NFS Client">
                     <div class="img-caption">NFS 클라이언트 마운트</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/samba-window.png" alt="Samba Windows">
+                    <img src="../p2/samba-window.png" alt="Samba Windows">
                     <div class="img-caption">Samba 윈도우 공유 폴더 접근</div>
                 </div>
             </div>
@@ -315,15 +315,15 @@
             <h3>Database & PMM Monitoring</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/db.png" alt="MariaDB Setup">
+                    <img src="../p2/db.png" alt="MariaDB Setup">
                     <div class="img-caption">MariaDB 설치 및 구성</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/pmm2.png" alt="PMM Dashboard">
+                    <img src="../p2/pmm2.png" alt="PMM Dashboard">
                     <div class="img-caption">PMM 서버 대시보드 (Query Analytics)</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/pmmserverclientconncection.png" alt="PMM Client Connect">
+                    <img src="../p2/pmmserverclientconncection.png" alt="PMM Client Connect">
                     <div class="img-caption">PMM Client-Server 연동</div>
                 </div>
             </div>
@@ -331,15 +331,15 @@
             <h3>Log Analysis & OSSEC</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/loganlyser.png" alt="LogAnalyzer">
+                    <img src="../p2/loganlyser.png" alt="LogAnalyzer">
                     <div class="img-caption">LogAnalyzer: Rsyslog 시각화</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/ossec-client.png" alt="OSSEC Client">
+                    <img src="../p2/ossec-client.png" alt="OSSEC Client">
                     <div class="img-caption">OSSEC Agent 연결</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/ossecresult.png" alt="OSSEC Alert">
+                    <img src="../p2/ossecresult.png" alt="OSSEC Alert">
                     <div class="img-caption">OSSEC 침입 탐지 알림</div>
                 </div>
             </div>
@@ -356,19 +356,19 @@
             <h3>CTF & Snort Detection</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/ctf-userflag.png" alt="CTF User Flag">
+                    <img src="../p2/ctf-userflag.png" alt="CTF User Flag">
                     <div class="img-caption">CTF: User Flag 획득</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/ctf-rootflag.png" alt="CTF Root Flag">
+                    <img src="../p2/ctf-rootflag.png" alt="CTF Root Flag">
                     <div class="img-caption">CTF: Root 권한 탈취 성공</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/snort-kali-web-ddos.png" alt="Snort DDoS Detection">
+                    <img src="../p2/snort-kali-web-ddos.png" alt="Snort DDoS Detection">
                     <div class="img-caption">Snort: DDoS 공격 탐지 로그</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/snort-kali-ctf.png" alt="Snort LFI Detection">
+                    <img src="../p2/snort-kali-ctf.png" alt="Snort LFI Detection">
                     <div class="img-caption">Snort: /etc/passwd 접근 탐지</div>
                 </div>
             </div>
@@ -376,15 +376,15 @@
             <h3>System Hardening & Exploit Analysis</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p2/stickybit.png" alt="Sticky Bit">
+                    <img src="../p2/stickybit.png" alt="Sticky Bit">
                     <div class="img-caption">Sticky Bit 설정 및 파일 보호</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/stickbitmore.png" alt="SetUID & Password Policy">
+                    <img src="../p2/stickbitmore.png" alt="SetUID & Password Policy">
                     <div class="img-caption">SetUID 설정 및 패스워드 정책 적용</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p2/bof.png" alt="Buffer Overflow">
+                    <img src="../p2/bof.png" alt="Buffer Overflow">
                     <div class="img-caption">Buffer Overflow(BoF) 취약점 분석 및 실행</div>
                 </div>
             </div>
@@ -446,7 +446,7 @@
     </main>
     
     <footer style="text-align: center; padding: 40px; color: #555; border-top: 1px solid #333;">
-        &copy; 2024 [당신의 이름]. All Rights Reserved.
+        &copy; 2024 KIMSEOJIN. All Rights Reserved.
     </footer>
 
     <!-- 라이트박스 -->

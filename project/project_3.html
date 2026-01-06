@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 상세: Enterprise Network & Wargame Lab | [당신의 이름]</title>
+    <title>프로젝트 상세: Enterprise Network & Wargame Lab | KIMSEOJIN</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* 기본 테마 설정 (Deep Aqua) */
@@ -132,7 +132,7 @@
         }
         .subnet-table tr:hover { background-color: #252525; }
 
-        /* 링크 버튼 스타일 (Wargame/CTF 이동) */
+        /* 링크 버튼 스타일 */
         .action-btn {
             display: inline-block;
             background-color: transparent;
@@ -146,6 +146,7 @@
             text-transform: uppercase;
             font-size: 0.9rem;
             text-align: center;
+            text-decoration: none;
         }
         .action-btn:hover {
             background-color: var(--accent);
@@ -187,7 +188,7 @@
 <body>
 
     <header>
-        <a href="index.html" class="back-link">← Main Portfolio</a>
+        <a href="../index.html" class="back-link">← Main Portfolio</a>
     </header>
 
     <main>
@@ -215,17 +216,16 @@
 
             <div class="comparison-grid" style="margin-bottom: 40px;">
                 <div class="img-container">
-                    <img src="images/p3/lab.png" alt="기본 Lab 구성도">
+                    <img src="../p3/lab.png" alt="기본 Lab 구성도">
                     <div class="img-caption">Figure 1. 기본 네트워크 토폴로지</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/lab-more.png" alt="IP 할당 포함 구성도">
+                    <img src="../p3/lab-more.png" alt="IP 할당 포함 구성도">
                     <div class="img-caption">Figure 2. 상세 IP 및 포트 구성도</div>
                 </div>
             </div>
 
             <h3>Internal Network Subnetting (192.168.0.0/16)</h3>
-            <p style="color: #888; margin-bottom: 10px;">Subnet Mask: <strong>255.255.224.0 (/19)</strong> | Wildcard: 0.0.31.255 | Total 8 Subnets (Used 6)</p>
             <div style="overflow-x: auto;">
                 <table class="subnet-table">
                     <thead>
@@ -247,38 +247,17 @@
                 </table>
             </div>
 
-            <h3>External Network & VLAN (10.10.10.0/24)</h3>
-            <p style="color: #888; margin-bottom: 10px;">Subnet Mask: <strong>255.255.255.192 (/26)</strong> | VLAN 10, 20, 30 Allocation</p>
-            <div style="overflow-x: auto;">
-                <table class="subnet-table">
-                    <thead>
-                        <tr>
-                            <th>VLAN ID</th>
-                            <th>Network Address</th>
-                            <th>Usable IP Range</th>
-                            <th>Broadcast</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>VLAN 10</td><td>10.10.10.0</td><td>10.10.10.1 ~ 10.62</td><td>10.10.10.63</td></tr>
-                        <tr><td>VLAN 20</td><td>10.10.10.64</td><td>10.10.10.65 ~ 10.126</td><td>10.10.10.127</td></tr>
-                        <tr><td>VLAN 30</td><td>10.10.10.128</td><td>10.10.10.129 ~ 10.190</td><td>10.10.10.191</td></tr>
-                        <tr><td>Reserved</td><td>10.10.10.192</td><td>10.10.10.193 ~ 10.254</td><td>10.10.10.255</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p3/vlan-router.png" alt="VLAN Router Config">
+                    <img src="../p3/vlan-router.png" alt="VLAN Router Config">
                     <div class="img-caption">Router VLAN 설정 및 Inter-VLAN 라우팅</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/vlan-kali-ping.png" alt="VLAN Ping Test 1">
+                    <img src="../p3/vlan-kali-ping.png" alt="VLAN Ping Test 1">
                     <div class="img-caption">VLAN 간 통신 테스트 (Ping) - 1</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/vlan-kali-ping2.png" alt="VLAN Ping Test 2">
+                    <img src="../p3/vlan-kali-ping2.png" alt="VLAN Ping Test 2">
                     <div class="img-caption">VLAN 간 통신 테스트 (Ping) - 2</div>
                 </div>
             </div>
@@ -295,11 +274,11 @@
             <h3>ASAv Firewall & DNS</h3>
             <div class="comparison-grid">
                 <div class="img-container">
-                    <img src="images/p3/rule-1.png" alt="ASAv Rule">
+                    <img src="../p3/rule-1.png" alt="ASAv Rule">
                     <div class="img-caption">ASAv 방화벽 정책 설정</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/dns.png" alt="DNS Configuration">
+                    <img src="../p3/dns.png" alt="DNS Configuration">
                     <div class="img-caption">내부 DNS 서버 구축 및 질의 테스트</div>
                 </div>
             </div>
@@ -307,19 +286,19 @@
             <h3>Web Security & WAF (GoAccess Analysis)</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="images/p3/waf-before.png" alt="WAF Before">
+                    <img src="../p3/waf-before.png" alt="WAF Before">
                     <div class="img-caption">WAF 적용 전: 공격 쿼리 유입</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/waf-after.png" alt="WAF After">
+                    <img src="../p3/waf-after.png" alt="WAF After">
                     <div class="img-caption">WAF 적용 후: 악성 요청 차단 확인</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/goaccess.png" alt="GoAccess Terminal">
+                    <img src="../p3/goaccess.png" alt="GoAccess Terminal">
                     <div class="img-caption">GoAccess: 웹 로그 터미널 분석</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/goaccess_web.png" alt="GoAccess Dashboard">
+                    <img src="../p3/goaccess_web.png" alt="GoAccess Dashboard">
                     <div class="img-caption">GoAccess: HTML 대시보드 시각화</div>
                 </div>
             </div>
@@ -333,71 +312,54 @@
             </p>
 
             <div class="gallery-grid">
-                <!-- Wazuh -->
                 <div class="img-container">
-                    <img src="images/p3/wazuh1.png" alt="Wazuh Dashboard 1">
+                    <img src="../p3/wazuh1.png" alt="Wazuh Dashboard 1">
                     <div class="img-caption">Wazuh SIEM: 보안 이벤트 대시보드</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/wazuh2.png" alt="Wazuh Dashboard 2">
+                    <img src="../p3/wazuh2.png" alt="Wazuh Dashboard 2">
                     <div class="img-caption">Wazuh: 에이전트 상태 및 위협 탐지</div>
                 </div>
-
-                <!-- PMM -->
                 <div class="img-container">
-                    <img src="images/p3/pmm-server.png" alt="PMM Server">
+                    <img src="../p3/pmm-server.png" alt="PMM Server">
                     <div class="img-caption">PMM Server: DB 쿼리 성능 분석</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/pmm-client.png" alt="PMM Client">
+                    <img src="../p3/pmm-client.png" alt="PMM Client">
                     <div class="img-caption">PMM Client 연동 설정</div>
                 </div>
-
-                <!-- OSSEC & Zabbix -->
                 <div class="img-container">
-                    <img src="images/p3/ossec-window10.png" alt="OSSEC HIDS">
+                    <img src="../p3/ossec-window10.png" alt="OSSEC HIDS">
                     <div class="img-caption">OSSEC: Windows 10 침입 탐지 로그</div>
                 </div>
                 <div class="img-container">
-                    <img src="images/p3/zabbix.png" alt="Zabbix NMS">
+                    <img src="../p3/zabbix.png" alt="Zabbix NMS">
                     <div class="img-caption">Zabbix: 네트워크 자산 모니터링</div>
                 </div>
             </div>
         </section>
 
-        <!-- 5. Wargame 및 CTF 풀이 (외부 링크 섹션) -->
+        <!-- 5. Wargame 및 CTF 풀이 -->
         <section style="background: rgba(255, 255, 255, 0.03); padding: 50px 40px; border-radius: 12px; border: 1px solid #333;">
             <h2>04. Custom Wargame - Team project & Solve Wargame Juice-shop</h2>
             <p class="description">
                 자체 구축한 Wargame 사이트와 외부 wargame(Juice Shop - OWASP Top 10기준) 문제를 해결한 상세 분석 보고서는 별도 페이지에서 확인하실 수 있습니다.
             </p>
 
-            <!-- [수정됨] gap: 50px로 간격을 넓혀서 사진과 CTF 섹션 사이 여백 확보 -->
             <div class="comparison-grid" style="gap: 50px;">
-                
-                <!-- Wargame Write-up Link -->
                 <div style="text-align: center;">
                     <h3 style="border: none; margin-top: 0;">🏴‍☠️ Custom Wargame Site</h3>
-                    <p style="color: #888; margin-bottom: 20px;">SQL Injection, XSS 등 직접 제작한 5단계 웹 해킹 시나리오</p>
-                    
-                    <!-- 사진 (크기 고정 및 중앙 정렬) -->
                     <div class="img-container" style="max-width: 300px; margin: 0 auto 25px auto;">
-                        <img src="images/p3/firstpage.png" alt="Wargame Main Page">
+                        <img src="../p3/firstpage.png" alt="Wargame Main Page">
                     </div>
-
                     <a href="wargame_writeup.html" class="action-btn">View Wargame Solutions</a>
                 </div>
 
-                <!-- CTF Write-up Link -->
                 <div style="text-align: center;">
                     <h3 style="border: none; margin-top: 0;">🚩 CTF - Juice Shop</h3>
-                    <p style="color: #888; margin-bottom: 20px;">Juice Shop wargame 문제 풀이 상세 보고서</p>
-                    
-                    <!-- 이미지 placeholder (추후 사진 추가 시 이 div를 img-container로 교체) -->
                     <div style="background: #111; height: 150px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px dashed #444; margin: 0 auto 25px auto; max-width: 300px; color: #555;">
                         <span>CTF Scoreboard (Coming Soon)</span>
                     </div>
-                    
                     <a href="ctf_writeup.html" class="action-btn">View CTF Write-ups</a>
                 </div>
             </div>
