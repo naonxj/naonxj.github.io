@@ -22,16 +22,17 @@
         .project-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; }
         section { margin-bottom: 80px; }
         h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; border-left: 5px solid var(--accent); padding-left: 15px; }
-        h3 { font-size: 1.3rem; color: var(--accent); margin: 30px 0 15px 0; }
+        h3 { font-size: 1.3rem; color: var(--accent); margin: 30px 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
         .description { color: var(--text-sub); margin-bottom: 20px; font-size: 0.95rem; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .img-container { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: 12px; transition: transform 0.3s; }
+        .img-container { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: 12px; transition: transform 0.3s; height: 100%; display: flex; flex-direction: column; }
         .img-container:hover { transform: translateY(-5px); border-color: var(--accent); }
         .img-container img { width: 100%; border-radius: 8px; cursor: zoom-in; }
-        .img-caption { margin-top: 12px; font-size: 0.85rem; color: var(--text-sub); line-height: 1.4; }
+        .img-caption { margin-top: 12px; font-size: 0.85rem; color: var(--text-sub); line-height: 1.4; flex-grow: 1; }
+        .velog-link { display: inline-block; margin-top: 10px; color: #00BCD4; text-decoration: underline; font-weight: bold; }
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out; }
         #lightbox img { max-width: 90%; max-height: 90%; }
-        .code-box { background: #000; padding: 15px; border-radius: 8px; border: 1px solid #333; color: #00ff00; font-family: monospace; font-size: 0.9rem; margin-bottom: 20px; }
+        ul.detail-list { padding-left: 15px; margin-top: 5px; font-size: 0.8rem; color: #888; list-style: square; }
     </style>
 </head>
 <body>
@@ -41,104 +42,145 @@
     <main>
         <section class="project-header">
             <h1>Enterprise Security & Infrastructure Hardening</h1>
-            <p>네트워크 인프라 이중화, 방화벽 정책 수립, DB 보안 쿼리 및 리눅스 시스템 보안 강화(Hardening)를 통합 구현한 프로젝트입니다.</p>
+            <p>GNS3와 VirtualBox를 연동하여 가상 네트워크 인프라를 설계하고, 방화벽 정책 수립, 라우터 이중화(HSRP), 보안 서버(VPN, IDS, SIEM) 구축 및 시스템 보안 강화(Hardening)의 전 과정을 통합적으로 수행한 프로젝트입니다.</p>
         </section>
 
-        <!-- 1) GNS3 인프라 및 방화벽 -->
+        <!-- 1) GNS3 활용 인프라 및 보안 설정 -->
         <section>
-            <h2>1) GNS3: Network Security & Firewall Policy</h2>
-            <div class="img-container" style="max-width: 800px; margin-bottom: 30px;">
-                <img src="../p2/network-popo2.png">
-                <div class="img-caption">상세 네트워크 토폴로지 설계도</div>
-            </div>
+            <h2>1) GNS3: Network Infrastructure & Policy</h2>
+            
+            <h3>VLAN Configuration</h3>
+            <p class="description">VLAN 구성을 통해 브로드캐스트 도메인을 분리하고 네트워크 세그멘테이션을 실현했습니다.</p>
 
             <h3>pfSense Firewall Rules</h3>
-            <p class="description">특정 호스트에 대한 서비스 제어 정책 수립</p>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="../p2/pfsense-firewallrule.png">
-                    <div class="img-caption">Rule: 192.168.5.50의 FTP 접근 차단 및 HTTP 통신 허용 설정</div>
-                </div>
-            </div>
-
-            <h3>Cisco ASAv Firewall Policy</h3>
-            <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/assv-https.png"><div class="img-caption">DVWA -> Inside: HTTPS 허용</div></div>
-                <div class="img-container"><img src="../p2/assv-telnet.png"><div class="img-caption">DVWA -> Inside: Telnet 허용</div></div>
-                <div class="img-container"><img src="../p2/asav-dns-r3-ping.png"><div class="img-caption">PC7(DNS) -> R3: Ping 통신 허용</div></div>
-                <div class="img-container"><img src="../p2/asav-r2-r4-ssh.png"><div class="img-caption">R2 -> R4: SSH 관리 접속 허용</div></div>
-            </div>
-        </section>
-
-        <!-- 2) Database Security & SQL Challenge -->
-        <section>
-            <h2>2) Database Security: MariaDB SQL Challenge</h2>
-            <p class="description">비트 연산(Bitwise)을 활용한 개발자 기술 스택 조회 및 세부 권한 부여 관리 시나리오입니다.</p>
-            
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/db.PNG">
-                    <div class="img-caption">SQL 문제: Front End 스킬 보유 개발자 조회 시나리오</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/db1.PNG">
-                    <div class="img-caption">1번 문제 해결: 비트 연산을 활용한 조건별 데이터 조회 쿼리 실행</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/db-Cdev.PNG">
-                    <div class="img-caption">2. Cdev: 로컬호스트 모든 권한 부여</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/db-Pydev.PNG">
-                    <div class="img-caption">3. Pydev: Skillcodes 테이블 Select/Create 권한 제어</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/db-Jdev.PNG">
-                    <div class="img-caption">4. Jdev: 원격 호스트(192.168.16.100) 대상 테이블 권한 부여</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3) System Security & OS Hardening -->
-        <section>
-            <h2>3) OS Hardening: Linux System Security</h2>
-            <p class="description">파일 권한 제어, 패스워드 복잡도 정책, 로그 분석 및 취약점 테스트를 통한 시스템 강화</p>
-
-            <h3>권한 제어 및 보안 정책 (Sticky Bit & PW Policy)</h3>
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/stickybit.png">
-                    <div class="img-caption">Sticky Bit 설정: text.txt 파일에 대해 소유자 외 삭제 방지 보안 설정</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/stickbitmore.png">
+                    <img src="../p2/pfsense-firewallrule.PNG">
                     <div class="img-caption">
-                        종합 보안 설정:<br>
-                        1. 패스워드 복잡도(특수문자/숫자 포함 10자 이상, 만료일 90일)<br>
-                        2. wtmp/btmp 로그를 통한 접속 기록 및 로그인 실패 이력 분석<br>
-                        3. SetUID 설정을 이용한 권한 상승 시나리오 검증
+                        <strong>호스트(192.168.5.50) 정책 설정</strong><br>
+                        - FTP 서비스: 차단(Deny)<br>
+                        - HTTP 서비스: 허용(Allow)
                     </div>
                 </div>
             </div>
 
-            <h3>Vulnerability Analysis (Buffer Overflow)</h3>
-            <div class="gallery-grid" style="grid-template-columns: 1fr;">
+            <h3>Cisco ASAv Firewall Rules</h3>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p2/assv-https.PNG"><div class="img-caption">Rule 1-1: Inside망 HTTPS 접속 허용</div></div>
+                <div class="img-container"><img src="../p2/assv-telnet.PNG"><div class="img-caption">Rule 1-2: Inside망 Telnet 접속 허용</div></div>
+                <div class="img-container"><img src="../p2/asav-dns-r3-ping.PNG"><div class="img-caption">Rule 2: PC7(DNS)에서 R3로의 Ping 허용</div></div>
+                <div class="img-container"><img src="../p2/asav-r2-r4-ssh.PNG"><div class="img-caption">Rule 3: R2에서 R4로의 SSH 접속 허용</div></div>
+            </div>
+
+            <h3>Router ACL (Access Control List)</h3>
+            <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="../p2/bof.png" style="max-height: 400px; object-fit: contain;">
-                    <div class="img-caption">간단한 C 코드를 활용한 Buffer Overflow 취약점 실행 및 메모리 오염 확인 테스트</div>
+                    <img src="../p2/r3acl.PNG">
+                    <div class="img-caption">R3 라우터 ACL 정책 설정 및 적용 결과</div>
                 </div>
             </div>
         </section>
 
-        <!-- 4) Network Services & Monitoring -->
+        <!-- 2) VirtualBox 기반 보안 및 시스템 서비스 -->
         <section>
-            <h2>4) Integrated Services & Monitoring</h2>
+            <h2>2) VirtualBox: Security Solutions & Hardening</h2>
+
+            <h3>NIDS 침입 탐지 (Snort)</h3>
             <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/remoteaccess.png"><div class="img-caption">OpenVPN Remote Access 접속 환경</div></div>
-                <div class="img-container"><img src="../p2/ftp.png"><div class="img-caption">FTP/SFTP 보안 전송 환경 구축</div></div>
-                <div class="img-container"><img src="../p2/dns-2.png"><div class="img-caption">DNS Name Server 및 가용성 설정</div></div>
-                <div class="img-container"><img src="../p2/pmm2.png"><div class="img-caption">PMM을 활용한 DB 성능 및 자원 모니터링</div></div>
-                <div class="img-container"><img src="../p2/snort-kali-web-ddos.png"><div class="img-caption">NIDS: DDoS 및 중요 파일 접근 실시간 탐지</div></div>
+                <div class="img-container">
+                    <img src="../p2/snort-kali-web-ddos.PNG">
+                    <div class="img-caption">Scenario 1: Kali Linux에서 Web 서버로의 DDoS 공격 탐지</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/snort-kali-ctf.PNG">
+                    <div class="img-caption">Scenario 2: Kali에서 CTF 서버 대상 /etc/passwd 접근 시도 탐지</div>
+                </div>
+            </div>
+
+            <h3>MariaDB & PMM Monitoring</h3>
+            <p class="description">PMM(Percona Monitoring and Management)을 통한 DB 모니터링 및 시나리오 기반 권한 부여 실습</p>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p2/pmm2.PNG"><div class="img-caption">PMM 대시보드 메인 화면</div></div>
+                <div class="img-container"><img src="../p2/pmmserverclientconnection.PNG"><div class="img-caption">Server-Client 에이전트 연결 상태 확인</div></div>
+                <div class="img-container"><img src="../p2/db.PNG"><div class="img-caption">DB 문제 시나리오 확인</div></div>
+                <div class="img-container"><img src="../p2/db1.PNG"><div class="img-caption">비트 연산 기반 데이터 조회 결과</div></div>
+                <div class="img-container"><img src="../p2/db-Cdev.PNG"><div class="img-caption">Cdev: 로컬호스트 전체 권한 부여</div></div>
+                <div class="img-container"><img src="../p2/db-Pydev.PNG"><div class="img-caption">Pydev: 특정 테이블 Select/Create 권한 제어</div></div>
+                <div class="img-container"><img src="../p2/db-Jdev.PNG"><div class="img-caption">Jdev: 특정 IP 대상 테이블 권한 부여</div></div>
+            </div>
+
+            <h3>Samba & NFS Resource Sharing</h3>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p2/samba-window.PNG"><div class="img-caption">Windows에서 Samba 공유 자원(testsamba, samba.txt) 생성</div></div>
+                <div class="img-container"><img src="../p2/samba2.PNG"><div class="img-caption">Linux 환경에서 실시간 공유 파일 동기화 확인</div></div>
+                <div class="img-container"><img src="../p2/nfs-result.png"><div class="img-caption">Rocky Linux NFS Server-Client 연결 및 공유 결과</div></div>
+                <div class="img-container"><img src="../p2/nameserver-nfsclient.PNG"><div class="img-caption">NMS 연동: nfs.project.com 도메인 설정 결과</div></div>
+            </div>
+
+            <h3>FTP / SFTP / FTPS 보안 전송</h3>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="../p2/ftp2.PNG">
+                    <div class="img-caption">서버 내 Move 디렉토리 및 ftp.txt 파일 생성 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/ftp.PNG">
+                    <div class="img-caption">파일질라(FileZilla)를 통해 192.168.16.2 접속 시 생성된 파일 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/ftps-certi.PNG">
+                    <div class="img-caption">FTPS 보안 연결을 위한 서버 인증서(Certificate) 적용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/sftp.PNG">
+                    <div class="img-caption">SFTP 보안 접속 성공 (sftp://192.168.16.2)</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/ftps.PNG">
+                    <div class="img-caption">FTPS 보안 접속 성공 (ftps://192.168.16.2)</div>
+                </div>
+            </div>
+
+            <h3>CTF Challenge: Venus</h3>
+            <p class="description">
+                정보 수집부터 권한 상승까지의 전체 침투 테스트 과정을 실습했습니다.<br>
+                <strong>주요 기법:</strong> 인증 토큰 우회(ROT13/Base64), 사전 대입 공격(Hydra), CVE-2021-4034 취력점 활용
+            </p>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="../p2/venus-userflag.PNG">
+                    <div class="img-caption">Nmap/BurpSuite/Hydra를 활용한 User 계정 탈취 및 Flag 획득</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p2/venus-rootflag.PNG">
+                    <div class="img-caption">CVE-2021-4034 익스플로잇을 통한 Root 권한 상승 및 최종 Flag 획득</div>
+                </div>
+            </div>
+            <p style="text-align: center;">
+                <a href="https://velog.io/@seojin5112/Project2-CTF-Venus-문제풀이" target="_blank" class="velog-link">
+                    Nmap, Burp Suite, Hydra 등을 활용한 상세 풀이 과정 보러가기 (Velog)
+                </a>
+            </p>
+            <h3>Linux System Hardening & DNS</h3>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p2/dns-2.PNG"><div class="img-caption">DNS 서버 패스워드 정책 적용 및 Passed 설정</div></div>
+                <div class="img-container"><img src="../p2/dns-3.PNG"><div class="img-caption">wtmp, btmp 로그 경로 확인 및 접속 기록 분석</div></div>
+                <div class="img-container">
+                    <img src="../p2/stickybit.PNG">
+                    <div class="img-caption">
+                        <strong>Sticky Bit(chmod 1777) 설정</strong>
+                        <ul class="detail-list">
+                            <li>1. /tmp/shared 디렉토리 생성 및 권한 1777 부여 (1=Sticky Bit)</li>
+                            <li>2. test 사용자가 test.txt 파일 생성</li>
+                            <li>3. test2 사용자가 삭제 시도 시 'Operation not permitted' 발생 확인</li>
+                            <li>결론: 공용 공간에서 소유자 외 파일 삭제 방지</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="img-container"><img src="../p2/dns-4.PNG"><div class="img-caption">SetUID 설정: r/project 실행을 통한 Root 권한 상승 확인</div></div>
+                <div class="img-container"><img src="../p2/dns-5bof.PNG"><div class="img-caption">BoF Test: 간단한 코드를 이용한 Buffer Overflow 발생 여부 점검</div></div>
+                <div class="img-container"><img src="../p2/loganlyzer.PNG"><div class="img-caption">LogAnalyzer를 통한 웹 기반 시스템 로그 시각화</div></div>
+                <div class="img-container"><img src="../p2/ossecresult.PNG"><div class="img-caption">OSSEC: Zabbix, Ubuntu, Rocky 클라이언트 통합 모니터링 확인</div></div>
             </div>
         </section>
     </main>
