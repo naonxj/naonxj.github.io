@@ -17,31 +17,37 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
         main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
-        a.back-link { display: inline-block; margin: 20px 0 20px 5%; color: var(--accent); text-decoration: none; font-weight: 600; }
+        
+        /* 헤더 섹션 */
         .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 50px; }
         .project-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; }
+        
         section { margin-bottom: 80px; }
         h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; border-left: 5px solid var(--accent); padding-left: 15px; }
         h3 { font-size: 1.3rem; color: var(--accent); margin: 30px 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
         .description { color: var(--text-sub); margin-bottom: 20px; font-size: 0.95rem; }
+        
+        /* 이미지 그리드 */
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
         .img-container { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: 12px; transition: transform 0.3s; height: 100%; display: flex; flex-direction: column; }
         .img-container:hover { transform: translateY(-5px); border-color: var(--accent); }
         .img-container img { width: 100%; border-radius: 8px; cursor: zoom-in; }
         .img-caption { margin-top: 12px; font-size: 0.85rem; color: var(--text-sub); line-height: 1.4; flex-grow: 1; }
+        
         .velog-link { display: inline-block; margin-top: 10px; color: #00BCD4; text-decoration: underline; font-weight: bold; }
+        
+        /* 라이트박스 */
         #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out; }
         #lightbox img { max-width: 90%; max-height: 90%; }
+        
         ul.detail-list { padding-left: 15px; margin-top: 5px; font-size: 0.8rem; color: #888; list-style: square; }
     </style>
 </head>
 <body>
 
-    <a href="../index.html" class="back-link">← Main Portfolio</a>
-
     <main>
         <section class="project-header">
-            <h1>Enterprise Security & Infrastructure Hardening</h1>
+            <h1>Enterprise Network & Security Hardening</h1>
             <p>GNS3와 VirtualBox를 연동하여 가상 네트워크 인프라를 설계하고, 방화벽 정책 수립, 라우터 이중화(HSRP), 보안 서버(VPN, IDS, SIEM) 구축 및 시스템 보안 강화(Hardening)의 전 과정을 통합적으로 수행한 프로젝트입니다.</p>
         </section>
 
@@ -144,7 +150,7 @@
             <h3>CTF Challenge: Venus</h3>
             <p class="description">
                 정보 수집부터 권한 상승까지의 전체 침투 테스트 과정을 실습했습니다.<br>
-                <strong>주요 기법:</strong> 인증 토큰 우회(ROT13/Base64), 사전 대입 공격(Hydra), CVE-2021-4034 취력점 활용
+                <strong>주요 기법:</strong> 인증 토큰 우회(ROT13/Base64), 사전 대입 공격(Hydra), CVE-2021-4034 취약점 활용
             </p>
             <div class="gallery-grid">
                 <div class="img-container">
@@ -161,6 +167,7 @@
                     Nmap, Burp Suite, Hydra 등을 활용한 상세 풀이 과정 보러가기 (Velog)
                 </a>
             </p>
+
             <h3>Linux System Hardening & DNS</h3>
             <div class="gallery-grid">
                 <div class="img-container"><img src="../p2/dns-2.PNG"><div class="img-caption">DNS 서버 패스워드 정책 적용 및 Passed 설정</div></div>

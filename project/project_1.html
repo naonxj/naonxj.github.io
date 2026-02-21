@@ -6,7 +6,7 @@
     <title>프로젝트 상세: GNS3 & VirtualBox 보안 인프라 구축</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* 기본 테마 설정 (사용자 제공 테마 유지) */
+        /* 기본 테마 설정 */
         :root {
             --bg-dark: #111111;
             --bg-card: #1A1A1A;
@@ -26,15 +26,6 @@
         }
 
         main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
-        
-        a.back-link {
-            display: inline-block;
-            margin-top: 20px;
-            margin-left: 5%;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
 
         /* 헤더 섹션 */
         .project-header {
@@ -104,46 +95,43 @@
             z-index: 1000; cursor: zoom-out;
         }
         #lightbox img { max-width: 90%; max-height: 90%; }
+
         .scenarios-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* 가로 3개 위주로 자동 배치 */
-        gap: 30px;
-        align-items: start;
-    }
-    .scenario-box {
-        background: var(--bg-card);
-        padding: 20px;
-        border-radius: 12px;
-        border: 1px solid var(--border);
-        height: 100%; /* 높이 통일 */
-    }
-    .scenario-box h3 {
-        margin-top: 0;
-        font-size: 1.1rem;
-        border-bottom: 2px solid var(--accent);
-        padding-bottom: 8px;
-        width: 100%;
-    }
-    /* 그리드 안에서 이미지 크기 최적화 */
-    .scenario-box .comparison-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-    .scenario-box .img-caption {
-        font-size: 0.8rem; /* 글자 크기 살짝 줄임 */
-    }
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+            gap: 30px;
+            align-items: start;
+        }
+        .scenario-box {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            height: 100%;
+        }
+        .scenario-box h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            width: 100%;
+        }
+        .scenario-box .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .scenario-box .img-caption {
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="../index.html" class="back-link">← 뒤로가기</a>
-    </header>
-
     <main>
         <!-- 프로젝트 제목 -->
         <section class="project-header">
-            <h1>Advanced Network Security Lab</h1>
+            <h1>GNS3 & VirtualBox 보안 인프라 구축</h1>
             <p>GNS3와 VirtualBox를 활용한 네트워크 인프라 구축 및 보안 솔루션 적용 프로젝트</p>
             <div class="tags">
                 <span class="tag">GNS3</span>
@@ -161,7 +149,7 @@
                 <img src="../p1/popo2.PNG" alt="GNS3 Topology">
                 <div class="img-caption" style="text-align: center;">전체 네트워크 구성도 (GNS3)</div>
             </div>
-            <p class="description">GNS3를 이용하여 가상 네트워크 인프라를 구축하고, 방화벽 정책 설정, 라우터 이중화(HSRP), VPN 서버 구축, IDS 및 SIEM 시스템을 각각 개별적으로 구축하여 실습한 프로젝트입니다. </p>
+            <p class="description" style="margin-top: 20px;">GNS3를 이용하여 가상 네트워크 인프라를 구축하고, 방화벽 정책 설정, 라우터 이중화(HSRP), VPN 서버 구축, IDS 및 SIEM 시스템을 각각 개별적으로 구축하여 실습한 프로젝트입니다. </p>
         </section>
 
         <!-- 1) GNS3 활용 인프라 설정 -->
@@ -236,179 +224,169 @@
                 </div>
             </div>
 
-            <!-- 06. Snort 시나리오 섹션 -->
-<section>
-    <h2>3. Threat Detection Scenarios (Snort)</h2>
-    <p class="description">커스텀 Snort Rule을 활용한 5가지 위협 시나리오별 공격(Attempt)과 탐지(Detection) 결과입니다.</p>
-    
-    <div class="scenarios-grid">
-        <!-- Scenario 1 -->
-        <div class="scenario-box">
-            <h3>Scenario 1: ICMP & HTTP</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/snort(win10-ossec)ping-cmd.PNG">
-                    <div class="img-caption">[공격] Ping 시도</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/snort(win10-ossec)ping.PNG">
-                    <div class="img-caption">[탐지] ICMP 알람</div>
-                </div>
-            </div>
-            <div class="img-container" style="margin-top:10px;">
-                <img src="../p1/snort(win10-ossec)http.PNG">
-                <div class="img-caption">[탐지] HTTP 트래픽 식별</div>
-            </div>
-        </div>
+            <!-- Snort 시나리오 섹션 -->
+            <section>
+                <h2>3. Threat Detection Scenarios (Snort)</h2>
+                <p class="description">커스텀 Snort Rule을 활용한 5가지 위협 시나리오별 공격(Attempt)과 탐지(Detection) 결과입니다.</p>
+                
+                <div class="scenarios-grid">
+                    <div class="scenario-box">
+                        <h3>Scenario 1: ICMP & HTTP</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/snort(win10-ossec)ping-cmd.PNG">
+                                <div class="img-caption">[공격] Ping 시도</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/snort(win10-ossec)ping.PNG">
+                                <div class="img-caption">[탐지] ICMP 알람</div>
+                            </div>
+                        </div>
+                        <div class="img-container" style="margin-top:10px;">
+                            <img src="../p1/snort(win10-ossec)http.PNG">
+                            <div class="img-caption">[탐지] HTTP 트래픽 식별</div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 2 -->
-        <div class="scenario-box">
-            <h3>Scenario 2: Inter-Network Ping</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/rocky-win-ping.PNG">
-                    <div class="img-caption">[공격] Rocky9 -> Win10</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/rocky-win-ping-result.PNG">
-                    <div class="img-caption">[탐지] 네트워크 간 핑 탐지</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 2: Inter-Network Ping</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/rocky-win-ping.PNG">
+                                <div class="img-caption">[공격] Rocky9 -> Win10</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/rocky-win-ping-result.PNG">
+                                <div class="img-caption">[탐지] 네트워크 간 핑 탐지</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 3 -->
-        <div class="scenario-box">
-            <h3>Scenario 3: Command Injection</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/rockinjectcurl.PNG">
-                    <div class="img-caption">[공격] /etc/passwd 접근</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/injection-dect.PNG">
-                    <div class="img-caption">[탐지] 인젝션 패턴 매칭</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 3: Command Injection</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/rockinjectcurl.PNG">
+                                <div class="img-caption">[공격] /etc/passwd 접근</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/injection-dect.PNG">
+                                <div class="img-caption">[탐지] 인젝션 패턴 매칭</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 4 -->
-        <div class="scenario-box">
-            <h3>Scenario 4: DDoS (Land Attack)</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/random-attack.PNG">
-                    <div class="img-caption">[공격] Random IP DDoS</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/randomattack-detection.PNG">
-                    <div class="img-caption">[탐지] 트래픽 플러딩 탐지</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 4: DDoS (Land Attack)</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/random-attack.PNG">
+                                <div class="img-caption">[공격] Random IP DDoS</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/randomattack-detection.PNG">
+                                <div class="img-caption">[탐지] 트래픽 플러딩 탐지</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 5 -->
-        <div class="scenario-box">
-            <h3>Scenario 5: SYN Scanning</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/snort-synflagattack.PNG">
-                    <div class="img-caption">[공격] 포트 스캐닝 시도</div>
+                    <div class="scenario-box">
+                        <h3>Scenario 5: SYN Scanning</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/snort-synflagattack.PNG">
+                                <div class="img-caption">[공격] 포트 스캐닝 시도</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/snort-synflagdetection.PNG">
+                                <div class="img-caption">[탐지] SYN 스캔 행위 식별</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="img-container">
-                    <img src="../p1/snort-synflagdetection.PNG">
-                    <div class="img-caption">[탐지] SYN 스캔 행위 식별</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
 
-<!-- 07. Suricata 시나리오 섹션 -->
-<section>
-    <h2>4. Threat Detection Scenarios (Suricata)</h2>
-    <p class="description">Suricata IDS를 활용하여 동일한 5가지 시나리오에 대한 탐지 성능을 교차 검증했습니다.</p>
-    
-    <div class="scenarios-grid">
-        <!-- Scenario 1 -->
-        <div class="scenario-box">
-            <h3>Scenario 1: ICMP & HTTP</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/suriwin-ossec-ping.PNG">
-                    <div class="img-caption">[공격] Win10 통신 시도</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/surwin-ossec-pingdetect.PNG">
-                    <div class="img-caption">[탐지] fast.log 경보</div>
-                </div>
-            </div>
-            <div class="img-container" style="margin-top:10px;">
-                <img src="../p1/win-ossechttpdet.PNG">
-                <div class="img-caption">[탐지] HTTP 시그니처 탐지</div>
-            </div>
-        </div>
+            <!-- Suricata 시나리오 섹션 -->
+            <section>
+                <h2>4. Threat Detection Scenarios (Suricata)</h2>
+                <p class="description">Suricata IDS를 활용하여 동일한 5가지 시나리오에 대한 탐지 성능을 교차 검증했습니다.</p>
+                
+                <div class="scenarios-grid">
+                    <div class="scenario-box">
+                        <h3>Scenario 1: ICMP & HTTP</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/suriwin-ossec-ping.PNG">
+                                <div class="img-caption">[공격] Win10 통신 시도</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/surwin-ossec-pingdetect.PNG">
+                                <div class="img-caption">[탐지] fast.log 경보</div>
+                            </div>
+                        </div>
+                        <div class="img-container" style="margin-top:10px;">
+                            <img src="../p1/win-ossechttpdet.PNG">
+                            <div class="img-caption">[탐지] HTTP 시그니처 탐지</div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 2 -->
-        <div class="scenario-box">
-            <h3>Scenario 2: Inter-Network Ping</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/surirocky-win-ping.PNG">
-                    <div class="img-caption">[공격] Rocky9 호스트발 통신</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/surirocky-winping-det.PNG">
-                    <div class="img-caption">[탐지] 실시간 알람 수신</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 2: Inter-Network Ping</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/surirocky-win-ping.PNG">
+                                <div class="img-caption">[공격] Rocky9 호스트발 통신</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/surirocky-winping-det.PNG">
+                                <div class="img-caption">[탐지] 실시간 알람 수신</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 3 -->
-        <div class="scenario-box">
-            <h3>Scenario 3: Command Injection</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/suri-injection-attack.PNG">
-                    <div class="img-caption">[공격] 악성 페이로드 전송</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/suri-injection-detec.PNG">
-                    <div class="img-caption">[탐지] 명령어 삽입 식별</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 3: Command Injection</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/suri-injection-attack.PNG">
+                                <div class="img-caption">[공격] 악성 페이로드 전송</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/suri-injection-detec.PNG">
+                                <div class="img-caption">[탐지] 명령어 삽입 식별</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 4 -->
-        <div class="scenario-box">
-            <h3>Scenario 4: DDoS (Land Attack)</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/surikali-winrandattack.PNG">
-                    <div class="img-caption">[공격] 위조 패킷 플러딩</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p1/surikali-win-randattack2.PNG">
-                    <div class="img-caption">[탐지] 임계치 기반 탐지</div>
-                </div>
-            </div>
-        </div>
+                    <div class="scenario-box">
+                        <h3>Scenario 4: DDoS (Land Attack)</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/surikali-winrandattack.PNG">
+                                <div class="img-caption">[공격] 위조 패킷 플러딩</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/surikali-win-randattack2.PNG">
+                                <div class="img-caption">[탐지] 임계치 기반 탐지</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Scenario 5 -->
-        <div class="scenario-box">
-            <h3>Scenario 5: SYN Scanning</h3>
-            <div class="comparison-grid">
-                <div class="img-container">
-                    <img src="../p1/surikali-rocky-synattack.PNG">
-                    <div class="img-caption">[공격] Nmap 포트 스캔</div>
+                    <div class="scenario-box">
+                        <h3>Scenario 5: SYN Scanning</h3>
+                        <div class="comparison-grid">
+                            <div class="img-container">
+                                <img src="../p1/surikali-rocky-synattack.PNG">
+                                <div class="img-caption">[공격] Nmap 포트 스캔</div>
+                            </div>
+                            <div class="img-container">
+                                <img src="../p1/suri-kali-rocky-syn-attack-det.PNG">
+                                <div class="img-caption">[탐지] 스캔 패턴 감지</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="img-container">
-                    <img src="../p1/suri-kali-rocky-syn-attack-det.PNG">
-                    <div class="img-caption">[탐지] 스캔 패턴 감지</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
 
             <h3>4. OSSEC 구축</h3>
             <p class="description">OSSEC 매니저 서버에서 생성한 인증 키를 Windows 10(192.168.16.131) 및 Rocky Linux(192.168.16.170) 에이전트에 각각 등록하고, 서버-클라이언트 간의 정상적인 연결 상태를 확인하여 시스템 구축을 완료했습니다.  </p>
@@ -436,8 +414,6 @@
                 <div class="img-container">
                     <img src="../p1/windowossec4tail.PNG" alt="OSSEC Agent">
                     <div class="img-caption">OSSEC 실시간 경보(Alert) 로그 모니터링 및 정상 작동 확인</div>
-                    <!-- linux 터미널에서 tail -f 명령어를 통해 ossec 실시간 알림 로그를 확인한 결과이다.--> 
-                    <!--윈도우 에이전트 연결성공메시지(new ossec agent connected)와 시스템 로그온 성공 이벤트(windows logon success)가 서버로 정상 전송되어 탐지되는것을 확인했다.  -->
                 </div>
             </div>
 

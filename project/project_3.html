@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 상세: Enterprise Network & Wargame Lab | KIMSEOJIN</title>
+    <title>프로젝트 상세: Enterprise Network Segmentation & Wargame Lab</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -25,15 +25,6 @@
         }
 
         main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
-        
-        a.back-link {
-            display: inline-block;
-            margin-top: 20px;
-            margin-left: 5%;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-        }
 
         /* 프로젝트 헤더 */
         .project-header {
@@ -143,10 +134,6 @@
 </head>
 <body>
 
-    <header>
-        <a href="../index.html" class="back-link">← Main Portfolio</a>
-    </header>
-
     <main>
         <!-- 프로젝트 헤더 및 요약 -->
         <section class="project-header">
@@ -154,10 +141,11 @@
             <p>GNS3와 가상화 환경을 연동하여 엔터프라이즈급 네트워크 인프라를 설계하고, 다계층 보안 시스템(WAF, SIEM, IDS)과 관제 환경을 통합 구현한 프로젝트입니다.</p>
             <div class="tags">
                 <span class="tag">Infrastructure</span>
-                <span class="tag">WAF/SIEM</span>
                 <span class="tag">VLAN/Subnetting</span>
+                <span class="tag">WAF/SIEM</span>
                 <span class="tag">Monitoring</span>
                 <span class="tag">Wargame</span>
+                <span class="tag">CTF</span>
             </div>
         </section>
 
@@ -267,12 +255,10 @@
 
             <h3>Network & Analysis (DNS & OWASP)</h3>
             <div class="gallery-grid">
-                <!-- DNS 서버 설정 이미지 -->
                 <div class="img-container">
                     <img src="../p3/dns.PNG">
                     <div class="img-caption">192.168.16.10 -> park.testjin.com 도메인 접속 성공</div>
                 </div>
-                <!-- Juice-shop 분석 이미지 삽입 -->
                 <div class="img-container">
                     <img src="../p3/juiceshop.PNG" alt="OWASP Juice-shop Analysis">
                     <div class="img-caption">OWASP Top 10 취약점을 Juice-shop 실습 환경을 통해 분석하고 해결한 프로젝트입니다.</div>
@@ -283,16 +269,16 @@
 
         <!-- 3) Wargame & Team Project -->
         <section>
-            <h2>03. Project Links</h2>
+            <h2>03. Team Project Links</h2>
             <div class="comparison-grid">
                 <div class="img-container">
-                    <h3 style="border:none; margin:0 0 10px 0;">War-game Team Project</h3>
-                    <p class="description" style="font-size:0.9rem;">팀원들과 협력하여 직접 제작하고 운영한 모의해킹 학습 플랫폼입니다.</p>
+                    <h3 style="border:none; margin:0 0 10px 0;">1. War-game Team Project</h3>
+                    <p class="description" style="font-size:0.9rem;">팀원들과 협력하여 wargame 문제를 직접 제작하고 운영한 모의해킹 학습 플랫폼입니다.</p>
                     <a href="../wargame_writeup.html" class="action-btn">프로젝트 상세보기</a>
                 </div>
                 <div class="img-container">
-                    <h3 style="border:none; margin:0 0 10px 0;">CTF Challenge Write-ups</h3>
-                    <p class="description" style="font-size:0.9rem;">CTF 실습을 통해 발견한 취약점들과 해결 과정을 정리한 리포트입니다.</p>
+                    <h3 style="border:none; margin:0 0 10px 0;">2. CTF Challenge Write-ups</h3>
+                    <p class="description" style="font-size:0.9rem;">직접 만든 CTF 실습을 통해 발견한 취약점들과 해결 과정을 정리한 리포트입니다.</p>
                     <a href="../ctf_juiceshop.html" class="action-btn">상세 리포트 보기</a>
                 </div>
             </div>
