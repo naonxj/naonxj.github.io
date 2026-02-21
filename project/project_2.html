@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project 2: Enterprise Network & Security Hardening</title>
+    <title>프로젝트 상세: GNS3 & VirtualBox 보안 인프라 구축</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,180 +14,333 @@
             --text-sub: #AAAAAA;
             --border: #333333;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
         main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
-        
+
         /* 헤더 섹션 */
-        .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 50px; }
-        .project-header h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header {
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 30px;
+            margin-bottom: 50px;
+        }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
         
+        .tags { margin-top: 20px; }
+        .tag {
+            background: #222; color: var(--accent);
+            padding: 5px 12px; border-radius: 4px;
+            font-size: 0.85rem; margin-right: 8px; font-weight: 600;
+        }
+
+        /* 섹션 타이틀 */
         section { margin-bottom: 80px; }
-        h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; border-left: 5px solid var(--accent); padding-left: 15px; }
-        h3 { font-size: 1.3rem; color: var(--accent); margin: 30px 0 15px 0; border-bottom: 1px solid #333; padding-bottom: 5px; }
-        .description { color: var(--text-sub); margin-bottom: 20px; font-size: 0.95rem; }
+        h2 {
+            font-size: 1.8rem; color: var(--text-main);
+            margin-bottom: 25px; border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+        h3 { font-size: 1.3rem; color: var(--accent); margin: 40px 0 20px 0; }
         
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        /* 00. 토폴로지 전용 스타일 */
+        .topology-wrapper { margin-bottom: 60px; }
+        .topology-card { 
+            background: #1e1e1e; 
+            padding: 40px; 
+            border-radius: 20px; 
+            border: 1px solid #333;
+            text-align: center;
+        }
+        .topology-card img { 
+            width: 100%; 
+            max-width: 1000px;
+            height: auto;
+            border-radius: 10px; 
+            margin-bottom: 25px;
+            cursor: zoom-in;
+        }
+        .figure-label { color: var(--text-sub); font-size: 1.1rem; font-weight: 600; }
+        .topology-main-desc { 
+            margin-top: 30px; 
+            text-align: center; 
+            font-size: 1.1rem; 
+            line-height: 1.8; 
+            color: var(--text-main);
+            word-break: keep-all;
+        }
+
         /* 이미지 그리드 */
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .img-container { background: var(--bg-card); padding: 15px; border: 1px solid var(--border); border-radius: 12px; transition: transform 0.3s; height: 100%; display: flex; flex-direction: column; }
-        .img-container:hover { transform: translateY(-5px); border-color: var(--accent); }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px;
+        }
+
+        .img-container {
+            background: var(--bg-card);
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .img-container:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
         .img-container img { width: 100%; border-radius: 8px; cursor: zoom-in; }
-        .img-caption { margin-top: 12px; font-size: 0.85rem; color: var(--text-sub); line-height: 1.4; flex-grow: 1; }
-        
-        .velog-link { display: inline-block; margin-top: 10px; color: #00BCD4; text-decoration: underline; font-weight: bold; }
-        
+
+        .img-caption {
+            margin-top: 15px; 
+            color: var(--text-sub); 
+            font-size: 0.9rem; 
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* 시나리오 그리드 (Snort/Suricata) */
+        .scenarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); 
+            gap: 30px;
+            align-items: start;
+        }
+        .scenario-box {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            height: 100%;
+        }
+        .scenario-box h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .scenario-box .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .scenario-box .img-caption { font-size: 0.8rem; }
+
         /* 라이트박스 */
-        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
+            z-index: 1000; cursor: zoom-out;
+        }
         #lightbox img { max-width: 90%; max-height: 90%; }
-        
-        ul.detail-list { padding-left: 15px; margin-top: 5px; font-size: 0.8rem; color: #888; list-style: square; }
     </style>
 </head>
 <body>
 
     <main>
+        <!-- 프로젝트 제목 -->
         <section class="project-header">
-            <h1>Enterprise Network & Security Hardening</h1>
-            <p>GNS3와 VirtualBox를 연동하여 가상 네트워크 인프라를 설계하고, 방화벽 정책 수립, 라우터 이중화(HSRP), 보안 서버(VPN, IDS, SIEM) 구축 및 시스템 보안 강화(Hardening)의 전 과정을 통합적으로 수행한 프로젝트입니다.</p>
+            <h1>GNS3 & VirtualBox 보안 인프라 구축</h1>
+            <p>GNS3와 VirtualBox를 활용한 네트워크 인프라 구축 및 보안 솔루션 적용 프로젝트</p>
+            <div class="tags">
+                <span class="tag">GNS3</span>
+                <span class="tag">VirtualBox</span>
+                <span class="tag">Cisco ASA</span>
+                <span class="tag">IDS (Snort/Suricata)</span>
+                <span class="tag">VPN</span>
+            </div>
         </section>
 
-        <!-- 1) GNS3 활용 인프라 및 보안 설정 -->
-        <section>
-            <h2>1) GNS3: Network Infrastructure & Policy</h2>
-            
-            <h3>VLAN Configuration</h3>
-            <p class="description">VLAN 구성을 통해 브로드캐스트 도메인을 분리하고 네트워크 세그멘테이션을 실현했습니다.</p>
+        <!-- 00. Overall Network Topology -->
+        <section class="topology-wrapper">
+            <h2>00. Overall Network Topology</h2>
+            <div class="topology-card">
+                <img src="../p2/network-popo2.PNG" alt="Overall Network Topology">
+                <p class="figure-label">Figure 1. 통합 네트워크 인프라 구성도 (GNS3 & VMware 연동)</p>
+            </div>
+            <p class="topology-main-desc">
+                GNS3를 이용하여 가상 네트워크 인프라를 구축하고, 방화벽 정책 설정, 라우터 이중화(HSRP), VPN 서버 구축,<br>
+                IDS 및 SIEM 시스템을 각각 개별적으로 구축하여 실습한 프로젝트입니다.
+            </p>
+        </section>
 
-            <h3>pfSense Firewall Rules</h3>
+        <!-- 01. GNS3 활용 인프라 설정 -->
+        <section>
+            <h2>01. GNS3 Infrastructure Setup</h2>
+            <p class="description">GNS3 내 가상 장비를 활용하여 방화벽 정책과 라우터 이중화(HSRP)를 구성했습니다.</p>
+
+            <h3>1. Firewall Rules (Cisco ASAv)</h3>
             <div class="gallery-grid">
                 <div class="img-container">
-                    <img src="../p2/pfsense-firewallrule.PNG">
-                    <div class="img-caption">
-                        <strong>호스트(192.168.5.50) 정책 설정</strong><br>
-                        - FTP 서비스: 차단(Deny)<br>
-                        - HTTP 서비스: 허용(Allow)
+                    <img src="../p1/fire3-inside-http.PNG">
+                    <div class="img-caption">Rule 1: Firefox3에서 Inside 구역으로 http 접속 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/fire3-inside-telnet.PNG">
+                    <div class="img-caption">Rule 1: Firefox3에서 Inside 구역으로 telnet 접속 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/fire5-dmz-telnet.PNG">
+                    <div class="img-caption">Rule 2: Webterm2에서 dmz 구역으로 telnet 접속 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/pc1-fire4-ping.PNG">
+                    <div class="img-caption">Rule 3: PC1에서 Webterm1으로 ping 통신 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/firewallrule4http.PNG">
+                    <div class="img-caption">Rule 4: Webterm1에서 R1 라우터로 http 접속 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/firewallrule4telnet.png.PNG">
+                    <div class="img-caption">Rule 4: Webterm1에서 R1 라우터로 telnet 접속 허용</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/firewall5ping.PNG">
+                    <div class="img-caption">Rule 5: Webterm2에서 PC1으로 ping 통신 허용</div>
+                </div>
+            </div>
+
+            <h3>2. HSRP Configuration (High Availability)</h3>
+            <p class="description">라우터 장애에 대비하여 HSRP(Host Standby Router Protocol)를 설정했습니다. Virtual Gateway : 192.168.50.254</p>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="../p1/HSRP-active.PNG">
+                    <div class="img-caption">R4: HSRP Active 상태 확인 (Primary Gateway)</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/HSRP-standby.PNG">
+                    <div class="img-caption">R3: HSRP Standby 상태 확인 (Failover 대기)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 02. VirtualBox 활용 보안 시스템 구축 -->
+        <section>
+            <h2>02. VirtualBox Security Solutions</h2>
+            <p class="description">VirtualBox에 설치된 가상 머신들을 연동하여 VPN, IDS, SIEM 보안 서버를 구축했습니다.</p>
+
+            <h3>1. OpenVPN Server</h3>
+            <p class="description">pfSense를 활용해 외부 클라이언트가 가상 터널(10.10.10.0/24)을 통해 내부망에 접속하는 환경을 구현했습니다.</p>
+            <div class="gallery-grid">
+                <div class="img-container">
+                    <img src="../p1/openvpn.PNG">
+                    <div class="img-caption">OpenVPN 서버 구축 후 외부 Win10 클라이언트 접속 확인</div>
+                </div>
+                <div class="img-container">
+                    <img src="../p1/openvpn2.PNG">
+                    <div class="img-caption">가상터널(10.10.10.0/24) 및 내부 네트워크(192.168.16.0/24) 설정</div>
+                </div>
+            </div>
+
+            <h3>2. Threat Detection Scenarios (Snort)</h3>
+            <div class="scenarios-grid">
+                <div class="scenario-box">
+                    <h3>Scenario 1: ICMP & HTTP</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/snort(win10-ossec)ping-cmd.PNG"><div class="img-caption">[공격] Ping 시도</div></div>
+                        <div class="img-container"><img src="../p1/snort(win10-ossec)ping.PNG"><div class="img-caption">[탐지] ICMP 알람</div></div>
+                    </div>
+                    <div class="img-container" style="margin-top:10px;"><img src="../p1/snort(win10-ossec)http.PNG"><div class="img-caption">[탐지] HTTP 트래픽 식별</div></div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 2: Inter-Network Ping</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/rocky-win-ping.PNG"><div class="img-caption">[공격] Rocky9 -> Win10</div></div>
+                        <div class="img-container"><img src="../p1/rocky-win-ping-result.PNG"><div class="img-caption">[탐지] 통신 탐지</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 3: Command Injection</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/rockinjectcurl.PNG"><div class="img-caption">[공격] /etc/passwd 접근</div></div>
+                        <div class="img-container"><img src="../p1/injection-dect.PNG"><div class="img-caption">[탐지] 패턴 매칭</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 4: DDoS (Land Attack)</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/random-attack.PNG"><div class="img-caption">[공격] Random IP DDoS</div></div>
+                        <div class="img-container"><img src="../p1/randomattack-detection.PNG"><div class="img-caption">[탐지] 플러딩 탐지</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 5: SYN Scanning</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/snort-synflagattack.PNG"><div class="img-caption">[공격] 포트 스캐닝</div></div>
+                        <div class="img-container"><img src="../p1/snort-synflagdetection.PNG"><div class="img-caption">[탐지] SYN 스캔 식별</div></div>
                     </div>
                 </div>
             </div>
 
-            <h3>Cisco ASAv Firewall Rules</h3>
-            <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/assv-https.PNG"><div class="img-caption">Rule 1-1: Inside망 HTTPS 접속 허용</div></div>
-                <div class="img-container"><img src="../p2/assv-telnet.PNG"><div class="img-caption">Rule 1-2: Inside망 Telnet 접속 허용</div></div>
-                <div class="img-container"><img src="../p2/asav-dns-r3-ping.PNG"><div class="img-caption">Rule 2: PC7(DNS)에서 R3로의 Ping 허용</div></div>
-                <div class="img-container"><img src="../p2/asav-r2-r4-ssh.PNG"><div class="img-caption">Rule 3: R2에서 R4로의 SSH 접속 허용</div></div>
-            </div>
-
-            <h3>Router ACL (Access Control List)</h3>
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/r3acl.PNG">
-                    <div class="img-caption">R3 라우터 ACL 정책 설정 및 적용 결과</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2) VirtualBox 기반 보안 및 시스템 서비스 -->
-        <section>
-            <h2>2) VirtualBox: Security Solutions & Hardening</h2>
-
-            <h3>NIDS 침입 탐지 (Snort)</h3>
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/snort-kali-web-ddos.PNG">
-                    <div class="img-caption">Scenario 1: Kali Linux에서 Web 서버로의 DDoS 공격 탐지</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/snort-kali-ctf.PNG">
-                    <div class="img-caption">Scenario 2: Kali에서 CTF 서버 대상 /etc/passwd 접근 시도 탐지</div>
-                </div>
-            </div>
-
-            <h3>MariaDB & PMM Monitoring</h3>
-            <p class="description">PMM(Percona Monitoring and Management)을 통한 DB 모니터링 및 시나리오 기반 권한 부여 실습</p>
-            <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/pmm2.PNG"><div class="img-caption">PMM 대시보드 메인 화면</div></div>
-                <div class="img-container"><img src="../p2/pmmserverclientconnection.PNG"><div class="img-caption">Server-Client 에이전트 연결 상태 확인</div></div>
-                <div class="img-container"><img src="../p2/db.PNG"><div class="img-caption">DB 문제 시나리오 확인</div></div>
-                <div class="img-container"><img src="../p2/db1.PNG"><div class="img-caption">비트 연산 기반 데이터 조회 결과</div></div>
-                <div class="img-container"><img src="../p2/db-Cdev.PNG"><div class="img-caption">Cdev: 로컬호스트 전체 권한 부여</div></div>
-                <div class="img-container"><img src="../p2/db-Pydev.PNG"><div class="img-caption">Pydev: 특정 테이블 Select/Create 권한 제어</div></div>
-                <div class="img-container"><img src="../p2/db-Jdev.PNG"><div class="img-caption">Jdev: 특정 IP 대상 테이블 권한 부여</div></div>
-            </div>
-
-            <h3>Samba & NFS Resource Sharing</h3>
-            <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/samba-window.PNG"><div class="img-caption">Windows에서 Samba 공유 자원(testsamba, samba.txt) 생성</div></div>
-                <div class="img-container"><img src="../p2/samba2.PNG"><div class="img-caption">Linux 환경에서 실시간 공유 파일 동기화 확인</div></div>
-                <div class="img-container"><img src="../p2/nfs-result.png"><div class="img-caption">Rocky Linux NFS Server-Client 연결 및 공유 결과</div></div>
-                <div class="img-container"><img src="../p2/nameserver-nfsclient.PNG"><div class="img-caption">NMS 연동: nfs.project.com 도메인 설정 결과</div></div>
-            </div>
-
-            <h3>FTP / SFTP / FTPS 보안 전송</h3>
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/ftp2.PNG">
-                    <div class="img-caption">서버 내 Move 디렉토리 및 ftp.txt 파일 생성 확인</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/ftp.PNG">
-                    <div class="img-caption">파일질라(FileZilla)를 통해 192.168.16.2 접속 시 생성된 파일 확인</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/ftps-certi.PNG">
-                    <div class="img-caption">FTPS 보안 연결을 위한 서버 인증서(Certificate) 적용</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/sftp.PNG">
-                    <div class="img-caption">SFTP 보안 접속 성공 (sftp://192.168.16.2)</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/ftps.PNG">
-                    <div class="img-caption">FTPS 보안 접속 성공 (ftps://192.168.16.2)</div>
-                </div>
-            </div>
-
-            <h3>CTF Challenge: Venus</h3>
-            <p class="description">
-                정보 수집부터 권한 상승까지의 전체 침투 테스트 과정을 실습했습니다.<br>
-                <strong>주요 기법:</strong> 인증 토큰 우회(ROT13/Base64), 사전 대입 공격(Hydra), CVE-2021-4034 취약점 활용
-            </p>
-            <div class="gallery-grid">
-                <div class="img-container">
-                    <img src="../p2/venus-userflag.PNG">
-                    <div class="img-caption">Nmap/BurpSuite/Hydra를 활용한 User 계정 탈취 및 Flag 획득</div>
-                </div>
-                <div class="img-container">
-                    <img src="../p2/venus-rootflag.PNG">
-                    <div class="img-caption">CVE-2021-4034 익스플로잇을 통한 Root 권한 상승 및 최종 Flag 획득</div>
-                </div>
-            </div>
-            <p style="text-align: center;">
-                <a href="https://velog.io/@seojin5112/Project2-CTF-Venus-문제풀이" target="_blank" class="velog-link">
-                    Nmap, Burp Suite, Hydra 등을 활용한 상세 풀이 과정 보러가기 (Velog)
-                </a>
-            </p>
-
-            <h3>Linux System Hardening & DNS</h3>
-            <div class="gallery-grid">
-                <div class="img-container"><img src="../p2/dns-2.PNG"><div class="img-caption">DNS 서버 패스워드 정책 적용 및 Passed 설정</div></div>
-                <div class="img-container"><img src="../p2/dns-3.PNG"><div class="img-caption">wtmp, btmp 로그 경로 확인 및 접속 기록 분석</div></div>
-                <div class="img-container">
-                    <img src="../p2/stickybit.PNG">
-                    <div class="img-caption">
-                        <strong>Sticky Bit(chmod 1777) 설정</strong>
-                        <ul class="detail-list">
-                            <li>1. /tmp/shared 디렉토리 생성 및 권한 1777 부여 (1=Sticky Bit)</li>
-                            <li>2. test 사용자가 test.txt 파일 생성</li>
-                            <li>3. test2 사용자가 삭제 시도 시 'Operation not permitted' 발생 확인</li>
-                            <li>결론: 공용 공간에서 소유자 외 파일 삭제 방지</li>
-                        </ul>
+            <h3 style="margin-top:60px;">3. Threat Detection Scenarios (Suricata)</h3>
+            <div class="scenarios-grid">
+                <div class="scenario-box">
+                    <h3>Scenario 1: ICMP & HTTP</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/suriwin-ossec-ping.PNG"><div class="img-caption">[공격] Win10 통신</div></div>
+                        <div class="img-container"><img src="../p1/surwin-ossec-pingdetect.PNG"><div class="img-caption">[탐지] fast.log 경보</div></div>
                     </div>
                 </div>
-                <div class="img-container"><img src="../p2/dns-4.PNG"><div class="img-caption">SetUID 설정: r/project 실행을 통한 Root 권한 상승 확인</div></div>
-                <div class="img-container"><img src="../p2/dns-5bof.PNG"><div class="img-caption">BoF Test: 간단한 코드를 이용한 Buffer Overflow 발생 여부 점검</div></div>
-                <div class="img-container"><img src="../p2/loganlyzer.PNG"><div class="img-caption">LogAnalyzer를 통한 웹 기반 시스템 로그 시각화</div></div>
-                <div class="img-container"><img src="../p2/ossecresult.PNG"><div class="img-caption">OSSEC: Zabbix, Ubuntu, Rocky 클라이언트 통합 모니터링 확인</div></div>
+                <div class="scenario-box">
+                    <h3>Scenario 2: Inter-Network Ping</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/surirocky-win-ping.PNG"><div class="img-caption">[공격] Rocky9 호스트</div></div>
+                        <div class="img-container"><img src="../p1/surirocky-winping-det.PNG"><div class="img-caption">[탐지] 실시간 알람</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 3: Command Injection</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/suri-injection-attack.PNG"><div class="img-caption">[공격] 악성 페이로드</div></div>
+                        <div class="img-container"><img src="../p1/suri-injection-detec.PNG"><div class="img-caption">[탐지] 명령어 삽입</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 4: DDoS (Land Attack)</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/surikali-winrandattack.PNG"><div class="img-caption">[공격] 위조 패킷</div></div>
+                        <div class="img-container"><img src="../p1/surikali-win-randattack2.PNG"><div class="img-caption">[탐지] 임계치 기반</div></div>
+                    </div>
+                </div>
+                <div class="scenario-box">
+                    <h3>Scenario 5: SYN Scanning</h3>
+                    <div class="comparison-grid">
+                        <div class="img-container"><img src="../p1/surikali-rocky-synattack.PNG"><div class="img-caption">[공격] Nmap 스캔</div></div>
+                        <div class="img-container"><img src="../p1/suri-kali-rocky-syn-attack-det.PNG"><div class="img-caption">[탐지] 패턴 감지</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>4. OSSEC 구축</h3>
+            <p class="description">OSSEC 매니저 서버와 Windows/Rocky Linux 에이전트를 연동하여 실시간 통합 로그 모니터링 체계를 구축했습니다.</p>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p1/ossecserver.PNG"><div class="img-caption">Win10 Agent 추가 및 키 생성</div></div>
+                <div class="img-container"><img src="../p1/ossecagent.PNG"><div class="img-caption">Agent 등록 확인 및 키 추출</div></div>
+                <div class="img-container"><img src="../p1/ossecserver2.PNG"><div class="img-caption">Agent Manager 인증 키 등록</div></div>
+                <div class="img-container"><img src="../p1/ossecwindowfinal.PNG"><div class="img-caption">Rocky Agent 추가 및 연결</div></div>
+                <div class="img-container"><img src="../p1/windowossec4tail.PNG"><div class="img-caption">실시간 Alert 로그 모니터링 확인</div></div>
+            </div>
+
+            <h3>5. Zabbix 구축</h3>
+            <p class="description">Zabbix Server를 통해 Windows 및 Ubuntu 에이전트의 시스템 자원 가동 상태를 시각화했습니다.</p>
+            <div class="gallery-grid">
+                <div class="img-container"><img src="../p1/zabbixhome.PNG"><div class="img-caption">Zabbix Server 메인 대시보드</div></div>
+                <div class="img-container"><img src="../p1/zabbixwindowre.PNG"><div class="img-caption">호스트 구성 정보: 에이전트 연결 확인</div></div>
             </div>
         </section>
     </main>
@@ -195,7 +348,7 @@
     <div id="lightbox"><img id="lightbox-img" src=""></div>
 
     <script>
-        const images = document.querySelectorAll('.img-container img');
+        const images = document.querySelectorAll('img');
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
 
