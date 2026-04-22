@@ -53,7 +53,18 @@
             border-radius: 20px;
         }
 
-        /* [수정 부분: 사진 크기 및 화살표 위치 고정] */
+        /* [수정 부분: 일반 이미지 컨테이너 크기 고정] */
+        .img-container img {
+            width: 100%;
+            height: 450px; /* 슬라이더와 동일한 높이로 고정 */
+            object-fit: contain; /* 비율 유지 */
+            background-color: #050505; /* 여백 배경색 */
+            border-radius: 8px;
+            cursor: zoom-in;
+            display: block;
+        }
+
+        /* 슬라이더 스타일 */
         .slider-container {
             position: relative;
             max-width: 800px;
@@ -71,7 +82,6 @@
 
         .slides.active { display: block; }
 
-        /* 사진 높이를 450px로 고정하고 비율을 유지하도록 설정 */
         .slides img {
             width: 100%;
             height: 450px; 
@@ -94,11 +104,10 @@
             from {opacity: .4} to {opacity: 1}
         }
 
-        /* 컨트롤 버튼 위치를 사진 영역(450px)의 중앙에 고정 */
         .prev, .next {
             cursor: pointer;
             position: absolute;
-            top: 225px; /* 이미지 고정 높이 450px의 정확히 절반 */
+            top: 225px; 
             transform: translateY(-50%);
             width: auto;
             padding: 16px;
@@ -128,7 +137,6 @@
             z-index: 11;
         }
 
-        /* 파일 다운로드 섹션 */
         .file-section {
             background: #222;
             padding: 40px;
@@ -174,7 +182,7 @@
                 본 프로젝트는 각 팀원이 자신만의 창의적인 취약점을 포함한 보안 문제를 5개씩 출제하고, 팀별로 서로의 문제를 해결하는 워게임 대회 형식으로 진행되었습니다.
             </p>
             <div class="img-container" style="max-width: 900px; margin: 0 auto; border: 1px solid var(--border); padding: 10px; border-radius: 10px;">
-                <img src="../wargame/main.PNG" alt="Score Board" style="width:100%; border-radius: 5px;">
+                <img src="../wargame/main.PNG" alt="Score Board">
                 <div class="img-caption" style="text-align: center; margin-top: 10px;">Figure 1. Starmap 문제 메인 화면</div>
             </div>
         </section>
@@ -193,7 +201,6 @@
                 </p>
                 
                 <div class="slider-container" id="slider1">
-                    <!-- 슬라이드 1 -->
                     <div class="slides active">
                         <div class="counter">1 / 4</div>
                         <img src="../wargame/q1.png" alt="Problem Screen">
@@ -202,7 +209,6 @@
                             "You are not logged in" 힌트를 통해 인증 세션 혹은 쿠키와 관련된 취약점임을 유추할 수 있습니다.
                         </div>
                     </div>
-                    <!-- 슬라이드 2 -->
                     <div class="slides">
                         <div class="counter">2 / 4</div>
                         <img src="../wargame/q1-1.png" alt="Analyze">
@@ -211,7 +217,6 @@
                             인증 관련 쿠키인 <code>loggedin</code>의 Value 값이 0(거부)으로 설정되어 있는 것을 확인했습니다.
                         </div>
                     </div>
-                    <!-- 슬라이드 3 -->
                     <div class="slides">
                         <div class="counter">3 / 4</div>
                         <img src="../wargame/q1-2.png" alt="Bypass">
@@ -220,7 +225,6 @@
                             값을 1(관리자 권한)로 직접 변경 후 페이지를 새로고침하여 서버 인증을 통과시켰습니다.
                         </div>
                     </div>
-                    <!-- 슬라이드 4 -->
                     <div class="slides">
                         <div class="counter">4 / 4</div>
                         <img src="../wargame/q1-3.png" alt="Flag">
@@ -244,7 +248,6 @@
             </p>
             
             <div class="slider-container" id="slider2">
-                <!-- 슬라이드 1 -->
                 <div class="slides active">
                     <div class="counter">1 / 3</div>
                     <img src="../wargame/q2.png" alt="Challenge Screen">
@@ -252,8 +255,6 @@
                         <strong>[Stage 1] 문제 접속 및 탐색</strong><br>
                     </div>
                 </div>
-
-                <!-- 슬라이드 2 -->
                 <div class="slides">
                     <div class="counter">2 / 3</div>
                     <img src="../wargame/q2-1.png" alt="View Source Hint">
@@ -262,8 +263,6 @@
                         페이지 소스 보기 중 주석으로 숨겨진 <code>hint: Next flag is in /etc/star_webpass/cmd</code>를 발견하여 타겟 경로를 식별했습니다.
                     </div>
                 </div>
-
-                <!-- 슬라이드 3 -->
                 <div class="slides">
                     <div class="counter">3 / 3</div>
                     <img src="../wargame/q2-2.png" alt="LFI Attack & Success">
@@ -274,7 +273,6 @@
                     </div>
                 </div>
 
-                <!-- 슬라이더 컨트롤 -->
                 <a class="prev" onclick="moveSlide(-1, 'slider2')">❮</a>
                 <a class="next" onclick="moveSlide(1, 'slider2')">❯</a>
             </div>
@@ -289,7 +287,6 @@
         </p>
         
         <div class="slider-container" id="slider3">
-            <!-- 슬라이드 1 -->
             <div class="slides active">
                 <div class="counter">1 / 5</div>
                 <img src="../wargame/q3.png" alt="Challenge Screen">
@@ -298,8 +295,6 @@
                     패스워드 입력값이 서버 측의 <code>strcmp()</code> 함수를 통해 검증되는 단계입니다.
                 </div>
             </div>
-
-            <!-- 슬라이드 2 -->
             <div class="slides">
                 <div class="counter">2 / 5</div>
                 <img src="../wargame/q3-1.png" alt="Wrong Password">
@@ -308,8 +303,6 @@
                     임의의 패스워드 입력 시 "Wrong password, try again" 알림창이 뜨며 인증에 실패합니다.
                 </div>
             </div>
-
-            <!-- 슬라이드 3 -->
             <div class="slides">
                 <div class="counter">3 / 5</div>
                 <img src="../wargame/q3-2.png" alt="Burp Suite Intercept">
@@ -318,8 +311,6 @@
                     Burp Suite를 통해 전송되는 패킷을 캡처합니다. 현재 <code>password=asdf</code>와 같은 문자열 형태로 전송되고 있습니다.
                 </div>
             </div>
-
-            <!-- 슬라이드 4 -->
             <div class="slides">
                 <div class="counter">4 / 5</div>
                 <img src="../wargame/q3-3.png" alt="Payload Modification">
@@ -328,8 +319,6 @@
                     파라미터명을 <code>password[]</code>로 수정하여 배열 타입으로 전송합니다. 이를 통해 함수가 0(True)을 반환하도록 유도합니다.
                 </div>
             </div>
-
-            <!-- 슬라이드 5 -->
             <div class="slides">
                 <div class="counter">5 / 5</div>
                 <img src="../wargame/q3-4.png" alt="Flag Obtained">
@@ -339,7 +328,6 @@
                 </div>
             </div>
 
-            <!-- 슬라이더 컨트롤 -->
             <a class="prev" onclick="moveSlide(-1, 'slider3')">❮</a>
             <a class="next" onclick="moveSlide(1, 'slider3')">❯</a>
         </div>
@@ -354,7 +342,6 @@
     </p>
     
     <div class="slider-container" id="slider4">
-        <!-- 슬라이드 1 -->
         <div class="slides active">
             <div class="counter">1 / 6</div>
             <img src="../wargame/q4.png" alt="Challenge Screen">
@@ -363,8 +350,6 @@
                 문제 화면에서 <code>encodeSecret()</code> 함수 로직을 이용하라는 핵심 힌트를 확인했습니다.
             </div>
         </div>
-
-        <!-- 슬라이드 2 -->
         <div class="slides">
             <div class="counter">2 / 6</div>
             <img src="../wargame/q4-1.png" alt="Source Analysis">
@@ -374,8 +359,6 @@
                 <code>Logic: bin2hex(strrev(base64_encode($secret)))</code>
             </div>
         </div>
-
-        <!-- 슬라이드 3 -->
         <div class="slides">
             <div class="counter">3 / 6</div>
             <img src="../wargame/q4-2.png" alt="Hex Decode">
@@ -385,8 +368,6 @@
                 <code>hex2bin("3d4d31554242315242786b52")</code> -> <code>=M1UBB1RBxkR</code>
             </div>
         </div>
-
-        <!-- 슬라이드 4 -->
         <div class="slides">
             <div class="counter">4 / 6</div>
             <img src="../wargame/q4-3.png" alt="String Reverse">
@@ -396,8 +377,6 @@
                 <code>strrev("=M1UBB1RBxkR")</code> -> <code>RkxBR1BBU1M</code>
             </div>
         </div>
-
-        <!-- 슬라이드 5 -->
         <div class="slides">
             <div class="counter">5 / 6</div>
             <img src="../wargame/q4-4.png" alt="Base64 Decode">
@@ -407,8 +386,6 @@
                 <code>base64_decode("RkxBR1BBU1M")</code> -> <strong>FLAGPASS</strong>
             </div>
         </div>
-
-        <!-- 슬라이드 6 -->
         <div class="slides">
             <div class="counter">6 / 6</div>
             <img src="../wargame/q4-5.png" alt="Flag Success">
@@ -418,7 +395,6 @@
             </div>
         </div>
 
-        <!-- 슬라이더 컨트롤 -->
         <a class="prev" onclick="moveSlide(-1, 'slider4')">❮</a>
         <a class="next" onclick="moveSlide(1, 'slider4')">❯</a>
     </div>
@@ -433,7 +409,6 @@
     </p>
     
     <div class="slider-container" id="slider5">
-        <!-- 슬라이드 1 -->
         <div class="slides active">
             <div class="counter">1 / 4</div>
             <img src="../wargame/q5.png" alt="Challenge Screen">
@@ -442,8 +417,6 @@
                 "서버에 너무 많은 것을 요구하면 심장이 비밀을 드러낸다"는 힌트를 통해, 데이터 길이를 속여 메모리를 유출시키는 <strong>Heartbleed </strong>공격 방식임을 유추했습니다.
             </div>
         </div>
-
-        <!-- 슬라이드 2 -->
         <div class="slides">
             <div class="counter">2 / 4</div>
             <img src="../wargame/q5-1.png" alt="Memory Leak Probe">
@@ -452,8 +425,6 @@
                 Payload를 <code>a</code>(1바이트)로 입력하고 Length를 <code>840</code>으로 높게 설정하여 요청했습니다. 출력된 메모리 끝부분에서 <code>FLAG</code> 문구의 시작점을 포착했습니다.
             </div>
         </div>
-
-        <!-- 슬라이드 3 -->
         <div class="slides">
             <div class="counter">3 / 4</div>
             <img src="../wargame/q5-2.png" alt="Full Memory Leak">
@@ -462,8 +433,6 @@
                 더 넓은 범위의 데이터를 얻기 위해 Length를 <code>890</code>으로 증액하여 재요청했습니다. 그 결과, 서버 메모리 깊숙한 곳에 저장된 전체 플래그 값을 추출하는 데 성공했습니다.
             </div>
         </div>
-
-        <!-- 슬라이드 4 -->
         <div class="slides">
             <div class="counter">4 / 4</div>
             <img src="../wargame/q5-4.png" alt="Challenge Success">
@@ -473,7 +442,6 @@
             </div>
         </div>
 
-        <!-- 슬라이더 컨트롤 -->
         <a class="prev" onclick="moveSlide(-1, 'slider5')">❮</a>
         <a class="next" onclick="moveSlide(1, 'slider5')">❯</a>
     </div>
@@ -497,11 +465,9 @@
     </div>
 
     <script>
-    // 슬라이더 인덱스 관리 (슬라이더가 추가되어도 자동으로 대응하도록 수정)
     let slideIndices = {};
 
     function moveSlide(n, sliderId) {
-        // 해당 슬라이더의 인덱스가 아직 없다면 0으로 초기화
         if (slideIndices[sliderId] === undefined) {
             slideIndices[sliderId] = 0;
         }
@@ -511,7 +477,6 @@
         
         slideIndices[sliderId] += n;
 
-        // 인덱스 범위 체크 (무한 루프)
         if (slideIndices[sliderId] >= slides.length) { 
             slideIndices[sliderId] = 0; 
         }
@@ -519,16 +484,13 @@
             slideIndices[sliderId] = slides.length - 1; 
         }
 
-        // 모든 슬라이드 숨기기
         for (let i = 0; i < slides.length; i++) {
             slides[i].classList.remove("active");
         }
         
-        // 해당 인덱스의 슬라이드만 보이기
         slides[slideIndices[sliderId]].classList.add("active");
     }
 
-    // 라이트박스 (확대 보기) 기능
     const images = document.querySelectorAll('.slides img, .img-container img');
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
