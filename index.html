@@ -7,348 +7,353 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #111111;
-            --bg-card: #1A1A1A;
-            --accent: #00BCD4;       /* Cyan */
-            --accent-dim: #008ba3;
-            --text-main: #FAFAFA;
+            --bg-dark: #0A0A0A;
+            --bg-card: #141414;
+            --accent: #00DBFF;       /* Cyan */
+            --text-main: #FFFFFF;
             --text-sub: #A0A0A0;
-            --border: #333333;
+            --border: #222222;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: #000;
             color: var(--text-main);
             line-height: 1.5;
-            font-size: 15px;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
         }
 
-        body.modal-open { overflow: hidden; } /* 모달 열릴 때 배경 스크롤 방지 */
-
-        a { text-decoration: none; color: inherit; transition: 0.2s; }
-        ul { list-style: none; }
+        /* 메인 컨테이너 */
+        .portfolio-container {
+            width: 100%;
+            max-width: 1280px;
+            background-color: var(--bg-dark);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            padding: 60px;
+            position: relative;
+        }
 
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 5%;
-            background: rgba(17, 17, 17, 0.95);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(5px);
+            margin-bottom: 70px;
         }
 
-        .logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px; }
         .logo span { color: var(--accent); }
 
-        nav a { margin-left: 30px; font-size: 0.9rem; font-weight: 500; color: var(--text-sub); }
-        nav a:hover { color: var(--accent); }
+        nav a { margin-left: 30px; font-size: 0.9rem; color: var(--text-sub); text-decoration: none; font-weight: 500; }
+        nav a:hover { color: var(--text-main); }
 
-        main { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-        section { padding: 60px 0; border-bottom: 1px solid #222; }
-        section:last-child { border-bottom: none; }
+        /* 좌우 레이아웃 */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 80px;
+        }
 
-        h2 {
-            font-size: 2rem;
+        /* 왼쪽 패널 */
+        .left-panel .hero-badge {
+            background: rgba(0, 219, 255, 0.1);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .left-panel h1 {
+            font-size: 3.8rem;
             font-weight: 800;
-            margin-bottom: 30px;
-            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+        .left-panel h1 span { color: var(--accent); }
+        
+        .hero-desc {
+            font-size: 0.95rem;
+            color: var(--text-sub);
+            margin-bottom: 60px;
+            max-width: 360px;
+            word-break: keep-all;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
         }
-        h2::before {
-            content: ''; width: 6px; height: 24px; background: var(--accent);
+        .section-title::before {
+            content: ''; width: 4px; height: 20px; background: var(--accent);
             margin-right: 12px; border-radius: 2px;
         }
 
-        #hero { padding: 80px 0 60px 0; text-align: left; }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(0, 188, 212, 0.1);
-            color: var(--accent);
-            padding: 5px 12px;
-            border-radius: 20px;
+        .expertise-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 80px;
+        }
+        .tag-pill {
+            background: #1A1A1A;
+            border: 1px solid #333;
+            padding: 8px 14px;
+            border-radius: 6px;
             font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+            color: #EEE;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            line-height: 1.1;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
+        .contact-box {
+            border: 1px dashed #444;
+            padding: 30px;
+            border-radius: 12px;
+            width: fit-content;
+            min-width: 250px;
         }
-        h1 span { color: var(--accent); }
+        .contact-box h4 { color: var(--accent); font-size: 0.8rem; margin-bottom: 12px; font-weight: 700; }
+        .contact-box p { font-size: 1rem; font-weight: 600; color: #fff; }
 
-        .hero-desc {
-            font-size: 1.1rem;
-            color: var(--text-sub);
-            max-width: 700px;
-        }
-
-        .skills-grid {
+        /* 오른쪽 패널 */
+        .project-group { margin-bottom: 60px; }
+        .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-        }
-
-        .skill-card h3 {
-            font-size: 1.1rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-            font-weight: 700;
-            border-bottom: 1px solid #333;
-            padding-bottom: 8px;
-        }
-
-        .skill-card li {
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: #ccc;
-            padding-left: 15px;
-            position: relative;
-        }
-
-        .skill-card li::before {
-            content: '›';
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: bold;
-        }
-        
-        .skill-card strong { color: white; font-weight: 600; }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
         .project-card {
             background: var(--bg-card);
-            padding: 25px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            transition: transform 0.2s, border-color 0.2s;
-            display: block;
+            padding: 28px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            transition: all 0.3s ease;
             cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .project-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .card-header h3 { font-size: 1.1rem; font-weight: 700; line-height: 1.3; }
+        .card-icon { font-size: 1.3rem; }
+
+        .card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .card-tag { 
+            font-size: 0.7rem; 
+            color: var(--accent); 
+            background: rgba(0, 219, 255, 0.08); 
+            padding: 3px 8px; 
+            border-radius: 4px; 
+            font-weight: 700; 
         }
 
-        .project-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-        }
+        .card-desc { font-size: 0.85rem; color: #888; line-height: 1.6; word-break: keep-all; }
 
-        .project-card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 700; }
-        
-        .tags { margin-bottom: 12px; }
-        .tag {
-            font-size: 0.75rem;
-            background: #252525;
-            color: var(--accent);
-            padding: 3px 8px;
-            border-radius: 4px;
-            margin-right: 5px;
-        }
-
-        .project-desc { font-size: 0.9rem; color: var(--text-sub); line-height: 1.4; }
-
-        #contact { text-align: center; padding: 60px 0; }
-        .contact-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 30px;
-            border: 1px solid var(--accent);
-            color: var(--accent);
-            border-radius: 50px;
-            font-weight: 600;
-        }
-        .contact-btn:hover { background: var(--accent); color: var(--bg-dark); }
+        /* 강조 카드 스타일 (이미지의 파란 테두리 효과) */
+        .featured { border-color: var(--accent); box-shadow: 0 0 25px rgba(0, 219, 255, 0.1); }
 
         footer {
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid var(--border);
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
             font-size: 0.8rem;
-            color: #555;
+            color: #444;
         }
 
-        /* [모달 스타일 추가] */
+        /* 모달 스타일 */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(8px);
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);
         }
-
         .modal-content {
-            position: relative;
-            background-color: var(--bg-dark);
-            margin: 2% auto;
-            width: 90%;
-            max-width: 1100px;
-            height: 85vh;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0, 188, 212, 0.2);
+            background: #000; margin: 2% auto; width: 92%; max-width: 1200px;
+            height: 88vh; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid #333;
         }
+        .close-btn { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 35px; cursor: pointer; z-index: 2100; }
+        iframe { width: 100%; height: 100%; border: none; }
+        body.modal-open { overflow: hidden; }
 
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 25px;
-            color: var(--text-main);
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1100;
-            transition: 0.2s;
-        }
-        .close-btn:hover { color: var(--accent); }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: var(--bg-dark);
+        @media (max-width: 1100px) {
+            .main-layout { grid-template-columns: 1fr; gap: 50px; }
+            .project-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">SeoJin<span>.SEC</span></div>
-        <nav>
-            <a href="#hero">Home</a>
-            <a href="#skills">Skills</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
+    <div class="portfolio-container">
+        <header>
+            <div class="logo">SeoJin<span>.SEC</span></div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Experience</a>
+                <a href="#">Contact</a>
+            </nav>
+        </header>
 
-    <main>
-        <!-- HERO SECTION -->
-        <section id="hero">
-            <span class="hero-badge">Available for Hire</span>
-            <h1>Deep Insight.<br><span>Active Defense.</span></h1>
-            <p class="hero-desc">
-            "작은 로그 하나도 놓치지 않는 집요함으로 위협의 신호를 포착합니다."<br>
-            Wazuh와 IDS를 활용해 수많은 이벤트 속에서 유의미한 공격 징후를 식별하고, 정확한 분석을 통해 <strong>가장 빠른 대응책을 제시</strong>하는 보안 분석가입니다.
-            </p>
-        </section>
-        
-        <!-- SKILLS SECTION -->
-        <section id="skills">
-            <h2>Technical Stack</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3>Network Security</h3>
-                    <ul>
-                        <li>Cisco (Router/Switch, ASAv)</li>
-                        <li>VPN (IPSec, Remote Access), PfSense</li>
-                        <li>L3/L4 Security (ACL, ZFW, NAT)</li>
-                        <li>HA Network (HSRP/VRRP/GLBP)</li>
-                    </ul>
+        <div class="main-layout">
+            <!-- 왼쪽 섹션 -->
+            <div class="left-panel">
+                <span class="hero-badge">Aspiring Security Solution Engineer</span>
+                    <h1>Detect. Analyze.<br><span>Defend.</span></h1>
+                    <p class="hero-desc">
+                        " 작은 로그 속에서도 위협의 흐름을 읽어냅니다. "<br><br>
+                        Wazuh와 IDS 기반의 탐지 환경을 구축하고, 네트워크 보안 인프라 설계와 취약점 분석을 통해 공격을 이해하고 방어로 연결하는 보안 엔지니어입니다.
+                    </p>
+
+                <div class="section-title">Skills</div>
+                <div class="expertise-tags">
+                    <span class="tag-pill">Wazuh(SIEM)</span>
+                    <span class="tag-pill">GNS3(Asav)/PfSense</span>
+                    <span class="tag-pill">Snort/Suricata</span>
+                    <span class="tag-pill">Wireshark(Packet Analysis)</span>
+                    <span class="tag-pill">Linux(Ubuntu/Kali/Rocky)</span>
+                    <span class="tag-pill">MariaDB</span>
+                    <span class="tag-pill">Zabbix/Graylog</span>
+                    <span class="tag-pill">Shell Scripting</span>
                 </div>
-                <div class="skill-card">
-                    <h3>System Security</h3>
-                    <ul>
-                        <li>Linux (Rocky, Ubuntu), Windows 2022</li>
-                        <li>System Hardening (계정/권한 관리)</li>
-                        <li><strong>Shell Scripting (취약점 자동점검)</strong></li>
-                        <li>Access Control (Iptables, Firewalld)</li>
-                    </ul>
-                </div>
-                <div class="skill-card">
-                    <h3>Security Ops (SIEM)</h3>
-                    <ul>
-                        <li><strong>Wazuh</strong>, Security Onion 구축</li>
-                        <li>Snort/Suricata (Rule Customizing)</li>
-                        <li>Log Analysis (Graylog, Zabbix)</li>
-                        <li>Packet Analysis (Wireshark)</li>
-                    </ul>
-                </div>
-                <div class="skill-card">
-                    <h3>Web & DB Security</h3>
-                    <ul>
-                        <li>Web Server (HTTPS/SSL), Docker</li>
-                        <li>MariaDB (Replication, DB보안)</li>
-                        <li>OWASP Top 10 대응</li>
-                        <li>Web Log Analysis (GoAccess)</li>
-                    </ul>
-                </div>
-                <div class="skill-card">
-                    <h3>Vulnerability Check</h3>
-                    <ul>
-                        <li>Kali Linux, <strong>GDB (Debugging)</strong></li>
-                        <li>Memory Analysis (BoF, ASLR)</li>
-                        <li>CTF / Wargame (Bandit, WebGoat)</li>
-                        <li>System/Web 모의해킹 수행</li>
-                    </ul>
+
+                <div class="contact-box">
+                    <h4>CONTACT INFO</h4>
+                    <p>cc4391@naver.com</p>
+                    <p>010-5112-9776</p>
                 </div>
             </div>
-        </section>
 
-        <!-- PROJECTS SECTION -->
-        <section id="projects">
-            <h2>Key Projects</h2>
-            <div class="projects-grid">
+            <!-- 오른쪽 섹션 -->
+            <div class="right-panel">
                 
-                <!-- Project 1 -->
-                <a href="project/project_1.html" class="project-card">
-                    <h3>🛡️ GNS3 & VirtualBox 보안 인프라 구축</h3>
-                    <div class="tags"><span class="tag">GNS3</span><span class="tag">ASAv</span><span class="tag">IDS(Snort/Suricata)</span><span class="tag">VPN</span></div>
-                    <p class="project-desc">방화벽·HSRP·VPN·IDS·SIEM을 포함한 가상 네트워크 보안 인프라 구축 실습(클릭 시 상세 팝업)</p>
-                </a>
-                
-                <!-- Project 2 -->
-                <a href="project/project_2.html" class="project-card">
-                    <h3>⚙️ Enterprise Network & Security Hardening</h3>
-                    <div class="tags"><span class="tag">GNS3</span><span class="tag">VLAN</span><span class="tag">Samba</span><span class="tag">FTP</span><span class="tag">CTF</span></div>
-                    <p class="project-desc">방화벽·HSRP·VPN·IDS·SIEM 통합 가상 네트워크 보안 인프라 구축 실습. (클릭 시 상세 팝업)</p>
-                </a>
+                <!-- Personal Projects -->
+                <div class="project-group">
+                    <div class="section-title">Personal Projects</div>
+                    <div class="project-grid">
+                        
+                        <!-- 개인 프로젝트 1 -->
+                        <a href="project/project_1.html" class="project-card">
+                            <div class="card-header">
+                                <span class="card-icon">🛡️</span>
+                                <h3>GNS3 & VirtualBox 보안 인프라 구축</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">GNS3</span>
+                                <span class="card-tag">ASAv</span>
+                                <span class="card-tag">IDS(Snort/Suricata)</span>
+                                <span class="card-tag">VPN</span>
+                            </div>
+                            <p class="card-desc">방화벽·HSRP·VPN·IDS·SIEM을 포함한 가상 네트워크 보안 인프라 구축 실습 (클릭 시 상세 팝업)</p>
+                        </a>
 
-                <!-- Project 3 -->
-                <a href="project/project_3.html" class="project-card">
-                    <h3>🔗 Enterprise Network Security Architecture Lab</h3>
-                    <div class="tags"><span class="tag">GNS3</span><span class="tag">Subnetting</span><span class="tag">WAF/SIEM</span><span class="tag">Wargame</span></div>
-                    <p class="project-desc">GNS3와 가상화 환경을 기반으로 네트워크 분리, 고가용성, 보안 관제 및 공격·방어 실습을 통합 구축한 보안 인프라 프로젝트(클릭 시 상세 팝업)</p>
-                </a>
+                        <!-- 개인 프로젝트 2 -->
+                        <a href="project/project_2.html" class="project-card">
+                            <div class="card-header">
+                                <span class="card-icon">⚙️</span>
+                                <h3>Enterprise Network & Security Hardening</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">GNS3</span>
+                                <span class="card-tag">VLAN</span>
+                                <span class="card-tag">Samba</span>
+                                <span class="card-tag">FTP</span>
+                                <span class="card-tag">CTF</span>
+                            </div>
+                            <p class="card-desc">GNS3와 VirtualBox를 활용한 네트워크 인프라 구축 및 IDS/SIEM 기반 보안 솔루션 적용 실습 (클릭 시 상세 팝업)</p>
+                        </a>
+
+                        <!-- 개인 프로젝트 3 -->
+                        <a href="project/project_3.html" class="project-card">
+                            <div class="card-header">
+                                <span class="card-icon">🔗</span>
+                                <h3>Enterprise Network Security Architecture Lab</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">GNS3</span>
+                                <span class="card-tag">Subnetting</span>
+                                <span class="card-tag">WAF/SIEM</span>
+                                <span class="card-tag">Wargame</span>
+                            </div>
+                            <p class="card-desc">GNS3와 가상화 환경을 기반으로 네트워크 분리, 고가용성, 보안 관제 및 공격·방어 실습을 통합 구축한 보안 인프라 프로젝트 (클릭 시 상세 팝업)</p>
+                        </a>
+
+                    </div>
+                </div>
+
+                <!-- Team Projects -->
+                <div class="project-group">
+                    <div class="section-title">Team Projects</div>
+                    <div class="project-grid">
+                        
+                        <!-- 팀 프로젝트 1 -->
+                        <a href="project/final_project.html" class="project-card featured">
+                            <div class="card-header">
+                                <span class="card-icon">🔍</span>
+                                <h3> Web/App 모의해킹 프로젝트</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">Web Pentest</span>
+                                <span class="card-tag">OWASP Top 10</span>
+                                <span class="card-tag">Report</span>
+                            </div>
+                            <p class="card-desc">애플리케이션 및 웹 서비스의 취약점을 분석하고 대응 방안을 제시하는 실무형 모의해킹 프로젝트</p>
+                        </a>
+
+                        <!-- 팀 프로젝트 2 -->
+                        <a href="project/wargame.html" class="project-card">
+                            <div class="card-header">
+                                <span class="card-icon">🎮</span>
+                                <h3>Wargame project</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">Pwnable</span>
+                                <span class="card-tag">Reversing</span>
+                                <span class="card-tag">Exploit</span>
+                            </div>
+                            <p class="card-desc">시스템 및 웹 해킹 문제를 제작하고 풀이하며 공격 기법을 심도 있게 연구하는 워게임 프로젝트</p>
+                        </a>
+
+                        <!-- 팀 프로젝트 3 -->
+                        <a href="project/ctf.html" class="project-card">
+                            <div class="card-header">
+                                <span class="card-icon">⚔️</span>
+                                <h3>CTF Project</h3>
+                            </div>
+                            <div class="card-tags">
+                                <span class="card-tag">CTF</span>
+                                <span class="card-tag">Forensics</span>
+                                <span class="card-tag">Security Contest</span>
+                            </div>
+                            <p class="card-desc">팀 단위로 참여하는 해킹 방어 대회 준비 및 공격/방어 시나리오 분석 프로젝트</p>
+                        </a>
+
+                    </div>
+                </div>
 
             </div>
-        </section>
+        </div>
 
-        <section id="contact">
-            <h2>Ready to Work?</h2>
-            <p style="color: #888; margin-bottom: 20px;">안전하고 효율적인 시스템 구축을 위한 준비가 되어 있습니다.</p>
-            <a href="mailto:cc4391@naver.com" class="contact-btn">Send Email</a>
-        </section>
-    </main>
+        <footer>
+            <div>© 2024 KIM SEO JIN. Portfolio</div>
+            <div>Security Engineering & Analysis Portfolio v1.0</div>
+        </footer>
+    </div>
 
-    <footer>
-        &copy; 2024 KIM SEO JIN. Designed for Security Professionals.
-    </footer>
-
-    <!-- [모달 컨테이너 추가] -->
+    <!-- 모달 컨테이너 -->
     <div id="projectModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -356,43 +361,30 @@
         </div>
     </div>
 
-    <!-- [자바스크립트 추가] -->
     <script>
         const modal = document.getElementById("projectModal");
         const modalFrame = document.getElementById("modalFrame");
         const closeBtn = document.querySelector(".close-btn");
         const projectCards = document.querySelectorAll(".project-card");
 
-        // 카드 클릭 시 모달 열기
         projectCards.forEach(card => {
             card.addEventListener("click", function(e) {
-                e.preventDefault(); // 페이지 이동 방지
+                e.preventDefault();
                 const projectUrl = this.getAttribute("href");
-                
                 modalFrame.src = projectUrl;
                 modal.style.display = "block";
                 document.body.classList.add("modal-open");
             });
         });
 
-        // 닫기 버튼 클릭
-        closeBtn.onclick = function() {
-            closeModal();
-        }
-
-        // 모달 외부 클릭 시 닫기
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
+        closeBtn.onclick = closeModal;
+        window.onclick = function(event) { if (event.target == modal) closeModal(); }
+        
         function closeModal() {
             modal.style.display = "none";
-            modalFrame.src = ""; // iframe 내용 초기화
+            modalFrame.src = "";
             document.body.classList.remove("modal-open");
         }
     </script>
-
 </body>
 </html>

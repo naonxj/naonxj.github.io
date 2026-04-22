@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: Wargame Team Battle & Challenge Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;
+            --text-main: #FAFAFA;
+            --text-sub: #AAAAAA;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+
+        .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 50px; }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
+        
+        .tags { margin-top: 20px; }
+        .tag { background: #222; color: var(--accent); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; margin-right: 8px; font-weight: 600; }
+
+        section { margin-bottom: 80px; }
+        h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; border-left: 5px solid var(--accent); padding-left: 15px; }
+        
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        .challenge-box {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        .challenge-box h4 {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .challenge-box .vuln-type {
+            font-size: 0.8rem;
+            background: rgba(0, 188, 212, 0.1);
+            padding: 2px 10px;
+            border-radius: 20px;
+        }
+
+        /* [수정 부분: 사진 크기 및 화살표 위치 고정] */
+        .slider-container {
+            position: relative;
+            max-width: 800px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: #000;
+        }
+
+        .slides {
+            display: none;
+            animation: fade 0.5s;
+        }
+
+        .slides.active { display: block; }
+
+        /* 사진 높이를 450px로 고정하고 비율을 유지하도록 설정 */
+        .slides img {
+            width: 100%;
+            height: 450px; 
+            object-fit: contain; 
+            background-color: #050505;
+            display: block;
+            cursor: zoom-in;
+        }
+
+        .slide-caption {
+            padding: 20px;
+            background: var(--bg-card);
+            color: var(--text-sub);
+            font-size: 0.95rem;
+            border-top: 1px solid var(--border);
+            min-height: 100px;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} to {opacity: 1}
+        }
+
+        /* 컨트롤 버튼 위치를 사진 영역(450px)의 중앙에 고정 */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 225px; /* 이미지 고정 높이 450px의 정확히 절반 */
+            transform: translateY(-50%);
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.3s ease;
+            user-select: none;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 10;
+            text-decoration: none;
+        }
+        .next { right: 0; border-radius: 5px 0 0 5px; }
+        .prev { left: 0; border-radius: 0 5px 5px 0; }
+        .prev:hover, .next:hover { background-color: var(--accent); color: #000; }
+
+        .counter {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.6);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: bold;
+            z-index: 11;
+        }
+
+        /* 파일 다운로드 섹션 */
+        .file-section {
+            background: #222;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            border: 2px dashed var(--accent);
+        }
+        .download-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: var(--accent);
+            color: #000;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .download-btn:hover { background: #fff; transform: scale(1.05); }
+
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 90%; }
+    </style>
+</head>
+<body>
+
+    <main>
+        <section class="project-header">
+            <h1>Wargame Team Battle: Challenge Design</h1>
+            <p>팀별 해킹 문제 제작 및 상호 풀이 경쟁 (Time-Attack 방식)</p>
+            <div class="tags">
+                <span class="tag">Web Hacking</span>
+                <span class="tag">System Hacking</span>
+                <span class="tag">Vulnerability Design</span>
+                <span class="tag">Team Competition</span>
+            </div>
+        </section>
+
+        <!-- 대회 개요 -->
+        <section>
+            <h2>01. Competition Overview</h2>
+            <p class="description">
+                본 프로젝트는 각 팀원이 자신만의 창의적인 취약점을 포함한 보안 문제를 5개씩 출제하고, 팀별로 서로의 문제를 해결하는 워게임 대회 형식으로 진행되었습니다.
+            </p>
+            <div class="img-container" style="max-width: 900px; margin: 0 auto; border: 1px solid var(--border); padding: 10px; border-radius: 10px;">
+                <img src="../wargame/main.PNG" alt="Score Board" style="width:100%; border-radius: 5px;">
+                <div class="img-caption" style="text-align: center; margin-top: 10px;">Figure 1. Starmap 문제 메인 화면</div>
+            </div>
+        </section>
+
+        <!-- 나의 출제 문제 설명 -->
+        <section>
+            <h2>02. My 5 Key Challenges</h2>
+            <p class="description">제가 직접 설계하고 출제한 5가지 핵심 보안 문제의 워크스루입니다. (화살표를 클릭하여 단계를 확인하세요)</p>
+
+            <!-- 문제 1 슬라이더 -->
+            <div class="challenge-box">
+                <h4>01. Cookie Manipulation <span class="vuln-type">Authentication Bypass</span></h4>
+                <p class="description">
+                    클라이언트 측 쿠키 값을 서버에서 재검증하지 않고 그대로 신뢰하는 쿠키 변조 취약점입니다. 
+                    서버가 로그인 여부를 오직 <strong>loggedin=1</strong>이라는 쿠키 값만으로 판단하기 때문에, 공격자가 개발자 도구에서 이 값을 조작하여 손쉽게 관리자 권한을 탈취할 수 있는 구조를 설계했습니다.
+                </p>
+                
+                <div class="slider-container" id="slider1">
+                    <!-- 슬라이드 1 -->
+                    <div class="slides active">
+                        <div class="counter">1 / 4</div>
+                        <img src="../wargame/q1.png" alt="Problem Screen">
+                        <div class="slide-caption">
+                            <strong>[Stage 1] 문제 화면</strong><br>
+                            "You are not logged in" 힌트를 통해 인증 세션 혹은 쿠키와 관련된 취약점임을 유추할 수 있습니다.
+                        </div>
+                    </div>
+                    <!-- 슬라이드 2 -->
+                    <div class="slides">
+                        <div class="counter">2 / 4</div>
+                        <img src="../wargame/q1-1.png" alt="Analyze">
+                        <div class="slide-caption">
+                            <strong>[Stage 2] 개발자 도구(F12) 분석</strong><br>
+                            인증 관련 쿠키인 <code>loggedin</code>의 Value 값이 0(거부)으로 설정되어 있는 것을 확인했습니다.
+                        </div>
+                    </div>
+                    <!-- 슬라이드 3 -->
+                    <div class="slides">
+                        <div class="counter">3 / 4</div>
+                        <img src="../wargame/q1-2.png" alt="Bypass">
+                        <div class="slide-caption">
+                            <strong>[Stage 3] 데이터 변조 및 적용</strong><br>
+                            값을 1(관리자 권한)로 직접 변경 후 페이지를 새로고침하여 서버 인증을 통과시켰습니다.
+                        </div>
+                    </div>
+                    <!-- 슬라이드 4 -->
+                    <div class="slides">
+                        <div class="counter">4 / 4</div>
+                        <img src="../wargame/q1-3.png" alt="Flag">
+                        <div class="slide-caption">
+                            <strong>[Stage 4] Flag 획득</strong><br>
+                            인증 우회 성공 후 최종 플래그 <code>FLAG{first_cookie_1234@@}</code>를 획득했습니다.
+                        </div>
+                    </div>
+
+                    <a class="prev" onclick="moveSlide(-1, 'slider1')">❮</a>
+                    <a class="next" onclick="moveSlide(1, 'slider1')">❯</a>
+                </div>
+            </div>
+
+            <!-- 문제 2 슬라이더 -->
+        <div class="challenge-box">
+            <h4>02. Path Traversal <span class="vuln-type">LFI Vulnerability</span></h4>
+            <p class="description">
+                서버에서 외부 입력값을 검증하지 않고 파일 경로로 사용할 때 발생하는 <strong>LFI(Local File Inclusion) 취약점</strong>입니다. 
+                상위 디렉토리로 이동하는 <code>../</code>(Dot-Dot-Slash) 패턴을 활용해 서버 내부의 민감한 설정 파일이나 플래그 파일에 접근하는 공격 리스크를 설계했습니다.
+            </p>
+            
+            <div class="slider-container" id="slider2">
+                <!-- 슬라이드 1 -->
+                <div class="slides active">
+                    <div class="counter">1 / 3</div>
+                    <img src="../wargame/q2.png" alt="Challenge Screen">
+                    <div class="slide-caption">
+                        <strong>[Stage 1] 문제 접속 및 탐색</strong><br>
+                    </div>
+                </div>
+
+                <!-- 슬라이드 2 -->
+                <div class="slides">
+                    <div class="counter">2 / 3</div>
+                    <img src="../wargame/q2-1.png" alt="View Source Hint">
+                    <div class="slide-caption">
+                        <strong>[Stage 2] 소스 코드 분석 (View Source)</strong><br>
+                        페이지 소스 보기 중 주석으로 숨겨진 <code>hint: Next flag is in /etc/star_webpass/cmd</code>를 발견하여 타겟 경로를 식별했습니다.
+                    </div>
+                </div>
+
+                <!-- 슬라이드 3 -->
+                <div class="slides">
+                    <div class="counter">3 / 3</div>
+                    <img src="../wargame/q2-2.png" alt="LFI Attack & Success">
+                    <div class="slide-caption">
+                        <strong>[Stage 3] 경로 조작 공격 및 Flag 획득</strong><br>
+                        단순히 URL에 ?page=/etc/star_webpass/cmd 를 입력시 flag 가 있는 페이지가 나오지 않지만, 
+                        <code>../../</code>를 반복 사용하여 URL에 넣다보면 <code>FLAG{LFI_master_00002shaha}</code>를 획득합니다.
+                    </div>
+                </div>
+
+                <!-- 슬라이더 컨트롤 -->
+                <a class="prev" onclick="moveSlide(-1, 'slider2')">❮</a>
+                <a class="next" onclick="moveSlide(1, 'slider2')">❯</a>
+            </div>
+        </div>
+
+        <!-- 문제 3 슬라이더 -->
+    <div class="challenge-box">
+        <h4>03. PHP strcmp() Vulnerability <span class="vuln-type">Type Juggling</span></h4>
+        <p class="description">
+            PHP의 <code>strcmp()</code> 함수가 문자열이 아닌 <strong>배열([ ]) 형태의 입력</strong>을 받았을 때 발생하는 취약점입니다. 
+            함수가 배열을 처리하지 못해 NULL(0)을 반환하는 특성을 이용하여, 정확한 패스워드를 몰라도 인증 로직을 무력화하고 권한을 획득하는 시나리오를 설계했습니다.
+        </p>
+        
+        <div class="slider-container" id="slider3">
+            <!-- 슬라이드 1 -->
+            <div class="slides active">
+                <div class="counter">1 / 5</div>
+                <img src="../wargame/q3.png" alt="Challenge Screen">
+                <div class="slide-caption">
+                    <strong>[Stage 1] 문제 확인</strong><br>
+                    패스워드 입력값이 서버 측의 <code>strcmp()</code> 함수를 통해 검증되는 단계입니다.
+                </div>
+            </div>
+
+            <!-- 슬라이드 2 -->
+            <div class="slides">
+                <div class="counter">2 / 5</div>
+                <img src="../wargame/q3-1.png" alt="Wrong Password">
+                <div class="slide-caption">
+                    <strong>[Stage 2] 일반적인 접근 시도</strong><br>
+                    임의의 패스워드 입력 시 "Wrong password, try again" 알림창이 뜨며 인증에 실패합니다.
+                </div>
+            </div>
+
+            <!-- 슬라이드 3 -->
+            <div class="slides">
+                <div class="counter">3 / 5</div>
+                <img src="../wargame/q3-2.png" alt="Burp Suite Intercept">
+                <div class="slide-caption">
+                    <strong>[Stage 3] 프록시 인터셉트 (Burp Suite)</strong><br>
+                    Burp Suite를 통해 전송되는 패킷을 캡처합니다. 현재 <code>password=asdf</code>와 같은 문자열 형태로 전송되고 있습니다.
+                </div>
+            </div>
+
+            <!-- 슬라이드 4 -->
+            <div class="slides">
+                <div class="counter">4 / 5</div>
+                <img src="../wargame/q3-3.png" alt="Payload Modification">
+                <div class="slide-caption">
+                    <strong>[Stage 4] 변수 타입 변조 (Array Injection)</strong><br>
+                    파라미터명을 <code>password[]</code>로 수정하여 배열 타입으로 전송합니다. 이를 통해 함수가 0(True)을 반환하도록 유도합니다.
+                </div>
+            </div>
+
+            <!-- 슬라이드 5 -->
+            <div class="slides">
+                <div class="counter">5 / 5</div>
+                <img src="../wargame/q3-4.png" alt="Flag Obtained">
+                <div class="slide-caption">
+                    <strong>[Stage 5] 인증 우회 및 Flag 획득</strong><br>
+                    검증 로직이 무력화되면서 최종 플래그 <code>FLAG{strcmp_bypass_success_9988@@}</code>를 획득했습니다.
+                </div>
+            </div>
+
+            <!-- 슬라이더 컨트롤 -->
+            <a class="prev" onclick="moveSlide(-1, 'slider3')">❮</a>
+            <a class="next" onclick="moveSlide(1, 'slider3')">❯</a>
+        </div>
+</div>
+
+        <!-- 문제 4 슬라이더 -->
+<div class="challenge-box">
+    <h4>04. Encoding Logic Exposure <span class="vuln-type">Information Disclosure</span></h4>
+    <p class="description">
+        서버의 암호화 로직이 소스 코드에 노출되어 발생하는 <strong>인코딩 방식 유출 취약점</strong>입니다. 
+        단방향 해시가 아닌 <code>Base64 -> strrev -> bin2hex</code> 순서의 가역적인 인코딩 조합을 사용함으로써, 공격자가 로직을 분석하여 원래의 Secret 값을 역연산으로 도출해낼 수 있는 위험성을 설계했습니다.
+    </p>
+    
+    <div class="slider-container" id="slider4">
+        <!-- 슬라이드 1 -->
+        <div class="slides active">
+            <div class="counter">1 / 6</div>
+            <img src="../wargame/q4.png" alt="Challenge Screen">
+            <div class="slide-caption">
+                <strong>[Stage 1] 문제 확인 및 힌트 수집</strong><br>
+                문제 화면에서 <code>encodeSecret()</code> 함수 로직을 이용하라는 핵심 힌트를 확인했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이드 2 -->
+        <div class="slides">
+            <div class="counter">2 / 6</div>
+            <img src="../wargame/q4-1.png" alt="Source Analysis">
+            <div class="slide-caption">
+                <strong>[Stage 2] 소스 코드 분석 (View Source)</strong><br>
+                노출된 코드에서 인코딩된 문자열과 처리 순서를 파악했습니다. <br>
+                <code>Logic: bin2hex(strrev(base64_encode($secret)))</code>
+            </div>
+        </div>
+
+        <!-- 슬라이드 3 -->
+        <div class="slides">
+            <div class="counter">3 / 6</div>
+            <img src="../wargame/q4-2.png" alt="Hex Decode">
+            <div class="slide-caption">
+                <strong>[Stage 3] 역연산 Step 1: Hex Decoding</strong><br>
+                가장 마지막 단계인 Hex를 먼저 복구합니다. <br>
+                <code>hex2bin("3d4d31554242315242786b52")</code> -> <code>=M1UBB1RBxkR</code>
+            </div>
+        </div>
+
+        <!-- 슬라이드 4 -->
+        <div class="slides">
+            <div class="counter">4 / 6</div>
+            <img src="../wargame/q4-3.png" alt="String Reverse">
+            <div class="slide-caption">
+                <strong>[Stage 4] 역연산 Step 2: String Reverse</strong><br>
+                중간 단계인 문자열 뒤집기를 수행합니다. <br>
+                <code>strrev("=M1UBB1RBxkR")</code> -> <code>RkxBR1BBU1M</code>
+            </div>
+        </div>
+
+        <!-- 슬라이드 5 -->
+        <div class="slides">
+            <div class="counter">5 / 6</div>
+            <img src="../wargame/q4-4.png" alt="Base64 Decode">
+            <div class="slide-caption">
+                <strong>[Stage 5] 역연산 Step 3: Base64 Decoding</strong><br>
+                첫 인코딩 단계인 Base64를 복구하여 원본 문자열을 획득합니다. <br>
+                <code>base64_decode("RkxBR1BBU1M")</code> -> <strong>FLAGPASS</strong>
+            </div>
+        </div>
+
+        <!-- 슬라이드 6 -->
+        <div class="slides">
+            <div class="counter">6 / 6</div>
+            <img src="../wargame/q4-5.png" alt="Flag Success">
+            <div class="slide-caption">
+                <strong>[Stage 6] 인증 성공 및 Flag 획득</strong><br>
+                도출해낸 <code>FLAGPASS</code>를 입력하여 최종 플래그 <br><code>FLAG{encodeSecret_function_bypass_success_2025}</code>를 획득했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이더 컨트롤 -->
+        <a class="prev" onclick="moveSlide(-1, 'slider4')">❮</a>
+        <a class="next" onclick="moveSlide(1, 'slider4')">❯</a>
+    </div>
+</div>
+
+        <!-- 문제 5 슬라이더 -->
+<div class="challenge-box">
+    <h4>05. Heartbleed Simulation <span class="vuln-type">Memory Over-read</span></h4>
+    <p class="description">
+        OpenSSL의 유명 취약점인 Heartbleed를 재현한 <strong>메모리 오버리드(Memory Over-read)</strong> 취약점입니다. 
+        사용자가 전송한 데이터의 실제 길이와 관계없이 사용자가 지정한 <code>length</code> 값만큼 메모리를 반환하는 서버 측 로직의 허점을 이용하며, 이를 통해 서버 메모리에 남아있는 민감한 데이터(Flag)를 유출시키는 시나리오를 설계했습니다.
+    </p>
+    
+    <div class="slider-container" id="slider5">
+        <!-- 슬라이드 1 -->
+        <div class="slides active">
+            <div class="counter">1 / 4</div>
+            <img src="../wargame/q5.png" alt="Challenge Screen">
+            <div class="slide-caption">
+                <strong>[Stage 1] 문제 확인 및 힌트 분석</strong><br>
+                "서버에 너무 많은 것을 요구하면 심장이 비밀을 드러낸다"는 힌트를 통해, 데이터 길이를 속여 메모리를 유출시키는 <strong>Heartbleed </strong>공격 방식임을 유추했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이드 2 -->
+        <div class="slides">
+            <div class="counter">2 / 4</div>
+            <img src="../wargame/q5-1.png" alt="Memory Leak Probe">
+            <div class="slide-caption">
+                <strong>[Stage 2] 1차 메모리 유출 시도 (Probe)</strong><br>
+                Payload를 <code>a</code>(1바이트)로 입력하고 Length를 <code>840</code>으로 높게 설정하여 요청했습니다. 출력된 메모리 끝부분에서 <code>FLAG</code> 문구의 시작점을 포착했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이드 3 -->
+        <div class="slides">
+            <div class="counter">3 / 4</div>
+            <img src="../wargame/q5-2.png" alt="Full Memory Leak">
+            <div class="slide-caption">
+                <strong>[Stage 3] 2차 메모리 유출 및 데이터 식별</strong><br>
+                더 넓은 범위의 데이터를 얻기 위해 Length를 <code>890</code>으로 증액하여 재요청했습니다. 그 결과, 서버 메모리 깊숙한 곳에 저장된 전체 플래그 값을 추출하는 데 성공했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이드 4 -->
+        <div class="slides">
+            <div class="counter">4 / 4</div>
+            <img src="../wargame/q5-4.png" alt="Challenge Success">
+            <div class="slide-caption">
+                <strong>[Stage 4] Flag 제출 및 성공</strong><br>
+                추출한 <code>FLAG{thirdstar_heartbleed_memory_leak_success_2025}</code>를 제출하여 문제 해결을 완료했습니다.
+            </div>
+        </div>
+
+        <!-- 슬라이더 컨트롤 -->
+        <a class="prev" onclick="moveSlide(-1, 'slider5')">❮</a>
+        <a class="next" onclick="moveSlide(1, 'slider5')">❯</a>
+    </div>
+</div>
+
+
+        </section>
+
+        <!-- 팀 워크스루 파일 다운로드 -->
+        <section class="file-section">
+            <h2>03. Team Full Walkthrough</h2>
+            <p class="description">우리 팀이 출제한 모든 문제의 상세한 출제 의도와 풀이 과정을 담은 보고서입니다.</p>
+            <a href="../p3/Team_Wargame_Walkthrough.docx" class="download-btn" download>
+                📄 Team Walkthrough.docx 다운로드
+            </a>
+        </section>
+    </main>
+
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="확대 이미지">
+    </div>
+
+    <script>
+    // 슬라이더 인덱스 관리 (슬라이더가 추가되어도 자동으로 대응하도록 수정)
+    let slideIndices = {};
+
+    function moveSlide(n, sliderId) {
+        // 해당 슬라이더의 인덱스가 아직 없다면 0으로 초기화
+        if (slideIndices[sliderId] === undefined) {
+            slideIndices[sliderId] = 0;
+        }
+
+        const container = document.getElementById(sliderId);
+        const slides = container.getElementsByClassName("slides");
+        
+        slideIndices[sliderId] += n;
+
+        // 인덱스 범위 체크 (무한 루프)
+        if (slideIndices[sliderId] >= slides.length) { 
+            slideIndices[sliderId] = 0; 
+        }
+        if (slideIndices[sliderId] < 0) { 
+            slideIndices[sliderId] = slides.length - 1; 
+        }
+
+        // 모든 슬라이드 숨기기
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].classList.remove("active");
+        }
+        
+        // 해당 인덱스의 슬라이드만 보이기
+        slides[slideIndices[sliderId]].classList.add("active");
+    }
+
+    // 라이트박스 (확대 보기) 기능
+    const images = document.querySelectorAll('.slides img, .img-container img');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+
+    images.forEach(img => {
+        img.addEventListener('click', () => {
+            lightbox.style.display = 'flex';
+            lightboxImg.src = img.src;
+        });
+    });
+
+    lightbox.addEventListener('click', () => {
+        lightbox.style.display = 'none';
+    });
+</script>
+</body>
+</html>
