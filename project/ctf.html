@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: CTF Challenge Design</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #111111;
+            --bg-card: #1A1A1A;
+            --accent: #00BCD4;
+            --text-main: #FAFAFA;
+            --text-sub: #AAAAAA;
+            --border: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 5%; }
+
+        /* Header */
+        .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 30px; margin-bottom: 50px; }
+        .project-header h1 { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; }
+        .project-header p { color: var(--text-sub); font-size: 1.1rem; }
+        .tags { margin-top: 20px; }
+        .tag { background: #222; color: var(--accent); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; margin-right: 8px; font-weight: 600; }
+
+        /* Sections */
+        section { margin-bottom: 80px; }
+        h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .description { color: var(--text-sub); margin-bottom: 30px; font-size: 1rem; }
+
+        /* Challenge Box */
+        .challenge-box { background: var(--bg-card); padding: 30px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 40px; }
+        .challenge-box h4 { color: var(--accent); font-size: 1.2rem; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .challenge-box .vuln-type { font-size: 0.8rem; background: rgba(0, 188, 212, 0.1); padding: 2px 10px; border-radius: 20px; }
+
+        /* Slider & Image Container */
+        .slider-container { position: relative; max-width: 900px; margin: 20px auto; overflow: hidden; border-radius: 12px; border: 1px solid var(--border); background: #000; }
+        .slides { display: none; animation: fade 0.5s; }
+        .slides.active { display: block; }
+        .slides img { width: 100%; height: 500px; object-fit: contain; background-color: #050505; display: block; cursor: zoom-in; }
+        
+        .slide-caption { padding: 20px; background: var(--bg-card); color: var(--text-sub); font-size: 0.95rem; border-top: 1px solid var(--border); min-height: 80px; }
+        
+        @keyframes fade { from {opacity: .4} to {opacity: 1} }
+
+        .prev, .next { cursor: pointer; position: absolute; top: 250px; transform: translateY(-50%); width: auto; padding: 16px; color: white; font-weight: bold; font-size: 24px; transition: 0.3s; user-select: none; background: rgba(0,0,0,0.5); z-index: 10; text-decoration: none; }
+        .next { right: 0; border-radius: 5px 0 0 5px; }
+        .prev { left: 0; border-radius: 0 5px 5px 0; }
+        .prev:hover, .next:hover { background-color: var(--accent); color: #000; }
+
+        .counter { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--accent); font-weight: bold; z-index: 11; }
+
+        /* Lightbox */
+        #lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; cursor: zoom-out; }
+        #lightbox img { max-width: 90%; max-height: 90%; }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- 프로젝트 헤더 -->
+        <section class="project-header">
+            <h1>CTF Challenge Design: The Ancient Tomb</h1>
+            <p>팀별 OVA 가상 머신 제작 및 취약점 시나리오 설계</p>
+            <div class="tags">
+                <span class="tag">OVA Deployment</span>
+                <span class="tag">Web Hacking</span>
+                <span class="tag">Steganography</span>
+                <span class="tag">RCE Exploit</span>
+            </div>
+        </section>
+
+        <!-- 01. 대회 개요 -->
+        <section>
+            <h2>01. Project Overview</h2>
+            <p class="description">
+                본 프로젝트는 팀별로 직접 취약점이 포함된 시스템을 설계하여 <strong>OVA</strong> 파일로 배포하고, 타 팀이 해당 시스템에 침투하여 Flag를 획득하는 해킹 대회를 목적으로 진행되었습니다. 
+            </p>
+            <div class="challenge-box">
+                <h4>출제 취약점: Unrestricted File Upload</h4>
+                <p class="description">
+                    제가 기획하고 구현한 메인 취약점은 <strong>파일 업로드 취약점</strong>입니다. 사용자가 접근하는 웹 페이지 UI 상에서는 '권한 없음' 메시지를 띄워 업로드를 차단하지만, 실제 서버 측 처리 파일인 <code>upload.php</code>에서 권한 검증 로직이 누락된 점을 이용하여 서버의 제어권을 탈취하는 시나리오를 구성했습니다.
+                </p>
+            </div>
+        </section>
+
+        <!-- 02. 워크스루 (설명) -->
+        <section>
+            <h2>02. Exploit Walkthrough</h2>
+            <p class="description">공격자가 시스템의 허점을 찾아내고 최종적으로 RCE(Remote Code Execution)를 달성하는 과정입니다.</p>
+
+            <div class="slider-container" id="exploitSlider">
+                <!-- Step 1 -->
+                <div class="slides active">
+                    <div class="counter">1 / 5</div>
+                    <img src="../ctf/p1.png" alt="UI Check">
+                    <div class="slide-caption">
+                        <strong>[Step 1] 관리 페이지 및 UI 제한 확인</strong><br>
+                        <code>Tomb.php</code> 접속 시 "No upload permission"이라는 문구가 출력됩니다. 시각적으로는 업로드 기능을 사용할 수 없도록 설계하여 공격자의 혼란을 유도했습니다.
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="slides">
+                    <div class="counter">2 / 5</div>
+                    <img src="../ctf/p2.png" alt="Directory Scanning">
+                    <div class="slide-caption">
+                        <strong>[Step 2] 정보 수집 및 숨겨진 경로 탐색</strong><br>
+                        <code>dirb</code> 도구를 활용해 서버를 스캔한 결과, 업로드된 파일들이 저장되는 <code>/uploads</code> 디렉토리를 발견하여 공격 지점을 식별했습니다.
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="slides">
+                    <div class="counter">3 / 5</div>
+                    <img src="../ctf/p3.png" alt="Payload Creation">
+                    <div class="slide-caption">
+                        <strong>[Step 3] 공격용 웹쉘(test.php) 제작</strong><br>
+                        서버 내부 정보를 확인하고 Flag를 출력하기 위해 <code>vi test.php</code>로 시스템 명령어를 포함한 PHP 페이로드를 직접 작성했습니다.
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="slides">
+                    <div class="counter">4 / 5</div>
+                    <img src="../ctf/p4.png" alt="Bypass Attack">
+                    <div class="slide-caption">
+                        <strong>[Step 4] 인터페이스 우회를 통한 파일 업로드</strong><br>
+                        UI를 거치지 않고 <code>curl</code> 명령어로 <code>upload.php</code>에 직접 파일을 전송했습니다. 서버 단의 권한 체크 부재로 인해 <code>shell.php</code>가 성공적으로 업로드되었습니다.
+                    </div>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="slides">
+                    <div class="counter">5 / 5</div>
+                    <img src="../ctf/p5.png" alt="Final Result">
+                    <div class="slide-caption">
+                        <strong>[Step 5] 원격 코드 실행 및 최종 Flag 탈취</strong><br>
+                        <code>/uploads/shell.php</code>에 접근하여 코드를 실행했습니다. 서버 내부 명령어가 수행되어 화면에 최종 Flag가 출력됨으로써 시스템 장악에 성공했습니다.
+                    </div>
+                </div>
+
+                <!-- 조작 버튼 -->
+                <a class="prev" onclick="moveSlide(-1, 'exploitSlider')">❮</a>
+                <a class="next" onclick="moveSlide(1, 'exploitSlider')">❯</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 확대 라이트박스 -->
+    <div id="lightbox">
+        <img id="lightbox-img" src="" alt="Zoom">
+    </div>
+
+    <script>
+        let slideIndices = {};
+
+        function moveSlide(n, sliderId) {
+            if (slideIndices[sliderId] === undefined) slideIndices[sliderId] = 0;
+            const container = document.getElementById(sliderId);
+            const slides = container.getElementsByClassName("slides");
+            
+            slideIndices[sliderId] += n;
+            if (slideIndices[sliderId] >= slides.length) slideIndices[sliderId] = 0;
+            if (slideIndices[sliderId] < 0) slideIndices[sliderId] = slides.length - 1;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slides[slideIndices[sliderId]].classList.add("active");
+        }
+
+        const images = document.querySelectorAll('img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+
+        images.forEach(img => {
+            img.addEventListener('click', () => {
+                lightbox.style.display = 'flex';
+                lightboxImg.src = img.src;
+            });
+        });
+
+        lightbox.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
