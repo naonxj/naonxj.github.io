@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 상세: 모의해킹 및 보안 관제 인프라 구축</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>프로젝트 상세: SecuriCare 의료 서비스 보안 취약점 진단 및 대응</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0F1115;
@@ -15,66 +15,90 @@
             --border: #2D3139;
             --success: #00E676;
             --danger: #FF5252;
+            --warning: #FFC107;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.7; word-break: keep-all; }
         main { max-width: 1100px; margin: 0 auto; padding: 60px 5%; }
 
-        /* Header */
+        /* 01. Header */
         .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 40px; margin-bottom: 60px; }
-        .project-header h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; letter-spacing: -1px; }
-        .project-header .period { color: var(--accent); font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; display: block; }
-        .tags { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
-        .tag { background: #222; color: var(--accent); padding: 6px 14px; border-radius: 4px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border); }
+        .project-header h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; color: var(--text-main); }
+        .project-meta { color: var(--text-sub); font-size: 1rem; margin-bottom: 25px; line-height: 1.8; }
+        .project-meta b { color: var(--accent); margin-right: 5px; }
+        
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tech-card { background: rgba(0, 229, 255, 0.1); color: var(--accent); padding: 8px 16px; border-radius: 6px; font-size: 0.9rem; font-weight: 700; border: 1px solid rgba(0, 229, 255, 0.3); }
 
-        /* Section Styling */
+        .download-area { margin-top: 30px; }
+        .btn-download { display: inline-flex; align-items: center; background: var(--accent); color: #000; padding: 12px 24px; border-radius: 8px; font-weight: 800; text-decoration: none; transition: 0.3s; gap: 10px; }
+        .btn-download:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        /* Section Global */
         section { margin-bottom: 100px; }
-        h2 { font-size: 2rem; color: var(--text-main); margin-bottom: 30px; border-left: 6px solid var(--accent); padding-left: 20px; }
-        .description { color: var(--text-sub); font-size: 1.05rem; margin-bottom: 30px; }
+        h2 { font-size: 1.8rem; color: var(--text-main); margin-bottom: 25px; display: flex; align-items: center; gap: 15px; }
+        h2::before { content: ""; width: 6px; height: 30px; background: var(--accent); display: block; border-radius: 3px; }
+        p.desc { color: var(--text-sub); font-size: 1.05rem; margin-bottom: 20px; }
 
-        /* Role Card */
-        .role-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
-        .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
-        .role-item h4 { color: var(--accent); margin-bottom: 10px; }
-        .role-item ul { list-style: none; color: var(--text-sub); }
-        .role-item li::before { content: "• "; color: var(--accent); }
+        /* Tables */
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; background: var(--bg-card); border-radius: 12px; overflow: hidden; }
+        th, td { padding: 16px; text-align: left; border: 1px solid var(--border); font-size: 0.95rem; }
+        th { background: rgba(255,255,255,0.05); color: var(--accent); font-weight: 700; }
+        td { color: var(--text-sub); }
+        .risk { font-weight: 800; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+        .risk.high { color: var(--danger); background: rgba(255,82,82,0.1); }
+        .risk.mid { color: var(--warning); background: rgba(255,193,7,0.1); }
+        .status { color: var(--success); font-weight: 700; }
 
-        /* Infra Diagram Flow */
-        .infra-diagram { background: #000; padding: 40px; border-radius: 16px; border: 1px solid var(--border); margin: 30px 0; text-align: center; }
-        .flow-path { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
-        .node { background: var(--bg-card); border: 1px solid var(--accent); padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; min-width: 100px; }
-        .node.attacker { border-color: var(--danger); color: var(--danger); }
-        .node.security { border-color: var(--success); color: var(--success); }
-        .arrow { color: var(--text-sub); font-weight: 900; }
+        /* Process Steps */
+        .process-flow { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+        .step { background: var(--bg-card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); flex: 1; min-width: 160px; text-align: center; }
+        .step .icon { color: var(--accent); font-weight: 900; margin-bottom: 10px; display: block; }
+        .arrow-icon { color: var(--border); font-weight: 900; }
 
-        /* Slider */
-        .slider-container { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: #000; margin-top: 20px; }
-        .slides { display: none; animation: fade 0.5s; }
-        .slides.active { display: block; }
-        .slides img { width: 100%; height: 550px; object-fit: contain; background: #050505; }
-        .slide-caption { padding: 25px; background: var(--bg-card); border-top: 1px solid var(--border); }
-        .slide-caption strong { color: var(--accent); display: block; margin-bottom: 8px; font-size: 1.2rem; }
-        .slide-caption p { color: var(--text-sub); font-size: 0.95rem; }
+        /* Infra & Image Sliders */
+        .infra-box { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); margin-bottom: 40px; }
+        .infra-box h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.2rem; }
+        
+        .slider-container { position: relative; margin: 30px 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--border); background: #000; }
+        .slider-wrapper { display: flex; transition: transform 0.5s ease-in-out; }
+        .slide { min-width: 100%; position: relative; }
+        .slide img { width: 100%; display: block; max-height: 500px; object-fit: contain; }
+        .slider-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.6); color: var(--accent); border: none; padding: 15px; cursor: pointer; font-size: 1.5rem; font-weight: bold; z-index: 10; border-radius: 0 4px 4px 0; }
+        .slider-btn.next { right: 0; border-radius: 4px 0 0 4px; }
+        .slider-btn:hover { background: var(--accent); color: #000; }
+        .caption { text-align: center; color: var(--text-sub); font-size: 0.9rem; margin-top: 10px; font-weight: 500; }
 
-        .prev, .next { cursor: pointer; position: absolute; top: 40%; transform: translateY(-50%); padding: 20px; color: white; font-size: 24px; background: rgba(0,0,0,0.6); user-select: none; transition: 0.3s; z-index: 10; text-decoration: none; }
-        .next { right: 0; } .prev { left: 0; }
-        .prev:hover, .next:hover { color: var(--accent); background: rgba(0,0,0,0.8); }
+        /* Role Detail Box */
+        .role-detail-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-bottom: 40px; border-left: 5px solid var(--accent); }
+        .role-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 25px; }
+        .role-item h4 { color: var(--text-main); margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .role-item h4 span { color: var(--accent); }
+        .role-item ul { list-style: none; color: var(--text-sub); font-size: 0.95rem; }
+        .role-item li { margin-bottom: 10px; position: relative; padding-left: 18px; }
+        .role-item li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
 
-        .counter { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 20px; color: var(--accent); font-weight: 700; font-size: 0.8rem; z-index: 11; }
+        /* Service List */
+        .service-overview { background: #15181E; padding: 30px; border-radius: 12px; border-left: 4px solid var(--accent); }
+        .service-overview ul { list-style: none; margin-top: 15px; }
+        .service-overview li { margin-bottom: 10px; color: var(--text-sub); padding-left: 20px; position: relative; }
+        .service-overview li::before { content: "•"; color: var(--accent); position: absolute; left: 0; font-weight: bold; }
+        .role-title { color: var(--text-main); font-weight: 700; margin-top: 10px; display: block; }
 
-        /* Result Grid */
-        .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .result-card { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); }
-        .result-card h4 { color: var(--accent); margin-bottom: 15px; }
-        .result-card li { margin-bottom: 8px; color: var(--text-sub); list-style-position: inside; }
+        /* Summary Box */
+        .summary-box { background: rgba(0, 229, 255, 0.03); border: 1px solid var(--border); padding: 30px; border-radius: 16px; margin-top: 30px; }
+        .summary-box h4 { color: var(--text-main); margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .summary-box p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 10px; }
 
-        @keyframes fade { from {opacity: 0.5} to {opacity: 1} }
+        /* Retrospective */
+        .retro-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border-left: 5px solid var(--accent); color: var(--text-sub); font-size: 1.05rem; line-height: 1.8; }
 
         @media (max-width: 768px) {
-            .role-grid { grid-template-columns: 1fr; }
-            .flow-path { flex-direction: column; }
-            .arrow { transform: rotate(90deg); }
+            .process-flow { flex-direction: column; align-items: stretch; }
+            .arrow-icon { transform: rotate(90deg); text-align: center; margin: 10px 0; }
+            table { display: block; overflow-x: auto; }
+            .project-header h1 { font-size: 2rem; }
         }
     </style>
 </head>
@@ -83,197 +107,271 @@
     <main>
         <!-- 01. 프로젝트 헤더 -->
         <section class="project-header">
-            <h1>Security Web & App Vulnerability Analysis & SIEM Defense</h1>
-            <p>취약한 가상 병원 예약 플랫폼 구축 및 공격 시나리오 기반 통합 보안 관제 실습</p>
-            <div class="tags">
-                <span class="tag">OWASP Top 10</span>
-                <span class="tag">WAF (ModSecurity)</span>
-                <span class="tag">IDS/IPS (Suricata)</span>
-                <span class="tag">SIEM (ELK Stack)</span>
-                <span class="tag">Wazuh</span>
+            <h1>SecuriCare 의료 서비스 보안 취약점 진단 및 대응</h1>
+            <div class="project-meta">
+                <p><b>프로젝트 유형:</b> 웹/모바일 모의해킹 및 보안 대응 프로젝트</p>
+                <p><b>기간:</b> 2025.11.24 ~ 2025.12.24</p>
+                <p><b>인원:</b> 4명</p>
+                <p><b>진단 기준:</b> OWASP Top 10 / OWASP Mobile Top 10</p>
+            </div>
+            <div class="tech-tags">
+                <div class="tech-card">Kali Linux</div>
+                <div class="tech-card">Nmap</div>
+                <div class="tech-card">OWASP ZAP</div>
+                <div class="tech-card">Suricata</div>
+                <div class="tech-card">ModSecurity</div>
+                <div class="tech-card">Wazuh</div>
+                <div class="tech-card">ELK Stack</div>
+            </div>
+            <div class="download-area">
+                <a href="../final/SecuriCare_final_report.pdf" download class="btn-download">
+                    <span>📄 프로젝트 결과 보고서 다운로드 (PDF)</span>
+                </a>
             </div>
         </section>
 
-        <!-- 02. 프로젝트 개요 -->
+        <!-- 02. 프로젝트 소개 -->
         <section>
-            <h2>01. Project Overview</h2>
-            <p class="description">
-                본 프로젝트는 병원 예약 및 관리 기능을 제공하는 가상 의료 플랫폼을 대상으로 <strong>웹 및 모바일 환경의 보안 가용성</strong>을 검증하기 위해 기행되었습니다. 
-                단순한 공격 실습에 그치지 않고, <strong>IDS/IPS/SIEM</strong> 시스템을 직접 구축하여 공격 흐름을 파악하고, WAF 정책 수립 및 로그 분석을 통해 실무적인 침투 테스트와 방어 역량을 확보하는 것을 목표로 하였습니다.
+            <h2>1. 프로젝트 소개</h2>
+            <p class="desc">
+                가상의 병원 SecuriCare의 웹사이트와 모바일 애플리케이션을 대상으로 OWASP Top 10 기반의 취약점 진단 및 모의해킹을 수행하였다. 발견된 취약점을 실제 공격 시나리오로 재현하여 위험성을 검증하고, 시스템 설정 강화와 Suricata IDS 탐지 룰, ModSecurity WAF 차단 룰을 적용하였다. 이후 Wazuh와 ELK Stack을 활용해 보안 이벤트를 수집·분석하고, 동일한 공격을 재수행하여 방어 체계의 적용 결과를 검증하였다.
             </p>
-            <div class="role-container">
-                <h4>나의 주요 역할</h4>
+        </section>
+
+        <!-- 03. 프로젝트 목표 -->
+        <section>
+            <h2>2. 프로젝트 목표</h2>
+            <div class="service-overview">
+                <ul>
+                    <li>OWASP Top 10 기반 웹/모바일 애플리케이션 취약점 식별</li>
+                    <li>실제 공격 시나리오를 통한 취약점 영향도 및 PoC 검증</li>
+                    <li>Suricata와 ModSecurity를 활용한 공격 탐지·차단 체계 구축</li>
+                    <li>Wazuh + ELK Stack 기반 보안 로그 수집 및 분석</li>
+                    <li>방어 적용 후 동일 공격을 재수행하여 대응 효과 검증</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 04. 수행 과정 -->
+        <section>
+            <h2>3. 전체 수행 과정</h2>
+            <p class="desc">본 프로젝트는 다음과 같은 5단계 절차에 따라 순차적으로 진행되었다.</p>
+            <div class="process-flow">
+                <div class="step"><span class="icon">01</span>정보수집</div>
+                <div class="arrow-icon">▶</div>
+                <div class="step"><span class="icon">02</span>취약점 진단</div>
+                <div class="arrow-icon">▶</div>
+                <div class="step"><span class="icon">03</span>모의해킹</div>
+                <div class="arrow-icon">▶</div>
+                <div class="step"><span class="icon">04</span>대응 및 모니터링</div>
+                <div class="arrow-icon">▶</div>
+                <div class="step"><span class="icon">05</span>보고서 작성</div>
+            </div>
+        </section>
+
+        <!-- 05. 사용 도구 -->
+        <section>
+            <h2>4. 사용 도구</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>사용 도구</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>공격 플랫폼</td><td>Kali Linux</td></tr>
+                    <tr><td>정보 수집 / 스캐닝</td><td>Nmap, Gobuster, ffuf, OWASP ZAP, Nikto</td></tr>
+                    <tr><td>취약점 검증 / 공격</td><td>curl, Python(자체 제작 DoS 스크립트), 웹 브라우저(Chrome, Edge)</td></tr>
+                    <tr><td>탐지 / 차단</td><td>Suricata(IDS/IPS), ModSecurity(WAF)</td></tr>
+                    <tr><td>로그 통합 관제</td><td>Wazuh, Elasticsearch, Kibana (ELK Stack), Filebeat</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- 06. 시스템 인프라 구성 -->
+        <section>
+            <h2>5. 시스템 인프라 구성</h2>
+            
+            <div class="infra-box">
+                <h3>1.6.1 Web 인프라 구성</h3>
+                <p class="desc">Web 환경은 웹 애플리케이션 방화벽(ModSecurity)이 적용된 Apache/Nginx 기반 웹서버(192.168.16.43)를 최전단에 배치하여 애플리케이션 계층으로 유입되는 공격 트래픽을 1차로 차단한다. 그 뒤에는 별도의 Suricata IDS(192.168.16.30)를 두어 웹서버 단계를 우회할 수 있는 네트워크 구간의 이상 트래픽까지 실시간으로 탐지한다.</p>
+                <img src="../final/webinfra.png" alt="Web 시스템 인프라 구성도" style="width:100%; border-radius:12px; margin-top:10px; border: 1px solid var(--border);">
+                <p class="caption">[그림 1] Web 시스템 인프라 구성도</p>
+            </div>
+
+            <div class="infra-box">
+                <h3>1.6.2 Mobile 인프라 구성</h3>
+                <p class="desc">Mobile 환경은 Nginx, ModSecurity(WAF), Suricata(IDS)가 구성된 게이트웨이(192.168.16.50)를 최전단에 배치하여 모바일 애플리케이션에서 유입되는 요청을 1차로 분석하고 공격 트래픽을 탐지·차단한다. 정상적으로 통과한 요청은 Node.js와 MySQL로 구성된 모바일 백엔드 서버(192.168.16.4)로 전달되어 데이터 처리를 수행한다.</p>
+                <img src="../final/mobileinfra.png" alt="Mobile 시스템 인프라 구성도" style="width:100%; border-radius:12px; margin-top:10px; border: 1px solid var(--border);">
+                <p class="caption">[그림 2] Mobile 시스템 인프라 구성도</p>
+            </div>
+
+            <!-- 이미지 슬라이더 1: 점검 대상 및 환경 -->
+            <h3 style="margin: 40px 0 10px; color: var(--accent);">웹/모바일 점검 대상 및 환경</h3>
+            <div class="slider-container" id="slider1">
+                <button class="slider-btn prev" onclick="moveSlide('slider1', -1)">&#10094;</button>
+                <div class="slider-wrapper">
+                    <div class="slide"><img src="../final/webip.png" alt="웹 점검 환경"></div>
+                    <div class="slide"><img src="../final/mobileip.png" alt="모바일 점검 환경"></div>
+                </div>
+                <button class="slider-btn next" onclick="moveSlide('slider1', 1)">&#10095;</button>
+            </div>
+
+            <!-- 이미지 슬라이더 2: 페이지 구성도 -->
+            <h3 style="margin: 40px 0 10px; color: var(--accent);">웹/모바일 서비스 페이지 구성도</h3>
+            <div class="slider-container" id="slider2">
+                <button class="slider-btn prev" onclick="moveSlide('slider2', -1)">&#10094;</button>
+                <div class="slider-wrapper">
+                    <div class="slide"><img src="../final/webpage.png" alt="웹 페이지 구성도"></div>
+                    <div class="slide"><img src="../final/mobilepage.png" alt="모바일 앱 페이지 구성도"></div>
+                </div>
+                <button class="slider-btn next" onclick="moveSlide('slider2', 1)">&#10095;</button>
+            </div>
+
+            <div class="service-overview">
+                <h3>웹/모바일 서비스 설계 개요</h3>
+                <p><strong>프로젝트 대상:</strong> 의료 관리 웹 애플리케이션</p>
+                <p><strong>설계 목표:</strong> 환자(Patient)·의사(Doctor)·관리자(Admin) 3개 역할(Role) 기반 접근 제어가 적용된 서비스 구현</p>
+                <span class="role-title">페이지 구조</span>
+                <ul>
+                    <li><strong>로그인 / 회원가입 :</strong> 모든 사용자가 접근 가능하며, 로그인 성공 시 역할에 따라 메뉴 분기</li>
+                    <li><strong>환자(Patient) 메뉴 :</strong> 예약 신청·취소·변경·조회, 게시판(오류/건의사항 등록, 파일 첨부), 진료 내역 조회</li>
+                    <li><strong>의사(Doctor) 메뉴 :</strong> 진료 일정 확인, 환자 진료 기록 작성, 처방 등록, 환자 병력·검사 결과 조회</li>
+                    <li><strong>관리자(Admin) 메뉴 :</strong> 사용자 계정 및 접근 권한 관리, 환자/의사 메뉴를 포함한 전 기능 접근</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 07. 팀 구성 및 역할 분담 -->
+        <section>
+            <h2>6. 팀 구성 및 역할 분담</h2>
+            <p class="desc">인프라 구축, 취약점 분석, 대응체계 구축 및 검증 업무를 팀원별로 분담해 진행했습니다.</p>
+
+            <!-- 나의 주요 역할 상세 카드 및 사진 -->
+            <div class="role-detail-container">
+                <h3 style="color: var(--accent); margin-bottom: 5px; font-size: 1.5rem; font-weight: 800;">나의 주요 역할</h3>
                 <div class="role-grid">
                     <div class="role-item">
-                        <h4>인프라 구축</h4>
+                        <h4><span>■</span> 인프라 구축</h4>
                         <ul>
-                            <li>모바일 앱 서버 백엔드(Node.js/Nginx) 및 DB(MariaDB) 연동 환경 구축</li>
-                            <li>Suricata(IDS/IPS) 설치 및 네트워크 미러링 환경 구성</li>
-                            <li>WAF(ModSecurity) 도입 및 보안 정책 적용</li>
+                            <li>모바일 환경 보안 인프라 전체 구축 (Nginx, ModSecurity, Suricata, Filebeat, Node.js, MySQL, Elasticsearch, Kibana)</li>
+                            <li>웹/모바일 취약점 진단 및 공격 시나리오 재현</li>
                         </ul>
                     </div>
                     <div class="role-item">
-                        <h4>분석 및 대응</h4>
+                        <h4><span>■</span> 대응 및 검증</h4>
                         <ul>
-                            <li>OWASP Top 10 기반 웹 취약점 2종, 모바일 취약점 1종 분석</li>
-                            <li>Filebeat를 활용한 보안 이벤트 로그 중앙 수집 (ELK Stack)</li>
-                            <li>공격 탐지를 위한 Suricata Custom Rule 및 WAF 차단 정책 작성</li>
+                            <li>시스템 설정 변경, Suricata 탐지 룰·ModSecurity 차단 룰 작성·적용</li>
+                            <li>대응체계 적용 전/후 동일 공격 재수행, ELK 로그 분석으로 방어 효과 최종 검증</li>
                         </ul>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- 03. 시스템 인프라 구성 -->
-        <section>
-            <h2>02. System Infrastructure</h2>
-            <p class="description">네트워크 영역을 구분하여 공격자로부터 웹/모바일 서버를 보호하고, 발생하는 모든 이벤트를 SIEM으로 집계하도록 구성했습니다.</p>
-            
-            <div class="infra-diagram">
-                <p style="margin-bottom: 20px; font-weight: bold; color: var(--accent);">[Web Architecture]</p>
-                <div class="flow-path">
-                    <div class="node attacker">Attacker</div> <div class="arrow">→</div>
-                    <div class="node security">WAF (ModSec)</div> <div class="arrow">→</div>
-                    <div class="node">Apache2 Web</div> <div class="arrow">→</div>
-                    <div class="node">MariaDB</div> <div class="arrow">→</div>
-                    <div class="node security">Suricata IDS</div> <div class="arrow">→</div>
-                    <div class="node security">SIEM (ELK)</div>
-                </div>
-                
-                <p style="margin: 30px 0 20px; font-weight: bold; color: var(--accent);">[Mobile Architecture]</p>
-                <div class="flow-path">
-                    <div class="node attacker">Attacker</div> <div class="arrow">→</div>
-                    <div class="node security">WAF (ModSec)</div> <div class="arrow">→</div>
-                    <div class="node">Nginx/Node.js</div> <div class="arrow">→</div>
-                    <div class="node security">Suricata IDS/IPS</div> <div class="arrow">→</div>
-                    <div class="node security">Filebeat</div> <div class="arrow">→</div>
-                    <div class="node security">ELK Stack</div>
+                <!-- 역할 상세 이미지 -->
+                <div style="margin-top: 35px; text-align: center;">
+                    <img src="../final/role.png" alt="나의 역할 및 업무 범위 상세" style="width:100%; border-radius:12px; border: 1px solid var(--border);">
+                    <p class="caption">[그림 3] 팀 프로젝트 업무 분담 및 상세 역할</p>
                 </div>
             </div>
         </section>
 
-        <!-- 04. 웹 취약점 진단 및 대응 -->
+        <!-- 08. 모의해킹 결과 요약 -->
         <section>
-            <h2>03. Web Vulnerability Walkthrough</h2>
-            <p class="description">직접 구축한 가상 병원 예약 플랫폼을 대상으로 수행한 웹 취약점 진단 및 대응 사례입니다.</p>
+            <h2>7. 모의해킹 결과 요약</h2>
+            <p class="desc">사전 스캐닝 및 수동 모의해킹을 통해 식별된 취약점 리스트입니다.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>OWASP 분류</th>
+                        <th>발견 취약점</th>
+                        <th>위험도</th>
+                        <th>조치상태</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>[Web] A02 Security Misconfiguration</td><td>Directory Listing (주요 경로 노출)</td><td><span class="risk high">상</span></td><td><span class="status">조치완료</span></td></tr>
+                    <tr><td>2</td><td>[Web] A02 Security Misconfiguration</td><td>Sensitive Information Disclosure (백업 파일 노출)</td><td><span class="risk high">상</span></td><td><span class="status">조치완료</span></td></tr>
+                    <tr><td>3</td><td>[Web] A02 Security Misconfiguration</td><td>CSP Header Not Set → Stored XSS</td><td><span class="risk high">상</span></td><td><span class="status">조치완료</span></td></tr>
+                    <tr><td>4</td><td>[Web] A09 Logging & Monitoring Failures</td><td>권한 변경 등 주요 행위에 대한 감사로그 미기록</td><td><span class="risk mid">중</span></td><td><span class="status">조치완료</span></td></tr>
+                    <tr><td>5</td><td>[Mobile] M4 Insufficient Input Validation</td><td>SQL Injection (인증 우회 및 권한 탈취)</td><td><span class="risk high">상</span></td><td><span class="status">조치완료</span></td></tr>
+                    <tr><td>6</td><td>[Mobile] M4 Insufficient Input Validation</td><td>Buffer Overflow로 인한 서비스 거부(DoS)</td><td><span class="risk high">상</span></td><td><span class="status">조치완료</span></td></tr>
+                </tbody>
+            </table>
 
-            <div class="slider-container" id="webSlider">
-                <div class="counter">1 / 3</div>
-                <!-- 슬라이드 1 -->
-                <div class="slides active">
-                    <img src="./web_p1.png" alt="Web Vulnerability Scan">
-                    <div class="slide-caption">
-                        <strong>[Phase 1] 취약점 탐색 및 진단</strong>
-                        <p>ZAP 및 수동 점검을 통해 예약 게시판 내 XSS 및 SQL Injection 포인트 식별. 병원 관리 페이지의 비인가 접근 가능성 확인.</p>
-                    </div>
-                </div>
-                <!-- 슬라이드 2 -->
-                <div class="slides">
-                    <img src="./web_p2.png" alt="Web Attack & Detection">
-                    <div class="slide-caption">
-                        <strong>[Phase 2] 공격 시나리오 재현 및 탐지</strong>
-                        <p>식별된 취약점을 이용해 환자 정보 탈취 공격 수행. Suricata에서 해당 페이로드 탐지 및 Kibana 대시보드 실시간 로그 유입 확인.</p>
-                    </div>
-                </div>
-                <!-- 슬라이드 3 -->
-                <div class="slides">
-                    <img src="./web_p3.png" alt="Web Defense">
-                    <div class="slide-caption">
-                        <strong>[Phase 3] 대응방안 적용 및 검증</strong>
-                        <p>ModSecurity 화이트리스트 기반 필터링 적용 및 PHP 소스 코드 내 prepared statement 적용을 통해 취약점 원천 차단 완료.</p>
-                    </div>
-                </div>
-                <a class="prev" onclick="moveSlide(-1, 'webSlider')">❮</a>
-                <a class="next" onclick="moveSlide(1, 'webSlider')">❯</a>
+            <div class="summary-box">
+                <h4>결과 총평</h4>
+                <p>• 총 6건의 실증 가능한(PoC 확보) 취약점이 최종 확인되었으며, 이 중 5건이 상(High), 1건이 중(Medium) 등급으로 평가되었다.</p>
+                <p>• 발견된 모든 취약점은 시스템 설정 변경, Suricata 탐지 룰, ModSecurity 차단 룰의 다계층 방어 체계를 통해 조치를 완료하였다.</p>
+                <p>• 조치 이후 동일한 공격 시나리오를 재수행한 결과, 전 항목에서 공격이 차단되고 IDS/WAF 로그가 정상적으로 기록됨을 확인하였다.</p>
             </div>
         </section>
 
-        <!-- 05. 모바일 취약점 진단 및 대응 -->
+        <!-- 09. 방어 계층별 구축 현황 -->
         <section>
-            <h2>04. Mobile Vulnerability Walkthrough</h2>
-            <p class="description">모바일 앱 패키지 분석 및 API 서버 취약점 분석을 통한 보안 강화 과정입니다.</p>
+            <h2>8. 방어 계층별 구축 현황</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 25%;">방어 계층</th>
+                        <th>구축 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>시스템 설정</th>
+                        <td>Apache Indexes 옵션 제거, CSP 보안 헤더 강제 적용, Body-parser 요청 크기 제한, MySQL general_log 활성화, 입력값 검증 로직 및 비효율적 루프 제거</td>
+                    </tr>
+                    <tr>
+                        <th>Suricata (IDS/IPS)</th>
+                        <td>총 10건의 커스텀 탐지 룰 작성 (백업 파일 접근, CSP 미설정, Stored XSS, SQL Injection 3종, DoS/Buffer Overflow 3종 등)</td>
+                    </tr>
+                    <tr>
+                        <th>ModSecurity (WAF)</th>
+                        <td>총 10건 이상의 커스텀 차단 룰 작성 및 적용, 전 항목 403/400/413 응답을 통한 요청 단계 원천 차단 구현</td>
+                    </tr>
+                    <tr>
+                        <th>SIEM / 로그 관제</th>
+                        <td>Filebeat → Wazuh → Elasticsearch → Kibana 파이프라인을 통해 전 취약점의 공격·차단 로그 실시간 시각화, 자체 개발 관리자 모니터링 UI 구축</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-            <div class="slider-container" id="mobileSlider">
-                <div class="counter">1 / 3</div>
-                <div class="slides active">
-                    <img src="./mobile_p1.png" alt="Mobile Analysis">
-                    <div class="slide-caption">
-                        <strong>[Phase 1] 모바일 취약점 점검</strong>
-                        <p>Android 패키지 디컴파일 및 API 통신 구간 가로채기를 통한 민감 데이터 노출(Insecure Data Storage) 분석.</p>
-                    </div>
-                </div>
-                <div class="slides">
-                    <img src="./mobile_p2.png" alt="Mobile Attack">
-                    <div class="slide-caption">
-                        <strong>[Phase 2] API 서버 공격 및 로그 분석</strong>
-                        <p>변조된 API 요청을 통한 타인 예약 내역 조회 공격 수행. Suricata IPS 모드에서 비정상적인 HTTP 패턴 차단 및 로그 집계.</p>
-                    </div>
-                </div>
-                <div class="slides">
-                    <img src="./mobile_p3.png" alt="Mobile Defense">
-                    <div class="slide-caption">
-                        <strong>[Phase 3] 대응 전략 및 대시보드 개선</strong>
-                        <p>Nginx 보안 헤더 설정 및 API 토큰 검증 로직 강화. SIEM 가시성 확보를 위해 Kibana 대시보드 시각화 차트 고도화.</p>
-                    </div>
-                </div>
-                <a class="prev" onclick="moveSlide(-1, 'mobileSlider')">❮</a>
-                <a class="next" onclick="moveSlide(1, 'mobileSlider')">❯</a>
+        <!-- 10. 결론 -->
+        <section>
+            <h2>9. 결론</h2>
+            <div class="retro-box" style="border-left-color: var(--success); background: rgba(0,230,118,0.02);">
+                본 프로젝트는 가상 병원 SecuriCare의 웹사이트 및 모바일 애플리케이션을 대상으로 OWASP Top 10 기준에 따른 모의해킹을 수행하였다. 사전 자동화 스캐닝을 통해 잠재적 취약점을 식별한 뒤, 실질적인 피해로 이어질 수 있는 6건의 취약점을 선별하여 실제 공격 시나리오로 재현하고 PoC를 확보하였다.
+                <br><br>
+                발견된 모든 취약점에 대해 시스템 설정 변경을 1차 방어선으로 적용하고, 다계층 방어 체계(Defense in Depth)를 구축하였다. 이후 동일한 공격을 재수행하여 모든 시나리오에서 공격이 차단되고 로그가 ELK Stack에 수집됨을 확인함으로써 대응체계의 실효성을 입증하였다. 특히 Kibana를 통한 시각화 및 모니터링 인터페이스 구축을 통해 지속 가능한 보안 운영 체계의 기반을 마련하였다는 데 의의가 있다.
             </div>
         </section>
 
-        <!-- 06. 프로젝트 결과 및 개선사항 -->
+        <!-- 11. 느낀점 -->
         <section>
-            <h2>05. Project Results & Insights</h2>
-            <div class="result-grid">
-                <div class="result-card">
-                    <h4>진단 및 분석 결과</h4>
-                    <ul>
-                        <li>핵심 웹 취약점(OWASP Top 10) 8건 식별 및 조치</li>
-                        <li>모바일 API 및 바이너리 취약점 3건 식별</li>
-                        <li>공격 시나리오별 탐지 성공률 90% 이상 달성</li>
-                    </ul>
-                </div>
-                <div class="result-card">
-                    <h4>보안 구축 핵심 성과</h4>
-                    <ul>
-                        <li>웹/모바일 통합 공격 탐지 룰(Custom Rule) 적용</li>
-                        <li>ModSecurity를 이용한 실시간 공격 차단 체계 마련</li>
-                        <li>ELK 기반 SIEM 환경 구축을 통한 통합 로그 가시성 확보</li>
-                    </ul>
-                </div>
-                <div class="result-card">
-                    <h4>향후 개선사항</h4>
-                    <ul>
-                        <li>탐지 오탐율(False Positive) 감소를 위한 정책 정교화</li>
-                        <li>신규 공격 패턴(0-Day) 대응을 위한 룰셋 최신화</li>
-                        <li>Kibana 대시보드 UI 개선 및 자동 알림 시스템 연동</li>
-                    </ul>
-                </div>
+            <h2>10. 프로젝트를 통해 느낀 점</h2>
+            <div class="retro-box">
+                이 프로젝트를 진행하며 취약점을 발견하는 것만큼 발견된 취약점이 실제로 어떻게 공격으로 이어지는지 확인하고, 이를 탐지·차단한 뒤 다시 검증하는 과정이 중요하다는 것을 느꼈습니다. 특히 처음에는 보안 솔루션을 적용하면 공격이 바로 차단될 것이라고 생각했지만, 실제로는 네트워크 구성과 탐지·차단 룰의 조건에 따라 결과가 달라질 수 있었습니다.
+                <br><br>
+                이를 해결하기 위해 공격 요청과 로그를 직접 비교하며 원인을 확인하고 룰을 수정하는 과정을 반복하면서, <strong>보안은 단순히 솔루션을 설치하는 것이 아니라 환경에 맞게 설정하고 지속적으로 검증하는 과정</strong>이라는 점을 배웠습니다.
             </div>
-            <p class="description" style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
-                이 경험을 통해 보안은 단순히 공격을 차단하는 것이 아니라, <strong>시스템 구조의 깊은 이해를 바탕으로 탐지, 대응, 운영이 유기적으로 연결</strong>되어야 한다는 점을 깨달았습니다. 안정성과 운영 효율을 모두 고려한 보안 설계를 수행하는 엔지니어로 성장하겠습니다.
-            </p>
         </section>
     </main>
 
     <script>
-        let slideIndices = {};
+        function moveSlide(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            const wrapper = slider.querySelector('.slider-wrapper');
+            const slides = slider.querySelectorAll('.slide');
+            let index = parseInt(slider.getAttribute('data-index') || 0);
 
-        function moveSlide(n, sliderId) {
-            if (slideIndices[sliderId] === undefined) slideIndices[sliderId] = 0;
-            const container = document.getElementById(sliderId);
-            const slides = container.getElementsByClassName("slides");
-            const counter = container.querySelector(".counter");
-            
-            slideIndices[sliderId] += n;
-            if (slideIndices[sliderId] >= slides.length) slideIndices[sliderId] = 0;
-            if (slideIndices[sliderId] < 0) slideIndices[sliderId] = slides.length - 1;
+            index += direction;
+            if (index < 0) index = slides.length - 1;
+            if (index >= slides.length) index = 0;
 
-            for (let i = 0; i < slides.length; i++) {
-                slides[i].classList.remove("active");
-            }
-            slides[slideIndices[sliderId]].classList.add("active");
-            counter.innerText = `${slideIndices[sliderId] + 1} / ${slides.length}`;
+            wrapper.style.transform = `translateX(-${index * 100}%)`;
+            slider.setAttribute('data-index', index);
         }
     </script>
 </body>

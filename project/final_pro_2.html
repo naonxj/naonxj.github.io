@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>프로젝트 상세: 모의해킹 및 보안 관제 인프라 구축</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0F1115;
+            --bg-card: #1A1D23;
+            --accent: #00E5FF;
+            --text-main: #FAFAFA;
+            --text-sub: #A0AABF;
+            --border: #2D3139;
+            --success: #00E676;
+            --danger: #FF5252;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        main { max-width: 1100px; margin: 0 auto; padding: 60px 5%; }
+
+        /* Header */
+        .project-header { border-bottom: 2px solid var(--accent); padding-bottom: 40px; margin-bottom: 60px; }
+        .project-header h1 { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; letter-spacing: -1px; }
+        .project-header .period { color: var(--accent); font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; display: block; }
+        .tags { margin-top: 25px; display: flex; flex-wrap: wrap; gap: 10px; }
+        .tag { background: #222; color: var(--accent); padding: 6px 14px; border-radius: 4px; font-size: 0.85rem; font-weight: 700; border: 1px solid var(--border); }
+
+        /* Section Styling */
+        section { margin-bottom: 100px; }
+        h2 { font-size: 2rem; color: var(--text-main); margin-bottom: 30px; border-left: 6px solid var(--accent); padding-left: 20px; }
+        .description { color: var(--text-sub); font-size: 1.05rem; margin-bottom: 30px; }
+
+        /* Role Card */
+        .role-container { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 40px; }
+        .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+        .role-item h4 { color: var(--accent); margin-bottom: 10px; }
+        .role-item ul { list-style: none; color: var(--text-sub); }
+        .role-item li::before { content: "• "; color: var(--accent); }
+
+        /* Infra Diagram Flow */
+        .infra-diagram { background: #000; padding: 40px; border-radius: 16px; border: 1px solid var(--border); margin: 30px 0; text-align: center; }
+        .flow-path { display: flex; align-items: center; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        .node { background: var(--bg-card); border: 1px solid var(--accent); padding: 10px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; min-width: 100px; }
+        .node.attacker { border-color: var(--danger); color: var(--danger); }
+        .node.security { border-color: var(--success); color: var(--success); }
+        .arrow { color: var(--text-sub); font-weight: 900; }
+
+        /* Slider */
+        .slider-container { position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: #000; margin-top: 20px; }
+        .slides { display: none; animation: fade 0.5s; }
+        .slides.active { display: block; }
+        .slides img { width: 100%; height: 550px; object-fit: contain; background: #050505; }
+        .slide-caption { padding: 25px; background: var(--bg-card); border-top: 1px solid var(--border); }
+        .slide-caption strong { color: var(--accent); display: block; margin-bottom: 8px; font-size: 1.2rem; }
+        .slide-caption p { color: var(--text-sub); font-size: 0.95rem; }
+
+        .prev, .next { cursor: pointer; position: absolute; top: 40%; transform: translateY(-50%); padding: 20px; color: white; font-size: 24px; background: rgba(0,0,0,0.6); user-select: none; transition: 0.3s; z-index: 10; text-decoration: none; }
+        .next { right: 0; } .prev { left: 0; }
+        .prev:hover, .next:hover { color: var(--accent); background: rgba(0,0,0,0.8); }
+
+        .counter { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 5px 15px; border-radius: 20px; color: var(--accent); font-weight: 700; font-size: 0.8rem; z-index: 11; }
+
+        /* Result Grid */
+        .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .result-card { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border); }
+        .result-card h4 { color: var(--accent); margin-bottom: 15px; }
+        .result-card li { margin-bottom: 8px; color: var(--text-sub); list-style-position: inside; }
+
+        @keyframes fade { from {opacity: 0.5} to {opacity: 1} }
+
+        @media (max-width: 768px) {
+            .role-grid { grid-template-columns: 1fr; }
+            .flow-path { flex-direction: column; }
+            .arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <!-- 01. 프로젝트 헤더 -->
+        <section class="project-header">
+            <h1>Security Web & App Vulnerability Analysis & SIEM Defense</h1>
+            <p>취약한 가상 병원 예약 플랫폼 구축 및 공격 시나리오 기반 통합 보안 관제 실습</p>
+            <div class="tags">
+                <span class="tag">OWASP Top 10</span>
+                <span class="tag">WAF (ModSecurity)</span>
+                <span class="tag">IDS/IPS (Suricata)</span>
+                <span class="tag">SIEM (ELK Stack)</span>
+                <span class="tag">Wazuh</span>
+            </div>
+        </section>
+
+        <!-- 02. 프로젝트 개요 -->
+        <section>
+            <h2>01. Project Overview</h2>
+            <p class="description">
+                본 프로젝트는 병원 예약 및 관리 기능을 제공하는 가상 의료 플랫폼을 대상으로 <strong>웹 및 모바일 환경의 보안 가용성</strong>을 검증하기 위해 기행되었습니다. 
+                단순한 공격 실습에 그치지 않고, <strong>IDS/IPS/SIEM</strong> 시스템을 직접 구축하여 공격 흐름을 파악하고, WAF 정책 수립 및 로그 분석을 통해 실무적인 침투 테스트와 방어 역량을 확보하는 것을 목표로 하였습니다.
+            </p>
+            <div class="role-container">
+                <h4>나의 주요 역할</h4>
+                <div class="role-grid">
+                    <div class="role-item">
+                        <h4>인프라 구축</h4>
+                        <ul>
+                            <li>모바일 앱 서버 백엔드(Node.js/Nginx) 및 DB(MariaDB) 연동 환경 구축</li>
+                            <li>Suricata(IDS/IPS) 설치 및 네트워크 미러링 환경 구성</li>
+                            <li>WAF(ModSecurity) 도입 및 보안 정책 적용</li>
+                        </ul>
+                    </div>
+                    <div class="role-item">
+                        <h4>분석 및 대응</h4>
+                        <ul>
+                            <li>OWASP Top 10 기반 웹 취약점 2종, 모바일 취약점 1종 분석</li>
+                            <li>Filebeat를 활용한 보안 이벤트 로그 중앙 수집 (ELK Stack)</li>
+                            <li>공격 탐지를 위한 Suricata Custom Rule 및 WAF 차단 정책 작성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 03. 시스템 인프라 구성 -->
+        <section>
+            <h2>02. System Infrastructure</h2>
+            <p class="description">네트워크 영역을 구분하여 공격자로부터 웹/모바일 서버를 보호하고, 발생하는 모든 이벤트를 SIEM으로 집계하도록 구성했습니다.</p>
+            
+            <div class="infra-diagram">
+                <p style="margin-bottom: 20px; font-weight: bold; color: var(--accent);">[Web Architecture]</p>
+                <div class="flow-path">
+                    <div class="node attacker">Attacker</div> <div class="arrow">→</div>
+                    <div class="node security">WAF (ModSec)</div> <div class="arrow">→</div>
+                    <div class="node">Apache2 Web</div> <div class="arrow">→</div>
+                    <div class="node">MariaDB</div> <div class="arrow">→</div>
+                    <div class="node security">Suricata IDS</div> <div class="arrow">→</div>
+                    <div class="node security">SIEM (ELK)</div>
+                </div>
+                
+                <p style="margin: 30px 0 20px; font-weight: bold; color: var(--accent);">[Mobile Architecture]</p>
+                <div class="flow-path">
+                    <div class="node attacker">Attacker</div> <div class="arrow">→</div>
+                    <div class="node security">WAF (ModSec)</div> <div class="arrow">→</div>
+                    <div class="node">Nginx/Node.js</div> <div class="arrow">→</div>
+                    <div class="node security">Suricata IDS/IPS</div> <div class="arrow">→</div>
+                    <div class="node security">Filebeat</div> <div class="arrow">→</div>
+                    <div class="node security">ELK Stack</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 04. 웹 취약점 진단 및 대응 -->
+        <section>
+            <h2>03. Web Vulnerability Walkthrough</h2>
+            <p class="description">직접 구축한 가상 병원 예약 플랫폼을 대상으로 수행한 웹 취약점 진단 및 대응 사례입니다.</p>
+
+            <div class="slider-container" id="webSlider">
+                <div class="counter">1 / 3</div>
+                <!-- 슬라이드 1 -->
+                <div class="slides active">
+                    <img src="./web_p1.png" alt="Web Vulnerability Scan">
+                    <div class="slide-caption">
+                        <strong>[Phase 1] 취약점 탐색 및 진단</strong>
+                        <p>ZAP 및 수동 점검을 통해 예약 게시판 내 XSS 및 SQL Injection 포인트 식별. 병원 관리 페이지의 비인가 접근 가능성 확인.</p>
+                    </div>
+                </div>
+                <!-- 슬라이드 2 -->
+                <div class="slides">
+                    <img src="./web_p2.png" alt="Web Attack & Detection">
+                    <div class="slide-caption">
+                        <strong>[Phase 2] 공격 시나리오 재현 및 탐지</strong>
+                        <p>식별된 취약점을 이용해 환자 정보 탈취 공격 수행. Suricata에서 해당 페이로드 탐지 및 Kibana 대시보드 실시간 로그 유입 확인.</p>
+                    </div>
+                </div>
+                <!-- 슬라이드 3 -->
+                <div class="slides">
+                    <img src="./web_p3.png" alt="Web Defense">
+                    <div class="slide-caption">
+                        <strong>[Phase 3] 대응방안 적용 및 검증</strong>
+                        <p>ModSecurity 화이트리스트 기반 필터링 적용 및 PHP 소스 코드 내 prepared statement 적용을 통해 취약점 원천 차단 완료.</p>
+                    </div>
+                </div>
+                <a class="prev" onclick="moveSlide(-1, 'webSlider')">❮</a>
+                <a class="next" onclick="moveSlide(1, 'webSlider')">❯</a>
+            </div>
+        </section>
+
+        <!-- 05. 모바일 취약점 진단 및 대응 -->
+        <section>
+            <h2>04. Mobile Vulnerability Walkthrough</h2>
+            <p class="description">모바일 앱 패키지 분석 및 API 서버 취약점 분석을 통한 보안 강화 과정입니다.</p>
+
+            <div class="slider-container" id="mobileSlider">
+                <div class="counter">1 / 3</div>
+                <div class="slides active">
+                    <img src="./mobile_p1.png" alt="Mobile Analysis">
+                    <div class="slide-caption">
+                        <strong>[Phase 1] 모바일 취약점 점검</strong>
+                        <p>Android 패키지 디컴파일 및 API 통신 구간 가로채기를 통한 민감 데이터 노출(Insecure Data Storage) 분석.</p>
+                    </div>
+                </div>
+                <div class="slides">
+                    <img src="./mobile_p2.png" alt="Mobile Attack">
+                    <div class="slide-caption">
+                        <strong>[Phase 2] API 서버 공격 및 로그 분석</strong>
+                        <p>변조된 API 요청을 통한 타인 예약 내역 조회 공격 수행. Suricata IPS 모드에서 비정상적인 HTTP 패턴 차단 및 로그 집계.</p>
+                    </div>
+                </div>
+                <div class="slides">
+                    <img src="./mobile_p3.png" alt="Mobile Defense">
+                    <div class="slide-caption">
+                        <strong>[Phase 3] 대응 전략 및 대시보드 개선</strong>
+                        <p>Nginx 보안 헤더 설정 및 API 토큰 검증 로직 강화. SIEM 가시성 확보를 위해 Kibana 대시보드 시각화 차트 고도화.</p>
+                    </div>
+                </div>
+                <a class="prev" onclick="moveSlide(-1, 'mobileSlider')">❮</a>
+                <a class="next" onclick="moveSlide(1, 'mobileSlider')">❯</a>
+            </div>
+        </section>
+
+        <!-- 06. 프로젝트 결과 및 개선사항 -->
+        <section>
+            <h2>05. Project Results & Insights</h2>
+            <div class="result-grid">
+                <div class="result-card">
+                    <h4>진단 및 분석 결과</h4>
+                    <ul>
+                        <li>핵심 웹 취약점(OWASP Top 10) 8건 식별 및 조치</li>
+                        <li>모바일 API 및 바이너리 취약점 3건 식별</li>
+                        <li>공격 시나리오별 탐지 성공률 90% 이상 달성</li>
+                    </ul>
+                </div>
+                <div class="result-card">
+                    <h4>보안 구축 핵심 성과</h4>
+                    <ul>
+                        <li>웹/모바일 통합 공격 탐지 룰(Custom Rule) 적용</li>
+                        <li>ModSecurity를 이용한 실시간 공격 차단 체계 마련</li>
+                        <li>ELK 기반 SIEM 환경 구축을 통한 통합 로그 가시성 확보</li>
+                    </ul>
+                </div>
+                <div class="result-card">
+                    <h4>향후 개선사항</h4>
+                    <ul>
+                        <li>탐지 오탐율(False Positive) 감소를 위한 정책 정교화</li>
+                        <li>신규 공격 패턴(0-Day) 대응을 위한 룰셋 최신화</li>
+                        <li>Kibana 대시보드 UI 개선 및 자동 알림 시스템 연동</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="description" style="margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px;">
+                이 경험을 통해 보안은 단순히 공격을 차단하는 것이 아니라, <strong>시스템 구조의 깊은 이해를 바탕으로 탐지, 대응, 운영이 유기적으로 연결</strong>되어야 한다는 점을 깨달았습니다. 안정성과 운영 효율을 모두 고려한 보안 설계를 수행하는 엔지니어로 성장하겠습니다.
+            </p>
+        </section>
+    </main>
+
+    <script>
+        let slideIndices = {};
+
+        function moveSlide(n, sliderId) {
+            if (slideIndices[sliderId] === undefined) slideIndices[sliderId] = 0;
+            const container = document.getElementById(sliderId);
+            const slides = container.getElementsByClassName("slides");
+            const counter = container.querySelector(".counter");
+            
+            slideIndices[sliderId] += n;
+            if (slideIndices[sliderId] >= slides.length) slideIndices[sliderId] = 0;
+            if (slideIndices[sliderId] < 0) slideIndices[sliderId] = slides.length - 1;
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].classList.remove("active");
+            }
+            slides[slideIndices[sliderId]].classList.add("active");
+            counter.innerText = `${slideIndices[sliderId] + 1} / ${slides.length}`;
+        }
+    </script>
+</body>
+</html>
