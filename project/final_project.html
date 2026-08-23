@@ -90,10 +90,18 @@
         .summary-box { background: rgba(0, 229, 255, 0.03); border: 1px solid var(--border); padding: 30px; border-radius: 16px; margin-top: 30px; }
         .summary-box h4 { color: var(--text-main); margin-bottom: 15px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         .summary-box p { color: var(--text-sub); font-size: 0.95rem; margin-bottom: 10px; }
-
+        
         /* Retrospective */
         .retro-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border-left: 5px solid var(--accent); color: var(--text-sub); font-size: 1.05rem; line-height: 1.8; }
-
+        /* 다운로드 영역의 설명 문구 스타일 */
+        .download-area p {
+            margin-top: 15px;      /* 버튼과의 간격 */
+            font-size: 0.85rem;    /* 글자 크기 축소 (기존은 보통 1rem) */
+            color: #888888;        /* 글자 색상을 더 연한 회색으로 변경 */
+            line-height: 1.6;      /* 줄 간격 조절 */
+            max-width: 700px;      /* 문장이 너무 길게 늘어지지 않도록 너비 제한 */
+            word-break: keep-all;  /* 한글 단어 끊김 방지 */
+        }
         @media (max-width: 768px) {
             .process-flow { flex-direction: column; align-items: stretch; }
             .arrow-icon { transform: rotate(90deg); text-align: center; margin: 10px 0; }
@@ -126,8 +134,8 @@
             <div class="download-area">
                 <a href="../final/SecuriCare_final_report.pdf" download class="btn-download">
                     <span>📄 프로젝트 결과 보고서 다운로드 (PDF)</span>
-                    <p>이 페이지에서는 모의해킹 프로젝트의 주요 내용과 결과를 간략하게 소개합니다. 프로젝트의 상세한 진단 과정과 취약점 분석, 대응 및 검증 결과는 아래의 결과 보고서에서 확인하실 수 있습니다.</p>
                 </a>
+                <p>이 페이지에서는 모의해킹 프로젝트의 주요 내용과 결과를 간략하게 소개합니다. 프로젝트의 상세한 진단 과정과 취약점 분석, 대응 및 검증 결과는 아래의 결과 보고서에서 확인하실 수 있습니다.</p>
             </div>
         </section>
 
